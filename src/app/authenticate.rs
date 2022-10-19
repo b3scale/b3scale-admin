@@ -7,10 +7,9 @@ use yew::{
 
 fn use_input_ref(node: &NodeRef) -> String {
     let node = node.clone();
-    if let Some(input) = node.cast::<HtmlInputElement>() {
-        input.value()
-    } else {
-        "".into()
+    match node.cast::<HtmlInputElement>() {
+        Some(input) => input.value(),
+        None => "".into(),
     }
 }
 
