@@ -1,0 +1,403 @@
+rustup
+rustup show
+rustup target
+rustup target list
+rustup target add wasm32-unknown-unknown
+s
+ls
+ls
+which cargo
+cargo install trunk
+cargo
+cargo
+~/.cargo/bin/trunk 
+~/.cargo/bin/
+trunk
+~/.cargo/
+cargo
+echo $PATH
+ls ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/
+ls ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo 
+~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo 
+vim ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo 
+ldd ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo 
+cargo
+ls
+cargo init
+ls
+ls
+touch Cargo.toml
+ls
+cargo 
+cargo install
+ls
+cargo --help
+rustup 
+rustup cargo
+rustup run cargo
+rustup run default cargo
+rustup run stable cargo
+rustup run stable
+rustup run stable help
+rustup run stable --help
+ls
+rustup install
+rustup install stabl
+rustup install stable
+cargo
+ls
+rustup install stable
+rustup install stable
+cargo
+ls
+cargo install trunk
+ls
+rm Cargo.toml 
+ls
+vim Readme.md
+ls
+vim Readme.md 
+cargo install trunk wasm-bindgen-cli
+cargo install wasm-bindgen-cli
+ping hannig.cc
+ls
+cargo install wasm-bindgen
+ls
+rust
+rustc
+which rustc
+cargo
+ls
+cargo init
+ls
+ls
+vim Cargo.toml 
+ls
+ls
+cd src/
+ls
+vim main.rs 
+ls
+cd ..
+ls
+cargo
+cargo install wasm-bindgen-cli
+ls
+ls
+ls
+cargo search yew
+cargo search yew 
+cargo search yew  --limit 00
+cargo search yew  --limit 1000
+cargo install wasm-bindgen-cli
+cargo install wasm-bindgen-cli
+cargo install wasm-bindgen-cli
+cargo install wasm-bindgen-cli --help
+cargo search wasm-bindgen
+cargo search wasm-bindgen-cli
+cargo install wasm-bindgen-cli
+ls
+echo $CARGO_HOME
+ls
+export
+ls
+vim shell.nix 
+echo $RUSTFLAGS
+vim shell.nix 
+echo $BINDGEN_EXTRA_CLANG_ARGS
+vim shell.nix 
+vim shell.nix 
+rm -r ~/.cargo/registry/
+rm -fr ~/.cargo/registry/
+cargo install wasm-bindgen-cli
+s
+ls
+ls
+cargo b
+ls
+trunk serve
+ls
+vim index.html 
+ls
+cd ..
+cd b3scale
+git status
+git checkout feature
+git checkout feature/openapi 
+git status
+ls
+ls
+ls
+ls
+cd ..
+cd admin
+ls
+cd b3scale-admin/
+ls
+trunk serve
+ls
+cargo metadata
+ls
+ls
+ls
+cd src/
+ls
+ls
+ls
+trunk serve
+trunk serls
+ls
+ls
+vim shell.nix 
+ls
+ls
+npx openapi-generator-cli
+npx openapi-generator-cli generate
+npx openapi-generator-cli generate -i
+npx openapi-generator-cli generate --help
+npx openapi-generator-cli help generate
+ls
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json 
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client
+ls
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client-rs/
+ls
+ls
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client-rs/
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client-rs/
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client-rs/
+npx openapi-generator-cli generate -i ../b3scale/pkg/http/static/assets/docs/b3scale-openapi-v1.json  -g rust -o b3scale-client-rs/
+ls
+cd b3scale-client-rs/
+ls
+cd src/
+ls
+cd apis/
+ls
+cd ..
+ls
+cd models/
+ls
+vim frontend.rs 
+ls
+vim command.rs 
+cd ..
+ls
+cd apis/
+ls
+vim backends_api.rs 
+ls
+ls
+cd ..
+ls
+cd models/
+ls
+vim mod.rs 
+ls
+vim backend.rs 
+ls
+vim error.rs 
+ls
+vim mod.rs 
+ls
+vim mod.rs 
+ls
+cd ..
+ls
+vim lib.rs 
+ls
+ld
+ls
+cd .
+cd ..
+ls
+cd ..
+cd ..
+cd b3scale-admin/
+ls
+cd ..
+ls
+cd b3scale-admin/
+ls
+cd src/
+ls
+vim main.rs 
+cd ..
+ls
+trunk serve
+ls
+sass
+nix-shell -p sass
+npm install @openapitools/openapi-generator-cli -g
+cd ..
+ls
+mkdir generators
+cd generators/
+npm init
+ls
+npm install @openapitools/openapi-generator-cli 
+ls
+ls
+cd node_modules/
+ls
+cd ..
+npm install @openapitools/openapi-generator-cli 
+npx openapi-generator
+npx openapi-generator-cli
+nix-shell -p java
+nix-shell -p openjdk
+trunk serve
+ls
+npx
+ls
+ls
+vim grass.sh
+chmod +x grass.sh 
+./grass.sh 
+./grass.sh 
+trunk serve
+ls
+ls
+ls
+dart
+scss
+scss --help
+ls
+ls
+trunk --help
+trunk config
+ls
+mkdir scripts
+mv grass.sh scripts/
+cd scripts/
+ls
+mv grass.sh compile_style.sh
+ls
+vim compile_style.sh 
+cd ..
+ls
+./scripts/compile_style.sh 
+./scripts/compile_style.sh 
+ls
+ls
+ls
+vim scripts/compile_style.sh 
+ls
+./scripts/compile_style.sh 
+ls
+trunk serve
+ls
+ls
+ls
+trunk serve
+wasm-bindgen
+ls
+ls
+trunk serve --help
+trunk serve -
+trunk serve 
+trunk serve 
+ls
+vim style.
+vim style.css 
+vim style.css 
+trunk serve
+trunk serve
+trunk serve
+ls
+ls
+ls
+ls
+cargo trunk install
+cargo install trunk
+cargo install wasm-bindgen-cli
+cargo search base64
+ls
+vim Cargo.toml 
+cargo 
+cargo b
+vim Cargo.toml 
+cargo b
+cargo search base64
+vim Cargo.toml 
+cargo b
+vim Cargo.toml 
+cargo b
+vim Cargo.
+vim Cargo.toml 
+cargo b
+cargo b
+ls
+ls
+ls
+npm
+nix-shell -p nodejs
+ls
+nix-shell
+cargo search yew-router
+ls
+vim Cargo.toml 
+cargo b
+:q
+ls
+ls
+cd src/
+ls
+cd authentication/
+ls
+ls
+cd ..
+ls
+cd authentication/
+ls
+touch mod.rs
+ls
+cd ..
+ls
+cargob
+carg ob
+cargo b
+ls
+cd navigation/
+ls
+vim header.rs 
+ls
+cd ..
+trunk serve
+ls
+cd ..
+trunk serve
+ls
+vim index.html 
+trunk serve
+ls
+trunk serve
+ls
+vim index.html 
+trunk serve
+trunk serve
+ls
+cd ..
+cd .
+cd ..
+cd cat
+cd annikahannig/cateyes/
+ls
+cd ui
+ls
+cd cateyes-
+cd cateyes-ui/
+ls
+trunk serve
+ls
+cp -r ../../../b3scale/b3scale-admin/scripts/ .
+ls
+vim scripts/compile_style.sh 
+ls
+vim scripts/compile_style.sh 
+ls
+cd ..
+ls
+ls
+nix-shel
+nix-shell

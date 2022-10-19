@@ -1,0 +1,47 @@
+main > .container-fluid {
+  padding: 60px 15px;
+}
+
+main > .container {
+  padding: 80px 15px;
+}
+
+body {
+  background: #2d3740;
+}
+
+.bg-primary {
+  background: #222;
+}
+
+.server-status {
+  margin-right: 4pt;
+  white-space: nowrap;
+  font-size: 11px;
+  font-family: monospace;
+  tr {
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+    padding-right: 4pt;
+  }
+}
+
+
+.container-page {
+  flex: 1;
+  min-height: 100vh;
+  border: 1px solid red;
+}
+
+.card.box {
+   width: 500px;  
+}
+
+.box-authenticate {
+
+}
+
