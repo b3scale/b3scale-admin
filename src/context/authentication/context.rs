@@ -1,14 +1,22 @@
 use anyhow::Result;
-use gloo::storage::{SessionStorage, Storage};
+use gloo::{
+    console::log,
+    storage::{SessionStorage, Storage},
+};
 
+use wasm_bindgen_futures::spawn_local;
 use yew::{
     function_component, html, use_context, use_state, Children, ContextProvider, Properties,
     UseStateHandle,
 };
 
+use super::access_token::new_access_token;
+use crate::api::{models::Status, status as status_api, Client};
+
 #[derive(PartialEq, Clone)]
 pub struct Context {
     pub access_token: UseStateHandle<Option<String>>,
+    pub error: UseStateHandle<Option<String>>,
 }
 
 impl Context {
@@ -20,15 +28,39 @@ impl Context {
         };
         Self {
             access_token: use_state(move || token),
+            error: use_state(move || None),
         }
     }
 
     /// Check if the token is valid and accept it
-    pub fn authenticate(&mut self, token: &str) -> Result<()> {
+    pub fn authenticate(&mut self, token: &str) {
+        log!(format!("auth token: {:?}", token));
         let token: String = token.into();
-        SessionStorage::set("access_token", token.clone())?;
-        self.access_token.set(Some(token.to_owned()));
-        Ok(())
+        let client = Client::new(&token);
+        {
+            let access_token = self.access_token.clone();
+            let error = self.error.clone();
+            spawn_local(async move {
+                match client.fetch::<Status>(status_api::read()).await {
+                    Ok(s) => {
+                        log!(format!("status: {:?}", s));
+                        SessionStorage::set("access_token", token.clone())
+                            .expect("session storage unavailable");
+                        access_token.set(Some(token.clone()));
+                    }
+                    Err(err) => {
+                        log!(format!("Err: {:?}", err));
+                        error.set(Some(format!("{:?}", err)));
+                    }
+                }
+            });
+        }
+    }
+
+    /// Authentiate with jwt secret
+    pub fn authenticate_secret(&mut self, secret: &str) {
+        let token = new_access_token(secret);
+        self.authenticate(&token)
     }
 
     /// Forget current session

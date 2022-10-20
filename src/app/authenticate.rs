@@ -2,8 +2,10 @@ use gloo::console::log;
 use web_sys::HtmlInputElement;
 use yew::{
     events::{FocusEvent, KeyboardEvent},
-    function_component, html, use_node_ref, Callback, NodeRef,
+    function_component, html, use_node_ref, Callback, NodeRef, Properties,
 };
+
+use crate::context::use_authentication;
 
 fn use_input_ref(node: &NodeRef) -> String {
     let node = node.clone();
@@ -13,8 +15,20 @@ fn use_input_ref(node: &NodeRef) -> String {
     }
 }
 
+#[derive(Clone, PartialEq, Debug)]
+pub struct FormData {
+    pub token: String,
+    pub secret: String,
+}
+
+#[derive(Clone, Properties, PartialEq)]
+pub struct FormProps {
+    pub on_submit: Callback<FormData>,
+}
+
 #[function_component(Form)]
-fn form() -> Html {
+fn form(props: &FormProps) -> Html {
+    let on_submit_cb = props.on_submit.clone();
     let token_ref = use_node_ref();
     let secret_ref = use_node_ref();
 
@@ -25,7 +39,10 @@ fn form() -> Html {
             ev.prevent_default();
             let token = use_input_ref(&token_ref);
             let secret = use_input_ref(&secret_ref);
-            log!(format!("on submit: {:?} - {:?}", token, secret));
+            on_submit_cb.emit(FormData {
+                token: token.clone(),
+                secret: secret.clone(),
+            });
         })
     };
 
@@ -63,6 +80,20 @@ fn form() -> Html {
 
 #[function_component(Authenticate)]
 pub fn authenticate() -> Html {
+    let auth = use_authentication();
+    let on_submit = {
+        let auth = auth.clone();
+        Callback::from(move |f: FormData| {
+            let mut auth = auth.clone();
+            log!(format!("FORM: {:?}", f));
+            auth.authenticate_secret(&f.secret);
+        })
+    };
+
+    if let Some(err) = (*auth.error).clone() {
+        log!(format!("AUTH ERROR: {:?}", err));
+    }
+
     html! {
         <div class="
             container-page
@@ -72,7 +103,7 @@ pub fn authenticate() -> Html {
 
         <div class="card box box-authenticate">
             <div class="card-body">
-              <Form />
+              <Form {on_submit} />
             </div>
         </div>
 

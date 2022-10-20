@@ -66,10 +66,7 @@ pub fn start() -> Html {
 
     let on_login = {
         let api = use_authentication();
-        Callback::from(move |_| {
-            let api = &mut api.clone();
-            api.authenticate("foooblubb").expect("yay");
-        })
+        Callback::from(move |_| {})
     };
 
     let on_logout = {

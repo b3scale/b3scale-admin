@@ -4,5 +4,5 @@ command = "./scripts/compile_style.sh"
 command_arguments = []
 
 [[proxy]]
-rewrite = "/api/v1/"
-backend = "http://localhost:42353/api/v1/"
+rewrite = "/api/v1"
+backend = "http://localhost:42353/api/v1"

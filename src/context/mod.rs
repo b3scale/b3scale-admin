@@ -1,2 +1,2 @@
-mod auth;
-pub use auth::{use_access_token, use_authentication, AuthenticationContext};
+mod authentication;
+pub use authentication::{use_access_token, use_authentication, AuthenticationContext};
