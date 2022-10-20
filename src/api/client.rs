@@ -3,18 +3,29 @@ use serde::{de::DeserializeOwned, Deserialize};
 /// Reexport request for convenience
 pub use gloo_net::http::Request;
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, PartialEq)]
 pub struct ErrorResponse {
     pub message: String,
     pub error: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Error {
     NotFound,
     ValidationFailed(String),
     Client(String),
     Server(ErrorResponse),
+}
+
+impl Error {
+    pub fn message(&self) -> String {
+        match self {
+            Self::NotFound => "404 not found".into(),
+            Self::ValidationFailed(msg) => msg.clone(),
+            Self::Client(msg) => msg.clone(),
+            Self::Server(res) => res.message.clone(),
+        }
+    }
 }
 
 impl From<gloo_net::Error> for Error {

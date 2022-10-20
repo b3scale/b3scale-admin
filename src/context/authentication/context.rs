@@ -1,4 +1,3 @@
-use anyhow::Result;
 use gloo::{
     console::log,
     storage::{SessionStorage, Storage},
@@ -11,12 +10,12 @@ use yew::{
 };
 
 use super::access_token::new_access_token;
-use crate::api::{models::Status, status as status_api, Client};
+use crate::api::{models::Status, status as status_api, Client, ClientError};
 
 #[derive(PartialEq, Clone)]
 pub struct Context {
     pub access_token: UseStateHandle<Option<String>>,
-    pub error: UseStateHandle<Option<String>>,
+    pub error: UseStateHandle<Option<ClientError>>,
 }
 
 impl Context {
@@ -35,7 +34,7 @@ impl Context {
     /// Check if the token is valid and accept it
     pub fn authenticate(&mut self, token: &str) {
         log!(format!("auth token: {:?}", token));
-        let token: String = token.into();
+        let token: String = token.trim().into();
         let client = Client::new(&token);
         {
             let access_token = self.access_token.clone();
@@ -47,10 +46,11 @@ impl Context {
                         SessionStorage::set("access_token", token.clone())
                             .expect("session storage unavailable");
                         access_token.set(Some(token.clone()));
+                        error.set(None);
                     }
                     Err(err) => {
                         log!(format!("Err: {:?}", err));
-                        error.set(Some(format!("{:?}", err)));
+                        error.set(Some(err));
                     }
                 }
             });

@@ -6,23 +6,27 @@ use yew_router::{
     Routable, Switch,
 };
 
-use crate::app::authenticate::Authenticate;
+use super::{authenticate::Authenticate, frontends::Frontends};
 use crate::context::{use_access_token, use_authentication};
 
 #[derive(Clone, Routable, PartialEq, Debug)]
-enum Route {
+pub enum Route {
     #[at("/")]
     Start,
     #[at("/authenticate")]
     Authenticate,
+    #[at("/frontends")]
+    Frontends,
     #[not_found]
     #[at("/404")]
     NotFound,
 }
 
+/// Render page
 fn switch(route: &Route) -> Html {
     match route {
         Route::Start => html! { <Start /> },
+        Route::Frontends => html! { <Frontends /> },
         Route::Authenticate => html! { <Authenticate /> },
         Route::NotFound => html! { <NotFound /> },
     }
@@ -33,7 +37,6 @@ pub fn router() -> Html {
     let history = use_history().unwrap();
     let auth = use_authentication();
     let route = use_route().unwrap_or(Route::Start);
-    log!(format!("route: {:?}", route));
     {
         // Navigate to auth page
         use_effect(move || {
@@ -57,33 +60,17 @@ pub fn not_found() -> Html {
 
 #[function_component(Start)]
 pub fn start() -> Html {
-    let token = use_access_token();
-    let authenticated = match token {
-        Some(t) => html! { <b>{"Auth: "}{t}</b> },
-        None => html! { <b>{"Unauthenticated"}</b> },
-    };
-    log!("render start");
+    let auth = use_authentication();
+    let history = use_history().unwrap();
 
-    let on_login = {
-        let api = use_authentication();
-        Callback::from(move |_| {})
-    };
-
-    let on_logout = {
-        let api = use_authentication();
-        Callback::from(move |_| {
-            let api = &mut api.clone();
-            api.logout();
-            log!("looogout");
-        })
-    };
+    use_effect(move || {
+        if auth.is_authenticated() {
+            history.replace(Route::Frontends);
+        };
+        || ()
+    });
 
     html! {
-        <p>{"Start"}<a href="/authenticate">{"Authenticate"}</a>
-            <br />
-            {authenticated}
-            <button onclick={on_login}>{"Login"}</button>
-            <button onclick={on_logout}>{"Logout"}</button>
-        </p>
+        <></>
     }
 }
