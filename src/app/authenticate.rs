@@ -108,8 +108,8 @@ fn form(props: &FormProps) -> Html {
     }
 }
 
-#[function_component(Authenticate)]
-pub fn authenticate() -> Html {
+#[function_component(AuthenticatePage)]
+pub fn authenticate_page() -> Html {
     let auth = use_authentication();
     let on_submit = {
         let auth = auth.clone();

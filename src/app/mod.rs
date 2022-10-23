@@ -1,10 +1,17 @@
 mod page;
-use page::Page;
+pub use page::*;
 
-pub mod authenticate;
+mod authenticate;
+pub use authenticate::*;
 
 mod router;
-pub use router::Router;
+pub use router::*;
+
+mod backends;
+pub use backends::*;
 
 mod frontends;
+pub use frontends::*;
+
 mod nav;
+pub use nav::*;

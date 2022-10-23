@@ -5,8 +5,8 @@ use yew_router::{
     Routable, Switch,
 };
 
-use super::{authenticate::Authenticate, frontends::FrontendsPage};
 use crate::api::auth::use_authentication;
+use crate::app::{AuthenticatePage, BackendsPage, FrontendsPage};
 
 #[derive(Clone, Routable, PartialEq, Debug)]
 pub enum Route {
@@ -16,8 +16,8 @@ pub enum Route {
     Authenticate,
     #[at("/frontends/:id")]
     Frontends { id: String },
-    #[at("/backends")]
-    Backends,
+    #[at("/backends/:id")]
+    Backends { id: String },
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -30,11 +30,15 @@ fn switch(route: &Route) -> Html {
         Route::Frontends { id } => html! {
             <FrontendsPage id={id.clone()} />
         },
-        Route::Backends => html! {
-            <FrontendsPage id={Option::<String>::None} />
+        Route::Backends { id } => html! {
+            <BackendsPage id={id.clone()} />
         },
-        Route::Authenticate => html! { <Authenticate /> },
-        Route::NotFound => html! { <NotFound /> },
+        Route::Authenticate => html! {
+            <AuthenticatePage />
+        },
+        Route::NotFound => html! {
+            <NotFound />
+        },
     }
 }
 

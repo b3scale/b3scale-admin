@@ -7,28 +7,29 @@ use yew_router::{
     Routable,
 };
 
-use std::iter::zip;
-
 #[derive(Properties, Clone, PartialEq)]
 pub struct LinkProps<T: Routable> {
     pub children: Children,
     pub to: T,
     #[prop_or_default]
     pub class: Classes,
-    #[prop_or(99)]
-    pub depth: usize,
+    pub active: Option<bool>,
 }
 
-/// Check if the prefixes match
-fn match_prefix<T: Routable>(a: T, b: T, depth: usize) -> bool {
-    // Compare
-    let match_depth = a
-        .to_path()
-        .split('/')
-        .zip(b.to_path().split('/'))
-        .map(|(a, b)| if a == b { 1 } else { 0 })
-        .fold(0, |acc, v| acc + v);
-    depth <= match_depth
+fn match_prefix<T: Routable>(a: &T, b: &T) -> bool {
+    let a: Vec<String> = a.to_path().split("/").map(|p| p.to_owned()).collect();
+    let b: Vec<String> = b.to_path().split("/").map(|p| p.to_owned()).collect();
+    let mut b = b.iter();
+    for a_ in a {
+        if let Some(b_) = b.next() {
+            if &a_ == b_ {
+                continue;
+            }
+        } else {
+            return false;
+        }
+    }
+    true
 }
 
 #[function_component(Link)]
@@ -37,11 +38,15 @@ pub fn link<T: Routable + 'static>(props: &LinkProps<T>) -> Html {
         children,
         to,
         class,
-        depth,
+        active,
     } = props.clone();
     let history = use_history().unwrap();
     let route: T = use_route().unwrap();
-    let active = match_prefix(route.clone(), to.clone(), depth);
+    let active = if let Some(a) = active {
+        a
+    } else {
+        match_prefix(&route, &to)
+    };
     let href = to.to_owned().to_path();
 
     let on_navigate = {

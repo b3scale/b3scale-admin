@@ -1,7 +1,42 @@
 use gloo_console::log;
 use yew::{events::MouseEvent, function_component, html, Callback, Children, Properties};
 
-use crate::api::status::use_status;
+use crate::{
+    api::status::use_status,
+    app::{nav::Link, router::Route},
+};
+
+#[derive(Properties, Clone, PartialEq)]
+pub struct PageSelectProps {
+    pub active: String,
+}
+
+#[function_component(PageSelect)]
+pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
+    html! {
+        <div class="nav-header">
+          <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+              <Link<Route> active={active == "frontends"} to={Route::Frontends { id: "new".to_string()}}>
+                {"Frontends"}
+              </Link<Route>>
+            </li>
+            <li class="nav-item">
+              <Link<Route> active={active == "backends"} to={Route::Backends { id: "new".into() }}>
+                {"Backends"}
+              </Link<Route>>
+            </li>
+          </ul>
+          <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+            <Link<Route> active={false} to={Route::Frontends { id: "new".to_string() }}>
+              { "(+)" }
+              </Link<Route>>
+            </li>
+          </ul>
+        </div>
+    }
+}
 
 #[function_component(Header)]
 fn header() -> Html {
