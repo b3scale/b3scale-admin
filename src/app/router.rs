@@ -5,7 +5,7 @@ use yew_router::{
     Routable, Switch,
 };
 
-use super::{authenticate::Authenticate, frontends::Frontends};
+use super::{authenticate::Authenticate, frontends::FrontendsPage};
 use crate::api::auth::use_authentication;
 
 #[derive(Clone, Routable, PartialEq, Debug)]
@@ -14,20 +14,48 @@ pub enum Route {
     Start,
     #[at("/authenticate")]
     Authenticate,
-    #[at("/frontends")]
+    #[at("/frontends/:s")]
     Frontends,
+    #[at("/backends")]
+    Backends,
     #[not_found]
     #[at("/404")]
     NotFound,
+}
+
+#[derive(Clone, PartialEq, Debug, Routable)]
+pub enum FrontendsRoute {
+    #[at("/frontends")]
+    Index,
+    #[at("/frontends/:id")]
+    Show { id: String },
 }
 
 /// Render page
 fn switch(route: &Route) -> Html {
     match route {
         Route::Start => html! { <Start /> },
-        Route::Frontends => html! { <Frontends /> },
+        Route::Frontends => html! {
+            <Switch<FrontendsRoute>
+                render={Switch::render(switch_frontends)} />
+        },
+        Route::Backends => html! {
+            <FrontendsPage id={Option::<String>::None} />
+        },
         Route::Authenticate => html! { <Authenticate /> },
         Route::NotFound => html! { <NotFound /> },
+    }
+}
+
+/// Render Frontends Pages
+fn switch_frontends(route: &FrontendsRoute) -> Html {
+    match route {
+        FrontendsRoute::Index => html! {
+            <FrontendsPage id={Option::<String>::None} />
+        },
+        FrontendsRoute::Show { id } => html! {
+            <FrontendsPage id={Some(id.clone())} />
+        },
     }
 }
 
@@ -64,7 +92,9 @@ pub fn start() -> Html {
 
     use_effect(move || {
         if auth.is_authenticated() {
-            history.replace(Route::Frontends);
+            history.replace(FrontendsRoute::Show {
+                id: "new".to_owned(),
+            });
         };
         || ()
     });

@@ -41,7 +41,8 @@
     }
 
     .nav-select-list {
-        overflow-y: scroll;
+        overflow-y: auto;
+        flex: 1;
         min-width: 450px;
         .list-group-item {
             padding-top: 15px;
@@ -55,7 +56,7 @@
     main {
         flex: 1;
         padding-top: 56px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 }
 
