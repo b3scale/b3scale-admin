@@ -14,8 +14,8 @@ pub enum Route {
     Start,
     #[at("/authenticate")]
     Authenticate,
-    #[at("/frontends/:s")]
-    Frontends,
+    #[at("/frontends/:id")]
+    Frontends { id: String },
     #[at("/backends")]
     Backends,
     #[not_found]
@@ -23,39 +23,18 @@ pub enum Route {
     NotFound,
 }
 
-#[derive(Clone, PartialEq, Debug, Routable)]
-pub enum FrontendsRoute {
-    #[at("/frontends")]
-    Index,
-    #[at("/frontends/:id")]
-    Show { id: String },
-}
-
 /// Render page
 fn switch(route: &Route) -> Html {
     match route {
         Route::Start => html! { <Start /> },
-        Route::Frontends => html! {
-            <Switch<FrontendsRoute>
-                render={Switch::render(switch_frontends)} />
+        Route::Frontends { id } => html! {
+            <FrontendsPage id={id.clone()} />
         },
         Route::Backends => html! {
             <FrontendsPage id={Option::<String>::None} />
         },
         Route::Authenticate => html! { <Authenticate /> },
         Route::NotFound => html! { <NotFound /> },
-    }
-}
-
-/// Render Frontends Pages
-fn switch_frontends(route: &FrontendsRoute) -> Html {
-    match route {
-        FrontendsRoute::Index => html! {
-            <FrontendsPage id={Option::<String>::None} />
-        },
-        FrontendsRoute::Show { id } => html! {
-            <FrontendsPage id={Some(id.clone())} />
-        },
     }
 }
 
@@ -92,7 +71,7 @@ pub fn start() -> Html {
 
     use_effect(move || {
         if auth.is_authenticated() {
-            history.replace(FrontendsRoute::Show {
+            history.replace(Route::Frontends {
                 id: "new".to_owned(),
             });
         };

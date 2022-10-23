@@ -2,7 +2,6 @@ use gloo::{
     console::log,
     storage::{SessionStorage, Storage},
 };
-
 use wasm_bindgen_futures::spawn_local;
 use yew::{
     function_component, html, use_context, use_state, Children, ContextProvider, Properties,
@@ -21,7 +20,7 @@ pub struct Context {
 impl Context {
     /// New api
     pub fn new() -> Self {
-        let token = match SessionStorage::get::<String>("access_token") {
+        let token: Option<String> = match SessionStorage::get("access_token") {
             Ok(t) => Some(t),
             Err(_) => None,
         };

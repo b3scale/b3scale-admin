@@ -2,10 +2,7 @@ use yew::{function_component, html, Html, Properties};
 
 use crate::{
     api::frontends::{use_frontends, Frontend},
-    app::{
-        nav::Button,
-        router::{FrontendsRoute, Route},
-    },
+    app::{nav::Button, router::Route},
 };
 
 /// Frontend ListItem Properties
@@ -17,12 +14,12 @@ pub struct ListItemProps {
 #[function_component(ListItem)]
 pub fn list_item(ListItemProps { frontend }: &ListItemProps) -> Html {
     html! {
-      <Button<FrontendsRoute> to={FrontendsRoute::Show{id: frontend.id.clone()}}>
+      <Button<Route> to={Route::Frontends{id: frontend.id.clone()}}>
         <div class="ms-2 me-auto">
           <div class="fw-bold">{&frontend.bbb.key}</div>
           <div class="subtitle">{&frontend.id}</div>
         </div>
-      </Button<FrontendsRoute>>
+      </Button<Route>>
     }
 }
 
