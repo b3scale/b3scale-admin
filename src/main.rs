@@ -1,4 +1,7 @@
-use b3scale_admin::{app::Router, context::AuthenticationContext};
+use b3scale_admin::{
+    api::{auth::AuthenticationContext, frontends::FrontendsContext},
+    app::Router,
+};
 
 use yew::{function_component, html};
 use yew_router::BrowserRouter;
@@ -8,7 +11,9 @@ fn app() -> Html {
     html! {
         <BrowserRouter>
         <AuthenticationContext>
-            <Router />
+        <FrontendsContext>
+          <Router />
+        </FrontendsContext>
         </AuthenticationContext>
         </BrowserRouter>
     }

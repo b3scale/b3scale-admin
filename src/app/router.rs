@@ -1,5 +1,4 @@
-use gloo::console::log;
-use yew::{function_component, html, use_effect, Callback, Html};
+use yew::{function_component, html, use_effect, Html};
 use yew_router::{
     history::History,
     hooks::{use_history, use_route},
@@ -7,7 +6,7 @@ use yew_router::{
 };
 
 use super::{authenticate::Authenticate, frontends::Frontends};
-use crate::context::{use_access_token, use_authentication};
+use crate::api::auth::use_authentication;
 
 #[derive(Clone, Routable, PartialEq, Debug)]
 pub enum Route {

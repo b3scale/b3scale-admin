@@ -6,7 +6,7 @@ use yew::{
 };
 use yew_router::{history::History, hooks::use_history};
 
-use crate::{app::router::Route, context::use_authentication};
+use crate::{api::auth::use_authentication, app::router::Route};
 
 fn use_input_ref(node: &NodeRef) -> Option<String> {
     let node = node.clone();

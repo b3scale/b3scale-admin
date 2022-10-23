@@ -1,0 +1,61 @@
+
+
+.container-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  header {
+    flex: 0 1;
+  }
+
+  .page {
+    height: 100vh;
+  }
+}
+
+.page {
+    display: flex;
+    flex-direction: row;
+
+    nav {
+        padding-top:56px;
+        display: flex;
+        flex-direction: column;
+        flex: 0 1;
+        flex-basis: fit-content;
+        background: #000000;
+        box-shadow: 0px 0px 10px #222;
+    }
+
+    .nav-header {
+        display: flex;
+        background: #222;
+        padding: 15px 10px;
+        justify-content: space-between;
+        ul {
+          padding: 4px;
+          background: #333;
+          border-radius: 8px;
+        }
+    }
+
+    .nav-select-list {
+        overflow-y: scroll;
+        min-width: 450px;
+        .list-group-item {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-radius: 0;
+            border-right: 0;
+            border-left: 0;
+        }
+    }
+
+    main {
+        flex: 1;
+        padding-top: 56px;
+        overflow-y: scroll;
+    }
+}
+

@@ -1,4 +1,8 @@
 use serde::{de::DeserializeOwned, Deserialize};
+use wasm_bindgen_futures::spawn_local;
+use yew::{use_effect_with_deps, use_state, UseStateHandle};
+
+use super::auth::use_access_token;
 
 /// Reexport request for convenience
 pub use gloo_net::http::Request;
@@ -69,4 +73,86 @@ impl Client {
             }
         }
     }
+}
+
+/// Provide a configured client by using the auth context
+pub fn use_client() -> Client {
+    let access_token = use_access_token().unwrap_or("".into());
+    Client::new(&access_token)
+}
+
+/// State
+#[derive(Clone, PartialEq, Debug)]
+pub struct State<T: DeserializeOwned + Clone> {
+    is_loading: UseStateHandle<bool>,
+    error: UseStateHandle<Option<Error>>,
+    result: UseStateHandle<Option<T>>,
+    fetch: UseStateHandle<u32>,
+}
+
+impl<T: DeserializeOwned + Clone> State<T> {
+    pub fn is_loading(&self) -> bool {
+        (*self.is_loading).clone()
+    }
+
+    pub fn error(&self) -> Option<Error> {
+        (*self.error).clone()
+    }
+
+    pub fn result(&self) -> Option<T> {
+        (*self.result).clone()
+    }
+
+    pub fn fetch(&self) {
+        let f = *self.fetch;
+        self.fetch.set(f + 1);
+    }
+}
+
+/// Use request returns a state object wrapping the
+/// requested type
+pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T> {
+    let client = use_client();
+    let is_loading = use_state(|| false);
+    let error = use_state(|| None);
+    let result = use_state(|| None);
+    let fetch = use_state(|| 0);
+
+    let state = {
+        let fetch = fetch.clone();
+        State {
+            is_loading,
+            error,
+            result,
+            fetch,
+        }
+    };
+    {
+        let state = state.clone();
+        let fetch = fetch.clone();
+        use_effect_with_deps(
+            move |_| {
+                state.is_loading.set(true);
+                spawn_local(async move {
+                    if *state.fetch == 0 {
+                        return;
+                    }
+                    match client.fetch::<T>(req).await {
+                        Ok(s) => {
+                            state.is_loading.set(false);
+                            state.error.set(None);
+                            state.result.set(Some(s));
+                        }
+                        Err(error) => {
+                            state.is_loading.set(false);
+                            state.error.set(Some(error));
+                        }
+                    }
+                });
+                || ()
+            },
+            *fetch,
+        );
+    }
+    state
 }

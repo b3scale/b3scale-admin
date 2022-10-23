@@ -1,4 +1,7 @@
-use yew::{function_component, html, Children, Properties};
+use gloo_console::log;
+use yew::{events::MouseEvent, function_component, html, Callback, Children, Properties};
+
+use crate::api::status::use_status;
 
 #[function_component(Header)]
 fn header() -> Html {
@@ -23,10 +26,13 @@ pub struct PageProps {
 #[function_component(Page)]
 pub fn page(props: &PageProps) -> Html {
     let PageProps { children } = props;
+
     html! {
-        <main>
-            <Header />
+      <div class="container-page">
+        <Header />
+        <div class="page">
             { for children.iter() }
-        </main>
+        </div>
+      </div>
     }
 }
