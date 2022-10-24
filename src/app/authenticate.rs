@@ -137,7 +137,9 @@ pub fn authenticate_page() -> Html {
     }
 
     html! {
+        <div class="vh-100 d-flex">
         <div class="
+            vh-100
             container-page
             d-flex
             justify-content-center
@@ -148,7 +150,7 @@ pub fn authenticate_page() -> Html {
               <Form {on_submit} />
             </div>
         </div>
-
+        </div>
         </div>
     }
 }

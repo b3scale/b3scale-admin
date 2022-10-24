@@ -2,16 +2,13 @@ html {
 }
 
 main > .container-fluid {
-  padding: 60px 15px;
+    padding: 15px 20px;
 }
 
 main > .container {
   padding: 80px 15px;
 }
 
-main {
-  padding-top: 56px;
-}
 
 body {
   background: #2d3740;
@@ -40,6 +37,8 @@ body {
 
 .card.box {
    width: 500px;  
+   padding: 20px;
+   border-radius: 8px;
 }
 
 .box-authenticate {
