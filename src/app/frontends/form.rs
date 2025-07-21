@@ -1,4 +1,4 @@
-use gloo_console::{self, log};
+use gloo_console::log;
 use std::collections::HashMap;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
@@ -26,15 +26,6 @@ pub fn form(props: &FormProps) -> Html {
     let FormProps { frontend, on_save, on_delete } = props;
     let client = use_client();
     
-    // Debug: Log what frontend data we receive
-    if let Some(f) = frontend {
-        gloo_console::log!("Form received frontend - Key:", &f.bbb.key);
-        gloo_console::log!("Form received frontend - Secret:", &f.bbb.secret);
-        gloo_console::log!("Form received frontend - Active:", f.active);
-        gloo_console::log!("Form received frontend - Account ref:", f.account_ref.as_ref().unwrap_or(&"None".to_string()));
-    } else {
-        gloo_console::log!("Form received NO frontend data");
-    }
     
     // Basic form state
     let key = use_state(|| frontend.as_ref().map(|f| f.bbb.key.clone()).unwrap_or_default());
@@ -109,8 +100,6 @@ pub fn form(props: &FormProps) -> Html {
         use_effect_with_deps(
             move |frontend_option| {
                 if let Some(f) = frontend_option {
-                    gloo_console::log!("Form updating with frontend data:", &f.bbb.key);
-                    
                     // Update basic fields
                     key.set(f.bbb.key.clone());
                     secret.set(f.bbb.secret.clone());
@@ -140,7 +129,6 @@ pub fn form(props: &FormProps) -> Html {
                         required_tags.set(Vec::new());
                     }
                 } else {
-                    gloo_console::log!("Form clearing - no frontend data");
                     // Reset to defaults for new frontend
                     key.set("".to_string());
                     secret.set("".to_string());

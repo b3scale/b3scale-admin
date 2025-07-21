@@ -1,4 +1,3 @@
-use gloo_console;
 use yew::{
     function_component, html, use_context, use_effect_with_deps, Children, ContextProvider,
     Properties,
@@ -15,7 +14,6 @@ pub fn list() -> Request {
 /// Get a single backend by ID
 pub fn get(id: &str) -> Request {
     let url = format!("/api/v1/backends/{}", id);
-    gloo_console::log!("Creating single backend request for URL:", &url);
     Request::get(&url)
 }
 
@@ -78,8 +76,7 @@ pub fn use_backend(id: &str) -> State<Backend> {
     {
         let state = state.clone();
         use_effect_with_deps(
-            move |id| {
-                gloo_console::log!("Triggering fetch for backend ID:", id);
+            move |_id| {
                 state.fetch();
                 || ()
             },

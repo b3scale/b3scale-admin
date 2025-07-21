@@ -1,4 +1,3 @@
-use gloo_console;
 use serde::{de::DeserializeOwned, Deserialize};
 use serde_json;
 use wasm_bindgen_futures::spawn_local;
@@ -65,39 +64,19 @@ impl Client {
         let bearer = format!("Bearer {}", auth_token);
         let req = req.header("Authorization", &bearer);
 
-        gloo_console::log!("Making API request...");
         let result = req.send().await?;
-        gloo_console::log!("API response status:", result.status());
         
         if result.ok() {
-            // Log the raw response text for debugging
             let response_text = result.text().await?;
-            gloo_console::log!("API response body:", &response_text);
-            
-            // Try to decode success type from the text
             match serde_json::from_str::<T>(&response_text) {
-                Ok(t) => {
-                    gloo_console::log!("API request successful");
-                    Ok(t)
-                },
-                Err(e) => {
-                    gloo_console::log!("JSON parse error:", format!("{:?}", e));
-                    gloo_console::log!("Raw response was:", &response_text);
-                    Err(Error::Client(format!("JSON parse error: {}", e)))
-                }
+                Ok(t) => Ok(t),
+                Err(e) => Err(Error::Client(format!("JSON parse error: {}", e)))
             }
         } else {
-            // Decode error
-            gloo_console::log!("API request failed with status:", result.status());
             match result.status() {
-                404 => {
-                    gloo_console::log!("404 Not Found error");
-                    Err(Error::NotFound)
-                },
+                404 => Err(Error::NotFound),
                 _ => {
-                    // Try to decode error response
                     let err: ErrorResponse = result.json().await?;
-                    gloo_console::log!("Server error:", format!("{:?}", err));
                     Err(Error::Server(err))
                 }
             }
@@ -142,7 +121,6 @@ impl<T: DeserializeOwned + Clone> State<T> {
 /// Use request returns a state object wrapping the
 /// requested type
 pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T> {
-    gloo_console::log!("use_fetch called");
     let client = use_client();
     let is_loading = use_state(|| false);
     let error = use_state(|| None);
@@ -163,12 +141,10 @@ pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T
         let fetch = fetch.clone();
         use_effect_with_deps(
             move |_| {
-                gloo_console::log!("use_fetch effect triggered, fetch count:", *state.fetch);
                 if *state.fetch == 0 {
-                    gloo_console::log!("Skipping fetch because count is 0");
+                    // Skip initial fetch
                 } else {
                     state.is_loading.set(true);
-                    gloo_console::log!("Starting fetch...");
                     spawn_local(async move {
                         match client.fetch::<T>(req).await {
                             Ok(s) => {

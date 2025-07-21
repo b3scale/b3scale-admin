@@ -1,4 +1,3 @@
-use gloo_console;
 use yew::{function_component, html, Callback};
 use yew_router::{hooks::use_history, prelude::*};
 
@@ -13,14 +12,6 @@ pub fn list() -> Html {
     let history = use_history().unwrap();
     let backends_ctx = use_backends();
     
-    // Debug logging
-    gloo_console::log!("Backends loading:", backends_ctx.is_loading());
-    if let Some(error) = backends_ctx.error() {
-        gloo_console::log!("Backends error:", format!("{:?}", error));
-    }
-    if let Some(result) = backends_ctx.result() {
-        gloo_console::log!("Backends result length:", result.len());
-    }
     
     let on_create = {
         let history = history.clone();
@@ -79,7 +70,6 @@ pub fn list() -> Html {
                             let history = history.clone();
                             let backend_id = backend_id.clone();
                             Callback::from(move |_| {
-                                gloo_console::log!("Selecting backend:", &backend_id);
                                 history.push(Route::Backends { id: backend_id.clone() });
                             })
                         };

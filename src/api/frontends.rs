@@ -1,4 +1,3 @@
-use gloo_console;
 use yew::{
     function_component, html, use_context, use_effect_with_deps, Children, ContextProvider,
     Properties,
@@ -15,7 +14,6 @@ pub fn list() -> Request {
 /// Get a single frontend by ID
 pub fn get(id: &str) -> Request {
     let url = format!("/api/v1/frontends/{}", id);
-    gloo_console::log!("Creating single frontend request for URL:", &url);
     Request::get(&url)
 }
 
@@ -77,10 +75,8 @@ pub fn use_frontend(id: &str) -> State<Frontend> {
     // Trigger initial fetch immediately
     {
         let state = state.clone();
-        let id_clone = id.to_string();
         use_effect_with_deps(
-            move |id| {
-                gloo_console::log!("Triggering fetch for frontend ID:", id);
+            move |_id| {
                 state.fetch();
                 || ()
             },

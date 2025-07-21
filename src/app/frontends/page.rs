@@ -1,4 +1,3 @@
-use gloo_console;
 use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties};
 use yew_router::{hooks::use_history, prelude::*};
 
@@ -27,16 +26,6 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
     let frontend_id = id.as_ref().unwrap_or(&dummy_id);
     let frontend_state = use_frontend(frontend_id);
     
-    // Debug logging for individual frontend fetch
-    gloo_console::log!("Frontend page - ID:", id.as_ref().unwrap_or(&"None".to_string()));
-    gloo_console::log!("Frontend state loading:", frontend_state.is_loading());
-    if let Some(error) = frontend_state.error() {
-        gloo_console::log!("Frontend state error:", format!("{:?}", error));
-    }
-    if let Some(result) = frontend_state.result() {
-        gloo_console::log!("Frontend state result - ID:", &result.id);
-        gloo_console::log!("Frontend state result - Key:", &result.bbb.key);
-    }
     
     {
         let current_frontend = current_frontend.clone();
@@ -47,15 +36,11 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
         };
         use_effect_with_deps(
             move |(id, frontend_result)| {
-                gloo_console::log!("Effect triggered with ID:", id.as_ref().unwrap_or(&"None".to_string()));
                 if let Some(frontend) = frontend_result {
-                    gloo_console::log!("Setting current frontend to:", &frontend.bbb.key);
-                    gloo_console::log!("Frontend data being set - Secret:", &frontend.bbb.secret);
                     current_frontend.set(Some(frontend.clone()));
                 } else if id.is_some() {
-                    gloo_console::log!("No frontend result but ID exists - keeping loading state");
+                    // Keep loading state
                 } else {
-                    gloo_console::log!("No ID - clearing frontend");
                     current_frontend.set(None);
                 }
                 || ()
@@ -87,22 +72,13 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
     };
     
     let title = if let Some(frontend) = &*current_frontend {
-        gloo_console::log!("Title: Using frontend", &frontend.bbb.key);
         format!("{}: {}", frontend.bbb.key, frontend.id)
     } else if id.is_some() {
-        gloo_console::log!("Title: Loading state - ID exists but no current_frontend");
         "Loading...".to_string()
     } else {
-        gloo_console::log!("Title: Create new frontend");
         "Create New Frontend".to_string()
     };
     
-    // Debug what we're passing to the form
-    if let Some(ref f) = *current_frontend {
-        gloo_console::log!("Page passing frontend to form - Key:", &f.bbb.key);
-    } else {
-        gloo_console::log!("Page passing None to form");
-    }
     
     html! {
         <Page>

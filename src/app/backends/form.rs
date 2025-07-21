@@ -1,4 +1,4 @@
-use gloo_console::{self, log};
+use gloo_console::log;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
 use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
@@ -27,16 +27,6 @@ pub fn form(props: &FormProps) -> Html {
     let FormProps { backend, on_save, on_delete } = props;
     let client = use_client();
     
-    // Debug: Log what backend data we receive
-    if let Some(b) = backend {
-        gloo_console::log!("Form received backend - Host:", &b.bbb.host);
-        gloo_console::log!("Form received backend - Secret:", &b.bbb.secret);
-        gloo_console::log!("Form received backend - Admin State:", format!("{:?}", b.admin_state));
-        gloo_console::log!("Form received backend - Load Factor:", b.load_factor);
-        gloo_console::log!("Form received backend - Tags:", format!("{:?}", b.settings.tags));
-    } else {
-        gloo_console::log!("Form received NO backend data");
-    }
     
     // Basic form state
     let host = use_state(|| backend.as_ref().map(|b| b.bbb.host.clone()).unwrap_or_default());
@@ -67,8 +57,6 @@ pub fn form(props: &FormProps) -> Html {
         use_effect_with_deps(
             move |backend_option| {
                 if let Some(b) = backend_option {
-                    gloo_console::log!("Form updating with backend data:", &b.bbb.host);
-                    
                     // Update basic fields
                     host.set(b.bbb.host.clone());
                     secret.set(b.bbb.secret.clone());
@@ -78,7 +66,6 @@ pub fn form(props: &FormProps) -> Html {
                     // Update settings fields
                     tags.set(b.settings.tags.clone());
                 } else {
-                    gloo_console::log!("Form clearing - no backend data");
                     // Reset to defaults for new backend
                     host.set("".to_string());
                     secret.set("".to_string());

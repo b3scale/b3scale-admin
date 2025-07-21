@@ -1,4 +1,3 @@
-use gloo_console;
 use yew::{function_component, html, Html, Properties};
 
 use crate::{
@@ -28,14 +27,6 @@ pub fn list_item(ListItemProps { frontend }: &ListItemProps) -> Html {
 pub fn list() -> Html {
     let frontends = use_frontends();
     
-    // Debug logging
-    gloo_console::log!("Frontends loading:", frontends.is_loading());
-    if let Some(error) = frontends.error() {
-        gloo_console::log!("Frontends error:", format!("{:?}", error));
-    }
-    if let Some(result) = frontends.result() {
-        gloo_console::log!("Frontends result length:", result.len());
-    }
     
     let frontends_list = if frontends.is_loading() {
         html! { <p>{"Loading frontends..."}</p> }

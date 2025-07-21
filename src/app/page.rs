@@ -1,8 +1,6 @@
-use gloo_console::log;
-use yew::{events::MouseEvent, function_component, html, Callback, Children, Properties};
+use yew::{function_component, html, Children, Properties};
 
 use crate::{
-    api::status::use_status,
     app::{nav::Link, router::Route},
 };
 
