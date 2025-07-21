@@ -1,17 +1,17 @@
-mod page;
+pub mod page;
 pub use page::*;
 
-mod authenticate;
+pub mod authenticate;
 pub use authenticate::*;
 
-mod router;
+pub mod router;
 pub use router::*;
 
-mod backends;
+pub mod backends;
 pub use backends::*;
 
-mod frontends;
+pub mod frontends;
 pub use frontends::*;
 
-mod nav;
+pub mod nav;
 pub use nav::*;
