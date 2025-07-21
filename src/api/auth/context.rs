@@ -9,7 +9,8 @@ use yew::{
 };
 
 use super::access_token::new_access_token;
-use crate::api::{models::Status, status as status_api, Client, ClientError};
+use crate::api::{status as status_api, Client, ClientError};
+use b3scale_api::Status;
 
 #[derive(PartialEq, Clone)]
 pub struct Context {

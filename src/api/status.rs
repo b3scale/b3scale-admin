@@ -1,7 +1,5 @@
-use super::{
-    client::{use_fetch, Request, State},
-    models::Status as StatusModel,
-};
+use super::client::{use_fetch, Request, State};
+use b3scale_api::Status as StatusModel;
 
 /// Read the status api
 pub fn read() -> Request {

@@ -4,7 +4,7 @@ use yew::{
 };
 
 use crate::api::client::{use_fetch, Request, State};
-pub use crate::api::models::Frontend;
+pub use b3scale_api::Frontend;
 
 /// List frontends Request
 fn list() -> Request {

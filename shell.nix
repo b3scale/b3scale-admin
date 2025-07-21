@@ -7,7 +7,6 @@ pkgs.mkShell rec {
     llvmPackages_latest.llvm
     llvmPackages_latest.bintools
     llvmPackages_latest.lld
-    sass
     zlib.out
   ];
   RUSTC_VERSION = "stable";

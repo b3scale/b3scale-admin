@@ -4,5 +4,4 @@ pub use client::Error as ClientError;
 
 pub mod auth;
 pub mod frontends;
-pub mod models;
 pub mod status;

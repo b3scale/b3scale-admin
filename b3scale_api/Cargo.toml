@@ -1,0 +1,15 @@
+[package]
+name = "b3scale_api"
+version = "0.1.0"
+edition = "2021"
+authors = ["b3scale-admin"]
+description = "Auto-generated data models for b3scale API"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_with = "3.0"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
