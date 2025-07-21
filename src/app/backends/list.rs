@@ -1,4 +1,5 @@
-use yew::{function_component, html, Callback};
+use web_sys::HtmlInputElement;
+use yew::{function_component, html, use_state, Callback, TargetCast};
 use yew_router::{hooks::use_history, prelude::*};
 
 use b3scale_api::backend::{AdminState, NodeState};
@@ -11,12 +12,21 @@ use crate::{
 pub fn list() -> Html {
     let history = use_history().unwrap();
     let backends_ctx = use_backends();
-    
+    let search_term = use_state(|| String::new());
     
     let on_create = {
         let history = history.clone();
         Callback::from(move |_| {
             history.push(Route::BackendsNew);
+        })
+    };
+    
+    let on_search_input = {
+        let search_term = search_term.clone();
+        Callback::from(move |e: yew::InputEvent| {
+            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                search_term.set(input.value());
+            }
         })
     };
     
@@ -48,7 +58,24 @@ pub fn list() -> Html {
         };
     }
     
-    let backends = backends_ctx.result().unwrap_or_default();
+    let all_backends = backends_ctx.result().unwrap_or_default();
+    
+    // Filter backends based on search term
+    let filtered_backends: Vec<_> = if search_term.is_empty() {
+        all_backends.clone()
+    } else {
+        let search_lower = search_term.to_lowercase();
+        all_backends
+            .iter()
+            .filter(|backend| {
+                backend.bbb.host.to_lowercase().contains(&search_lower) ||
+                backend.id.to_lowercase().contains(&search_lower) ||
+                backend.agent_ref.as_ref().unwrap_or(&String::new()).to_lowercase().contains(&search_lower) ||
+                backend.settings.tags.iter().any(|tag| tag.to_lowercase().contains(&search_lower))
+            })
+            .cloned()
+            .collect()
+    };
     
     html! {
         <nav class="nav-list">
@@ -63,8 +90,19 @@ pub fn list() -> Html {
                 </button>
             </div>
             <div class="nav-content">
+                // Search field
+                <div class="mb-3">
+                    <input 
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Search backends..."
+                        value={(*search_term).clone()}
+                        oninput={on_search_input}
+                    />
+                </div>
+                
                 <ul class="nav nav-pills nav-fill flex-column">
-                    {for backends.iter().map(|backend| {
+                    {for filtered_backends.iter().map(|backend| {
                         let backend_id = backend.id.clone();
                         let on_select = {
                             let history = history.clone();
@@ -118,10 +156,14 @@ pub fn list() -> Html {
                         }
                     })}
                     
-                    if backends.is_empty() {
+                    if filtered_backends.is_empty() {
                         <li class="nav-item">
                             <div class="nav-link text-muted">
-                                {"No backends found"}
+                                {if search_term.is_empty() {
+                                    "No backends found"
+                                } else {
+                                    "No backends match your search"
+                                }}
                             </div>
                         </li>
                     }

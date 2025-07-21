@@ -1,62 +1,160 @@
-use yew::{function_component, html, Html, Properties};
+use web_sys::HtmlInputElement;
+use yew::{function_component, html, use_state, Callback, TargetCast};
+use yew_router::{hooks::use_history, prelude::*};
 
 use crate::{
-    api::frontends::{use_frontends, Frontend},
-    app::{nav::Button, router::Route},
+    api::frontends::use_frontends,
+    app::router::Route,
 };
-
-/// Frontend ListItem Properties
-#[derive(Properties, Clone, PartialEq)]
-pub struct ListItemProps {
-    pub frontend: Frontend,
-}
-
-#[function_component(ListItem)]
-pub fn list_item(ListItemProps { frontend }: &ListItemProps) -> Html {
-    html! {
-      <Button<Route> to={Route::Frontends{id: frontend.id.clone()}}>
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">{&frontend.bbb.key}</div>
-          <div class="subtitle">{&frontend.id}</div>
-        </div>
-      </Button<Route>>
-    }
-}
 
 #[function_component(List)]
 pub fn list() -> Html {
-    let frontends = use_frontends();
+    let history = use_history().unwrap();
+    let frontends_ctx = use_frontends();
+    let search_term = use_state(|| String::new());
     
+    let on_create = {
+        let history = history.clone();
+        Callback::from(move |_| {
+            history.push(Route::FrontendsNew);
+        })
+    };
     
-    let frontends_list = if frontends.is_loading() {
-        html! { <p>{"Loading frontends..."}</p> }
-    } else if let Some(error) = frontends.error() {
-        html! { <p class="text-danger">{format!("Error: {}", error)}</p> }
+    let on_search_input = {
+        let search_term = search_term.clone();
+        Callback::from(move |e: yew::InputEvent| {
+            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                search_term.set(input.value());
+            }
+        })
+    };
+    
+    if frontends_ctx.is_loading() {
+        return html! {
+            <nav class="nav-list">
+                <div class="nav-header">
+                    <h2>{"Frontends"}</h2>
+                </div>
+                <div class="nav-content">
+                    <div class="loading">{"Loading..."}</div>
+                </div>
+            </nav>
+        };
+    }
+    
+    if let Some(error) = frontends_ctx.error() {
+        return html! {
+            <nav class="nav-list">
+                <div class="nav-header">
+                    <h2>{"Frontends"}</h2>
+                </div>
+                <div class="nav-content">
+                    <div class="alert alert-danger">
+                        {format!("Error loading frontends: {}", error)}
+                    </div>
+                </div>
+            </nav>
+        };
+    }
+    
+    let all_frontends = frontends_ctx.result().unwrap_or_default();
+    
+    // Filter frontends based on search term
+    let filtered_frontends: Vec<_> = if search_term.is_empty() {
+        all_frontends.clone()
     } else {
-        match frontends.result() {
-            None => html! { <p>{"No Frontends"}</p> },
-            Some(frontends) => {
-                if frontends.is_empty() {
-                    html! { <p>{"No frontends found"}</p> }
-                } else {
-                    frontends
-                        .iter()
-                        .map(|f| {
-                            html! { <ListItem frontend={f.clone()} /> }
-                        })
-                        .collect::<Html>()
-                }
-            },
-        }
+        let search_lower = search_term.to_lowercase();
+        all_frontends
+            .iter()
+            .filter(|frontend| {
+                frontend.bbb.key.to_lowercase().contains(&search_lower) ||
+                frontend.id.to_lowercase().contains(&search_lower) ||
+                frontend.account_ref.as_ref().unwrap_or(&String::new()).to_lowercase().contains(&search_lower)
+            })
+            .cloned()
+            .collect()
     };
     
     html! {
-        <div class="nav-select-list list-group">
-            <Button<Route> to={Route::FrontendsNew} class="btn btn-success mb-2">
-                <i class="bi bi-plus-circle me-2"></i>
-                {"Create New Frontend"}
-            </Button<Route>>
-            {frontends_list}
-        </div>
+        <nav class="nav-list">
+            <div class="nav-header">
+                <h2>{"Frontends"}</h2>
+                <button 
+                    type="button" 
+                    class="btn btn-primary btn-sm"
+                    onclick={on_create}
+                >
+                    {"+ Add Frontend"}
+                </button>
+            </div>
+            <div class="nav-content">
+                // Search field
+                <div class="mb-3">
+                    <input 
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Search frontends..."
+                        value={(*search_term).clone()}
+                        oninput={on_search_input}
+                    />
+                </div>
+                
+                <ul class="nav nav-pills nav-fill flex-column">
+                    {for filtered_frontends.iter().map(|frontend| {
+                        let frontend_id = frontend.id.clone();
+                        let on_select = {
+                            let history = history.clone();
+                            let frontend_id = frontend_id.clone();
+                            Callback::from(move |_| {
+                                history.push(Route::Frontends { id: frontend_id.clone() });
+                            })
+                        };
+                        
+                        html! {
+                            <li class="nav-item" key={frontend.id.clone()}>
+                                <a 
+                                    class="nav-link" 
+                                    href="#"
+                                    onclick={on_select}
+                                >
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="fw-bold">{&frontend.bbb.key}</div>
+                                            <div class="text-muted small">
+                                                {format!("ID: {}...", &frontend.id[..8])}
+                                            </div>
+                                            {if let Some(ref account_ref) = frontend.account_ref {
+                                                html! {
+                                                    <div class="text-muted small">
+                                                        {"Account: "}{account_ref}
+                                                    </div>
+                                                }
+                                            } else {
+                                                html! {}
+                                            }}
+                                        </div>
+                                        <span class={if frontend.active { "badge bg-success" } else { "badge bg-secondary" }}>
+                                            {if frontend.active { "Active" } else { "Inactive" }}
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    })}
+                    
+                    if filtered_frontends.is_empty() {
+                        <li class="nav-item">
+                            <div class="nav-link text-muted">
+                                {if search_term.is_empty() {
+                                    "No frontends found"
+                                } else {
+                                    "No frontends match your search"
+                                }}
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
     }
 }
