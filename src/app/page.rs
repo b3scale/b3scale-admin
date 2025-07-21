@@ -1,4 +1,5 @@
-use yew::{function_component, html, Children, Properties};
+use yew::{function_component, html, Callback, Children, Properties};
+use yew_router::{hooks::use_history, prelude::*};
 
 use crate::{
     app::{nav::Link, router::Route},
@@ -11,27 +12,47 @@ pub struct PageSelectProps {
 
 #[function_component(PageSelect)]
 pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
+    let history = use_history().unwrap();
+    
+    let (page_title, create_route) = match active.as_str() {
+        "frontends" => ("Frontends", Route::FrontendsNew),
+        "backends" => ("Backends", Route::BackendsNew),
+        _ => ("", Route::FrontendsNew), // fallback
+    };
+    
+    let on_create = {
+        let history = history.clone();
+        let create_route = create_route.clone();
+        Callback::from(move |_| {
+            history.push(create_route.clone());
+        })
+    };
+    
     html! {
         <div class="nav-header">
-          <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
-              <Link<Route> active={active == "frontends"} to={Route::Frontends { id: "new".to_string()}}>
-                {"Frontends"}
-              </Link<Route>>
-            </li>
-            <li class="nav-item">
-              <Link<Route> active={active == "backends"} to={Route::Backends { id: "new".into() }}>
-                {"Backends"}
-              </Link<Route>>
-            </li>
-          </ul>
-          <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
-            <Link<Route> active={false} to={Route::Frontends { id: "new".to_string() }}>
-              { "(+)" }
-              </Link<Route>>
-            </li>
-          </ul>
+            <ul class="nav nav-pills nav-fill mb-3">
+                <li class="nav-item">
+                  <Link<Route> active={active == "frontends"} to={Route::FrontendsNew}>
+                    {"Frontends"}
+                  </Link<Route>>
+                </li>
+                <li class="nav-item">
+                  <Link<Route> active={active == "backends"} to={Route::BackendsNew}>
+                    {"Backends"}
+                  </Link<Route>>
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button 
+                    type="button" 
+                    class="btn btn-primary btn-sm"
+                    onclick={on_create}
+                >
+                    {format!("+ Add {}", page_title.trim_end_matches('s'))}
+                </button>
+            </div>
+            
         </div>
     }
 }

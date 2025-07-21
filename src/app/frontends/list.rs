@@ -13,13 +13,6 @@ pub fn list() -> Html {
     let frontends_ctx = use_frontends();
     let search_term = use_state(|| String::new());
     
-    let on_create = {
-        let history = history.clone();
-        Callback::from(move |_| {
-            history.push(Route::FrontendsNew);
-        })
-    };
-    
     let on_search_input = {
         let search_term = search_term.clone();
         Callback::from(move |e: yew::InputEvent| {
@@ -32,9 +25,6 @@ pub fn list() -> Html {
     if frontends_ctx.is_loading() {
         return html! {
             <nav class="nav-list">
-                <div class="nav-header">
-                    <h2>{"Frontends"}</h2>
-                </div>
                 <div class="nav-content">
                     <div class="loading">{"Loading..."}</div>
                 </div>
@@ -45,9 +35,6 @@ pub fn list() -> Html {
     if let Some(error) = frontends_ctx.error() {
         return html! {
             <nav class="nav-list">
-                <div class="nav-header">
-                    <h2>{"Frontends"}</h2>
-                </div>
                 <div class="nav-content">
                     <div class="alert alert-danger">
                         {format!("Error loading frontends: {}", error)}
@@ -77,16 +64,6 @@ pub fn list() -> Html {
     
     html! {
         <nav class="nav-list">
-            <div class="nav-header">
-                <h2>{"Frontends"}</h2>
-                <button 
-                    type="button" 
-                    class="btn btn-primary btn-sm"
-                    onclick={on_create}
-                >
-                    {"+ Add Frontend"}
-                </button>
-            </div>
             <div class="nav-content">
                 // Search field
                 <div class="mb-3">

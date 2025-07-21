@@ -14,13 +14,6 @@ pub fn list() -> Html {
     let backends_ctx = use_backends();
     let search_term = use_state(|| String::new());
     
-    let on_create = {
-        let history = history.clone();
-        Callback::from(move |_| {
-            history.push(Route::BackendsNew);
-        })
-    };
-    
     let on_search_input = {
         let search_term = search_term.clone();
         Callback::from(move |e: yew::InputEvent| {
@@ -33,9 +26,6 @@ pub fn list() -> Html {
     if backends_ctx.is_loading() {
         return html! {
             <nav class="nav-list">
-                <div class="nav-header">
-                    <h2>{"Backends"}</h2>
-                </div>
                 <div class="nav-content">
                     <div class="loading">{"Loading..."}</div>
                 </div>
@@ -46,9 +36,6 @@ pub fn list() -> Html {
     if let Some(error) = backends_ctx.error() {
         return html! {
             <nav class="nav-list">
-                <div class="nav-header">
-                    <h2>{"Backends"}</h2>
-                </div>
                 <div class="nav-content">
                     <div class="alert alert-danger">
                         {format!("Error loading backends: {}", error)}
@@ -79,16 +66,6 @@ pub fn list() -> Html {
     
     html! {
         <nav class="nav-list">
-            <div class="nav-header">
-                <h2>{"Backends"}</h2>
-                <button 
-                    type="button" 
-                    class="btn btn-primary btn-sm"
-                    onclick={on_create}
-                >
-                    {"+ Add Backend"}
-                </button>
-            </div>
             <div class="nav-content">
                 // Search field
                 <div class="mb-3">
