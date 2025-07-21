@@ -26,7 +26,7 @@ pub fn list_item(ListItemProps { frontend }: &ListItemProps) -> Html {
 #[function_component(List)]
 pub fn list() -> Html {
     let frontends = use_frontends();
-    let frontends = match frontends.result() {
+    let frontends_list = match frontends.result() {
         None => html! { <p>{"No Frontends"}</p> },
         Some(frontends) => frontends
             .iter()
@@ -35,9 +35,14 @@ pub fn list() -> Html {
             })
             .collect::<Html>(),
     };
+    
     html! {
-    <div class="nav-select-list list-group">
-      {frontends}
-    </div>
+        <div class="nav-select-list list-group">
+            <Button<Route> to={Route::FrontendsNew} class="btn btn-success mb-2">
+                <i class="bi bi-plus-circle me-2"></i>
+                {"Create New Frontend"}
+            </Button<Route>>
+            {frontends_list}
+        </div>
     }
 }
