@@ -1477,6 +1477,10 @@
           "default_presentation": {
             "$ref": "#/components/schemas/DefaultPresentationSettings"
           },
+          "recordings": {
+            "$ref": "#/components/schemas/RecordingsSettings",
+            "description": "Settings for new and imported recordings."
+          },
           "required_tags": {
             "description": "When selecting a backend for creating a meeting, only consider nodes providing all of the required tags.",
             "items": {

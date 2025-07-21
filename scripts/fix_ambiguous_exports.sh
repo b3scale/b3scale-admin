@@ -1,3 +1,20 @@
+#!/bin/bash
+
+# Script to fix ambiguous glob re-exports in b3scale_api models
+# This script resolves naming conflicts by using explicit imports instead of glob imports
+
+set -euo pipefail
+
+MODELS_DIR="b3scale_api/src/models"
+MOD_FILE="${MODELS_DIR}/mod.rs"
+
+echo "🔧 Fixing ambiguous glob re-exports in ${MOD_FILE}..."
+
+# Create backup
+cp "${MOD_FILE}" "${MOD_FILE}.backup"
+
+# Create the new mod.rs file with explicit imports to resolve conflicts
+cat > "${MOD_FILE}" << 'EOF'
 //! Auto-generated API models
 
 pub mod attendee;
@@ -97,3 +114,20 @@ pub use status::Status;
 
 pub mod validation_error;
 pub use validation_error::*;
+EOF
+
+echo "✅ Fixed ambiguous glob re-exports!"
+echo "📝 Original file backed up as ${MOD_FILE}.backup"
+
+# Test that it compiles
+echo "🧪 Testing compilation..."
+cd b3scale_api
+if cargo check --quiet; then
+    echo "✅ Compilation successful!"
+else
+    echo "❌ Compilation failed. Restoring backup..."
+    mv "${MOD_FILE}.backup" "${MOD_FILE}"
+    exit 1
+fi
+
+echo "🎉 All done! Ambiguous glob re-exports have been resolved."

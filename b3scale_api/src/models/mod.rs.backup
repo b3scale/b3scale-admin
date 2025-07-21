@@ -4,35 +4,22 @@ pub mod attendee;
 pub use attendee::*;
 pub mod attendees_limit_settings;
 pub use attendees_limit_settings::*;
-
-// Backend module - contains AdminState and NodeState
 pub mod backend;
-pub use backend::{Backend, AdminState as BackendAdminState, NodeState as BackendNodeState};
-
+pub use backend::*;
 pub mod backend_config;
 pub use backend_config::*;
-
-// Backend patch module - contains AdminState and NodeState (different from backend)
 pub mod backend_patch;
-pub use backend_patch::{BackendPatch, AdminState as BackendPatchAdminState, NodeState as BackendPatchNodeState};
-
-// Backend request module - contains AdminState (different from backend and backend_patch)
+pub use backend_patch::*;
 pub mod backend_request;
-pub use backend_request::{BackendRequest, AdminState as BackendRequestAdminState};
-
+pub use backend_request::*;
 pub mod backend_settings;
 pub use backend_settings::*;
 pub mod breakout;
 pub use breakout::*;
-
-// Command module - contains Action
 pub mod command;
-pub use command::{Command, Action as CommandAction};
-
-// Command request module - contains Action (different from command)
+pub use command::*;
 pub mod command_request;
-pub use command_request::{CommandRequest, Action as CommandRequestAction};
-
+pub use command_request::*;
 pub mod default_presentation_settings;
 pub use default_presentation_settings::*;
 pub mod error;
@@ -81,19 +68,13 @@ pub mod recordings_settings;
 pub use recordings_settings::*;
 pub mod rpc_request;
 pub use rpc_request::*;
-
-// RPC Response module - contains Status (enum)
 pub mod rpc_response;
-pub use rpc_response::{RpcResponse, Status as RpcStatus};
-
+pub use rpc_response::*;
 pub mod schema_status;
 pub use schema_status::*;
 pub mod server_error;
 pub use server_error::*;
-
-// Status module - contains Status (struct, different from rpc_response)
 pub mod status;
-pub use status::Status;
-
+pub use status::*;
 pub mod validation_error;
 pub use validation_error::*;

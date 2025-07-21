@@ -3,5 +3,6 @@ pub use client::Client;
 pub use client::Error as ClientError;
 
 pub mod auth;
+pub mod backends;
 pub mod frontends;
 pub mod status;

@@ -1,5 +1,5 @@
 use b3scale_admin::{
-    api::{auth::AuthenticationContext, frontends::FrontendsContext},
+    api::{auth::AuthenticationContext, backends::BackendsContext, frontends::FrontendsContext},
     app::Router,
 };
 
@@ -12,7 +12,9 @@ fn app() -> Html {
         <BrowserRouter>
         <AuthenticationContext>
         <FrontendsContext>
+        <BackendsContext>
           <Router />
+        </BackendsContext>
         </FrontendsContext>
         </AuthenticationContext>
         </BrowserRouter>

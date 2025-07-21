@@ -1,0 +1,23 @@
+use_fetch called 2 b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends loading: false b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch effect triggered, fetch count: 0 b3scale-admin-e38805b9c609b6aa.js:432:17
+Skipping fetch because count is 0 b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch effect triggered, fetch count: 0 b3scale-admin-e38805b9c609b6aa.js:432:17
+Skipping fetch because count is 0 b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch called b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends loading: false b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch called 2 b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch effect triggered, fetch count: 1 b3scale-admin-e38805b9c609b6aa.js:432:17
+Starting fetch... b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch called 2 b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends loading: true b3scale-admin-e38805b9c609b6aa.js:432:17
+Making API request... b3scale-admin-e38805b9c609b6aa.js:432:17
+API response status: 200 b3scale-admin-e38805b9c609b6aa.js:432:17
+API response body: [{"id":"8935e8e1-3319-488d-aec5-22ef19d6ea57","active":true,"bbb":{"key":"greeen23","secret":"test123"},"settings":{"required_tags":null,"default_presentation":null,"attendees_limit":null,"create_default_params":{},"create_override_params":{},"recordings":null},"account_ref":"cust1a","created_at":"2025-07-21T20:40:59.558663Z","updated_at":"2025-07-21T20:40:59.558663Z"},{"id":"ddc92e61-a3b7-42d7-ac1e-d6de6679f25f","active":true,"bbb":{"key":"greenlight23","secret":"fooooooo42"},"settings":{"required_tags":[],"default_presentation":{"url":"","force":false},"attendees_limit":{"limit":100},"create_default_params":{},"create_override_params":{},"recordings":null},"account_ref":null,"created_at":"2025-07-21T21:01:46.429482Z","updated_at":"2025-07-21T21:01:46.429482Z"},{"id":"d4bcb864-fdb1-4ea1-8aeb-e5050c7864ed","active":true,"bbb":{"key":"grreeeeee","secret":"sdfsdfsdf"},"settings":{"required_tags":[],"default_presentation":{"url":"","force":false},"attendees_limit":{"limit":100},"create_default_params":{},"create_override_params":{},"recordings":null},"account_ref":null,"created_at":"2025-07-21T21:08:11.779486Z","updated_at":"2025-07-21T21:08:11.779486Z"}]
+b3scale-admin-e38805b9c609b6aa.js:432:17
+API request successful b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch called 2 b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends loading: false b3scale-admin-e38805b9c609b6aa.js:432:17
+use_fetch called 3 b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends loading: false b3scale-admin-e38805b9c609b6aa.js:432:17
+Frontends result length: 3 b3scale-admin-e38805b9c609b6aa.js:432:17

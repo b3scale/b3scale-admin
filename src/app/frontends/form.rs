@@ -1,9 +1,13 @@
-use gloo_console::log;
+use gloo_console::{self, log};
+use std::collections::HashMap;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
-use yew::{function_component, html, use_state, Callback, Properties, TargetCast};
+use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
 
-use b3scale_api::{Frontend, FrontendPatch, FrontendRequest};
+use b3scale_api::{
+    AttendeesLimitSettings, DefaultPresentationSettings, Frontend, FrontendConfig, 
+    FrontendConfigPatch, FrontendPatch, FrontendRequest, FrontendSettings
+};
 
 use crate::api::{
     client::use_client,
@@ -22,19 +26,142 @@ pub fn form(props: &FormProps) -> Html {
     let FormProps { frontend, on_save, on_delete } = props;
     let client = use_client();
     
-    // Form state
+    // Debug: Log what frontend data we receive
+    if let Some(f) = frontend {
+        gloo_console::log!("Form received frontend - Key:", &f.bbb.key);
+        gloo_console::log!("Form received frontend - Secret:", &f.bbb.secret);
+        gloo_console::log!("Form received frontend - Active:", f.active);
+        gloo_console::log!("Form received frontend - Account ref:", f.account_ref.as_ref().unwrap_or(&"None".to_string()));
+    } else {
+        gloo_console::log!("Form received NO frontend data");
+    }
+    
+    // Basic form state
     let key = use_state(|| frontend.as_ref().map(|f| f.bbb.key.clone()).unwrap_or_default());
     let secret = use_state(|| frontend.as_ref().map(|f| f.bbb.secret.clone()).unwrap_or_default());
     let active = use_state(|| frontend.as_ref().map(|f| f.active).unwrap_or(true));
     let account_ref = use_state(|| frontend.as_ref().and_then(|f| f.account_ref.clone()));
     
+    // Frontend settings state
+    let attendee_limit = use_state(|| {
+        frontend.as_ref()
+            .and_then(|f| f.settings.attendees_limit.as_ref())
+            .map(|al| al.limit)
+            .unwrap_or(100)
+    });
+    
+    // Create default params (dynamic key-value pairs)
+    let create_default_params = use_state(|| {
+        frontend.as_ref()
+            .map(|f| f.settings.create_default_params.clone())
+            .unwrap_or_else(|| HashMap::new())
+    });
+    
+    // Create override params (dynamic key-value pairs)  
+    let create_override_params = use_state(|| {
+        frontend.as_ref()
+            .map(|f| f.settings.create_override_params.clone())
+            .unwrap_or_else(|| HashMap::new())
+    });
+    
+    // Default presentation settings
+    let presentation_url = use_state(|| {
+        frontend.as_ref()
+            .and_then(|f| f.settings.default_presentation.as_ref())
+            .map(|dp| dp.url.clone())
+            .unwrap_or_default()
+    });
+    let presentation_force = use_state(|| {
+        frontend.as_ref()
+            .and_then(|f| f.settings.default_presentation.as_ref())
+            .map(|dp| dp.force)
+            .unwrap_or(false)
+    });
+    
+    // Note: recordings settings were removed from the API
+    
+    // Required tags (dynamic list)
+    let required_tags = use_state(|| {
+        frontend.as_ref()
+            .and_then(|f| f.settings.required_tags.as_ref())
+            .cloned()
+            .unwrap_or_else(|| Vec::new())
+    });
+    
     // Loading/error state
     let is_loading = use_state(|| false);
     let error = use_state(|| None::<String>);
     
+    // Update form fields when frontend prop changes
+    {
+        let frontend = frontend.clone();
+        let key = key.clone();
+        let secret = secret.clone();
+        let active = active.clone();
+        let account_ref = account_ref.clone();
+        let attendee_limit = attendee_limit.clone();
+        let create_default_params = create_default_params.clone();
+        let create_override_params = create_override_params.clone();
+        let presentation_url = presentation_url.clone();
+        let presentation_force = presentation_force.clone();
+        let required_tags = required_tags.clone();
+        
+        use_effect_with_deps(
+            move |frontend_option| {
+                if let Some(f) = frontend_option {
+                    gloo_console::log!("Form updating with frontend data:", &f.bbb.key);
+                    
+                    // Update basic fields
+                    key.set(f.bbb.key.clone());
+                    secret.set(f.bbb.secret.clone());
+                    active.set(f.active);
+                    account_ref.set(f.account_ref.clone());
+                    
+                    // Update settings fields
+                    let limit = f.settings.attendees_limit.as_ref()
+                        .map(|al| al.limit)
+                        .unwrap_or(100);
+                    attendee_limit.set(limit);
+                    
+                    create_default_params.set(f.settings.create_default_params.clone());
+                    create_override_params.set(f.settings.create_override_params.clone());
+                    
+                    if let Some(dp) = &f.settings.default_presentation {
+                        presentation_url.set(dp.url.clone());
+                        presentation_force.set(dp.force);
+                    } else {
+                        presentation_url.set("".to_string());
+                        presentation_force.set(false);
+                    }
+                    
+                    if let Some(tags) = &f.settings.required_tags {
+                        required_tags.set(tags.clone());
+                    } else {
+                        required_tags.set(Vec::new());
+                    }
+                } else {
+                    gloo_console::log!("Form clearing - no frontend data");
+                    // Reset to defaults for new frontend
+                    key.set("".to_string());
+                    secret.set("".to_string());
+                    active.set(true);
+                    account_ref.set(None);
+                    attendee_limit.set(100);
+                    create_default_params.set(HashMap::new());
+                    create_override_params.set(HashMap::new());
+                    presentation_url.set("".to_string());
+                    presentation_force.set(false);
+                    required_tags.set(Vec::new());
+                }
+                || ()
+            },
+            frontend.clone(),
+        );
+    }
+    
     let is_edit_mode = frontend.is_some();
     
-    // Input handlers
+    // Input handlers for basic fields
     let on_key_change = {
         let key = key.clone();
         Callback::from(move |e: yew::Event| {
@@ -72,6 +199,69 @@ pub fn form(props: &FormProps) -> Html {
         })
     };
     
+    // Attendee limit handler
+    let on_attendee_limit_change = {
+        let attendee_limit = attendee_limit.clone();
+        Callback::from(move |e: yew::Event| {
+            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                if let Ok(value) = input.value().parse::<i32>() {
+                    attendee_limit.set(value);
+                }
+            }
+        })
+    };
+    
+    // Presentation settings handlers
+    let on_presentation_url_change = {
+        let presentation_url = presentation_url.clone();
+        Callback::from(move |e: yew::Event| {
+            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                presentation_url.set(input.value());
+            }
+        })
+    };
+    
+    let on_presentation_force_change = {
+        let presentation_force = presentation_force.clone();
+        Callback::from(move |e: yew::Event| {
+            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                presentation_force.set(input.checked());
+            }
+        })
+    };
+    
+    // Note: recordings visibility handler removed - no longer in API
+    
+    // Helper to add new key-value pair to default params
+    let add_default_param = {
+        let create_default_params = create_default_params.clone();
+        Callback::from(move |_| {
+            let mut params = (*create_default_params).clone();
+            params.insert("".to_string(), "".to_string());
+            create_default_params.set(params);
+        })
+    };
+    
+    // Helper to add new key-value pair to override params
+    let add_override_param = {
+        let create_override_params = create_override_params.clone();
+        Callback::from(move |_| {
+            let mut params = (*create_override_params).clone();
+            params.insert("".to_string(), "".to_string());
+            create_override_params.set(params);
+        })
+    };
+    
+    // Helper to add new required tag
+    let add_required_tag = {
+        let required_tags = required_tags.clone();
+        Callback::from(move |_| {
+            let mut tags = (*required_tags).clone();
+            tags.push("".to_string());
+            required_tags.set(tags);
+        })
+    };
+    
     // Submit handler
     let on_submit = {
         let client = client.clone();
@@ -79,6 +269,12 @@ pub fn form(props: &FormProps) -> Html {
         let secret = secret.clone();
         let active = active.clone();
         let account_ref = account_ref.clone();
+        let attendee_limit = attendee_limit.clone();
+        let create_default_params = create_default_params.clone();
+        let create_override_params = create_override_params.clone();
+        let presentation_url = presentation_url.clone();
+        let presentation_force = presentation_force.clone();
+        let required_tags = required_tags.clone();
         let is_loading = is_loading.clone();
         let error = error.clone();
         let frontend = frontend.clone();
@@ -92,6 +288,12 @@ pub fn form(props: &FormProps) -> Html {
             let secret = (*secret).clone();
             let active = *active;
             let account_ref = (*account_ref).clone();
+            let attendee_limit = *attendee_limit;
+            let create_default_params = (*create_default_params).clone();
+            let create_override_params = (*create_override_params).clone();
+            let presentation_url = (*presentation_url).clone();
+            let presentation_force = *presentation_force;
+            let required_tags = (*required_tags).clone();
             let is_loading = is_loading.clone();
             let error = error.clone();
             let frontend = frontend.clone();
@@ -101,16 +303,31 @@ pub fn form(props: &FormProps) -> Html {
                 is_loading.set(true);
                 error.set(None);
                 
+                // Build the settings object (recordings field is ignored)
+                let settings = FrontendSettings {
+                    attendees_limit: Some(Box::new(AttendeesLimitSettings {
+                        limit: attendee_limit,
+                    })),
+                    create_default_params,
+                    create_override_params,
+                    default_presentation: Some(Box::new(DefaultPresentationSettings {
+                        url: presentation_url,
+                        force: presentation_force,
+                    })),
+                    required_tags: Some(required_tags),
+                    recordings: None, // Ignored field for backwards compatibility
+                };
+                
                 let result = if let Some(existing) = &frontend {
                     // Update existing frontend
                     let patch = FrontendPatch {
                         active: Some(active),
                         account_ref: Some(account_ref),
-                        bbb: Some(Box::new(b3scale_api::FrontendConfigPatch {
+                        bbb: Some(Box::new(FrontendConfigPatch {
                             key: Some(key),
                             secret: Some(secret),
                         })),
-                        settings: None,
+                        settings: Some(Box::new(settings)),
                     };
                     
                     client.fetch::<Frontend>(frontends::update(&existing.id, &patch)).await
@@ -119,11 +336,11 @@ pub fn form(props: &FormProps) -> Html {
                     let request = FrontendRequest {
                         active: Some(active),
                         account_ref: Some(account_ref),
-                        bbb: Box::new(b3scale_api::FrontendConfig {
+                        bbb: Box::new(FrontendConfig {
                             key,
                             secret,
                         }),
-                        settings: None,
+                        settings: Some(Box::new(settings)),
                     };
                     
                     client.fetch::<Frontend>(frontends::create(&request)).await
@@ -204,6 +421,7 @@ pub fn form(props: &FormProps) -> Html {
                 </div>
             }
             
+            // Basic frontend config
             <div class="form-group">
                 <label class="form-label">{"Key"}</label>
                 <input 
@@ -219,7 +437,7 @@ pub fn form(props: &FormProps) -> Html {
                 <label class="form-label">{"Secret"}</label>
                 <input 
                     class="form-control" 
-                    type="password"
+                    type="text"
                     value={(*secret).clone()}
                     onchange={on_secret_change}
                     required={true}
@@ -254,6 +472,296 @@ pub fn form(props: &FormProps) -> Html {
                 </div>
             </div>
             
+            // Attendee Limit Settings
+            <section class="form-section">
+                <h2>{"Attendee Limit"}</h2>
+                <div class="form-group">
+                    <label class="form-label">{"Maximum Attendees"}</label>
+                    <input 
+                        class="form-control" 
+                        type="number"
+                        value={attendee_limit.to_string()}
+                        onchange={on_attendee_limit_change}
+                        disabled={*is_loading}
+                        min="1"
+                    />
+                </div>
+            </section>
+            
+            // Create Default Parameters
+            <section class="form-section">
+                <h2>{"Create Default Parameters"}</h2>
+                <p class="form-text">{"Key-value params used as defaults when creating meetings"}</p>
+                
+                {for create_default_params.iter().enumerate().map(|(i, (key_val, value_val))| {
+                    let key_change = {
+                        let create_default_params = create_default_params.clone();
+                        let old_key = key_val.clone();
+                        Callback::from(move |e: yew::Event| {
+                            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                                let mut params = (*create_default_params).clone();
+                                if let Some(value) = params.remove(&old_key) {
+                                    params.insert(input.value(), value);
+                                }
+                                create_default_params.set(params);
+                            }
+                        })
+                    };
+                    
+                    let value_change = {
+                        let create_default_params = create_default_params.clone();
+                        let key_clone = key_val.clone();
+                        Callback::from(move |e: yew::Event| {
+                            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                                let mut params = (*create_default_params).clone();
+                                params.insert(key_clone.clone(), input.value());
+                                create_default_params.set(params);
+                            }
+                        })
+                    };
+                    
+                    let remove_param = {
+                        let create_default_params = create_default_params.clone();
+                        let key_clone = key_val.clone();
+                        Callback::from(move |_| {
+                            let mut params = (*create_default_params).clone();
+                            params.remove(&key_clone);
+                            create_default_params.set(params);
+                        })
+                    };
+                    
+                    html! {
+                        <div class="row mb-2" key={i}>
+                            <div class="form-group col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text">{"Key"}</span>
+                                    <input 
+                                        class="form-control" 
+                                        value={key_val.clone()}
+                                        onchange={key_change}
+                                        disabled={*is_loading}
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text">{"Value"}</span>
+                                    <input 
+                                        class="form-control" 
+                                        value={value_val.clone()}
+                                        onchange={value_change}
+                                        disabled={*is_loading}
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button 
+                                    type="button"
+                                    class="btn btn-danger"
+                                    onclick={remove_param}
+                                    disabled={*is_loading}
+                                >
+                                    {"-"}
+                                </button>
+                            </div>
+                        </div>
+                    }
+                })}
+                
+                <button 
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick={add_default_param}
+                    disabled={*is_loading}
+                >
+                    {"+ Add Parameter"}
+                </button>
+            </section>
+            
+            // Create Override Parameters  
+            <section class="form-section">
+                <h2>{"Create Override Parameters"}</h2>
+                <p class="form-text">{"Key-value params that override frontend params when creating meetings"}</p>
+                
+                {for create_override_params.iter().enumerate().map(|(i, (key_val, value_val))| {
+                    let key_change = {
+                        let create_override_params = create_override_params.clone();
+                        let old_key = key_val.clone();
+                        Callback::from(move |e: yew::Event| {
+                            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                                let mut params = (*create_override_params).clone();
+                                if let Some(value) = params.remove(&old_key) {
+                                    params.insert(input.value(), value);
+                                }
+                                create_override_params.set(params);
+                            }
+                        })
+                    };
+                    
+                    let value_change = {
+                        let create_override_params = create_override_params.clone();
+                        let key_clone = key_val.clone();
+                        Callback::from(move |e: yew::Event| {
+                            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                                let mut params = (*create_override_params).clone();
+                                params.insert(key_clone.clone(), input.value());
+                                create_override_params.set(params);
+                            }
+                        })
+                    };
+                    
+                    let remove_param = {
+                        let create_override_params = create_override_params.clone();
+                        let key_clone = key_val.clone();
+                        Callback::from(move |_| {
+                            let mut params = (*create_override_params).clone();
+                            params.remove(&key_clone);
+                            create_override_params.set(params);
+                        })
+                    };
+                    
+                    html! {
+                        <div class="row mb-2" key={i}>
+                            <div class="form-group col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text">{"Key"}</span>
+                                    <input 
+                                        class="form-control" 
+                                        value={key_val.clone()}
+                                        onchange={key_change}
+                                        disabled={*is_loading}
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text">{"Value"}</span>
+                                    <input 
+                                        class="form-control" 
+                                        value={value_val.clone()}
+                                        onchange={value_change}
+                                        disabled={*is_loading}
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button 
+                                    type="button"
+                                    class="btn btn-danger"
+                                    onclick={remove_param}
+                                    disabled={*is_loading}
+                                >
+                                    {"-"}
+                                </button>
+                            </div>
+                        </div>
+                    }
+                })}
+                
+                <button 
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick={add_override_param}
+                    disabled={*is_loading}
+                >
+                    {"+ Add Parameter"}
+                </button>
+            </section>
+            
+            // Required Tags
+            <section class="form-section">
+                <h2>{"Required Tags"}</h2>
+                <p class="form-text">{"Only backends with all these tags will be considered for meetings"}</p>
+                
+                {for required_tags.iter().enumerate().map(|(i, tag)| {
+                    let tag_change = {
+                        let required_tags = required_tags.clone();
+                        Callback::from(move |e: yew::Event| {
+                            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
+                                let mut tags = (*required_tags).clone();
+                                tags[i] = input.value();
+                                required_tags.set(tags);
+                            }
+                        })
+                    };
+                    
+                    let remove_tag = {
+                        let required_tags = required_tags.clone();
+                        Callback::from(move |_| {
+                            let mut tags = (*required_tags).clone();
+                            tags.remove(i);
+                            required_tags.set(tags);
+                        })
+                    };
+                    
+                    html! {
+                        <div class="row mb-2" key={i}>
+                            <div class="form-group col-md-10">
+                                <div class="input-group">
+                                    <span class="input-group-text">{"Tag"}</span>
+                                    <input 
+                                        class="form-control" 
+                                        value={tag.clone()}
+                                        onchange={tag_change}
+                                        disabled={*is_loading}
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button 
+                                    type="button"
+                                    class="btn btn-danger"
+                                    onclick={remove_tag}
+                                    disabled={*is_loading}
+                                >
+                                    {"-"}
+                                </button>
+                            </div>
+                        </div>
+                    }
+                })}
+                
+                <button 
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick={add_required_tag}
+                    disabled={*is_loading}
+                >
+                    {"+ Add Tag"}
+                </button>
+            </section>
+            
+            // Default Presentation
+            <section class="form-section">
+                <h2>{"Default Presentation"}</h2>
+                <div class="form-group">
+                    <label class="form-label">{"Presentation URL"}</label>
+                    <input 
+                        class="form-control" 
+                        type="url"
+                        value={(*presentation_url).clone()}
+                        onchange={on_presentation_url_change}
+                        disabled={*is_loading}
+                        placeholder="https://example.com/presentation.pdf"
+                    />
+                </div>
+                
+                <div class="form-check form-switch">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="presentationForceSwitch"
+                        checked={*presentation_force}
+                        onchange={on_presentation_force_change}
+                        disabled={*is_loading}
+                    />
+                    <label class="form-check-label" for="presentationForceSwitch">
+                        {"Force Override (override any presentation from frontend)"}
+                    </label>
+                </div>
+            </section>
+            
+            
             <div class="form-group mt-4">
                 <button 
                     type="submit" 
@@ -280,13 +788,6 @@ pub fn form(props: &FormProps) -> Html {
                     </button>
                 }
             </div>
-            
-            // TODO: Add sections for:
-            // - Create Default Parameters
-            // - Create Override Parameters  
-            // - Required Tags
-            // - Default Presentation
-            // These require more complex state management with dynamic lists
         </form>
     }
 }

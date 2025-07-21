@@ -10,12 +10,13 @@
 
 use crate::models;
 use serde::{Deserialize, Serialize};
+use serde_json;
 
 /// FrontendSettings : Frontend Settings
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FrontendSettings {
     #[serde(rename = "attendees_limit")]
-    pub attendees_limit: Box<models::AttendeesLimitSettings>,
+    pub attendees_limit: Option<Box<models::AttendeesLimitSettings>>,
     /// Provide key value params, which will be used as a default when a meeting is created. See the BBB api documentation for which params are valid. The param value must be encoded as string.
     #[serde(rename = "create_default_params")]
     pub create_default_params: std::collections::HashMap<String, String>,
@@ -23,31 +24,31 @@ pub struct FrontendSettings {
     #[serde(rename = "create_override_params")]
     pub create_override_params: std::collections::HashMap<String, String>,
     #[serde(rename = "default_presentation")]
-    pub default_presentation: Box<models::DefaultPresentationSettings>,
-    #[serde(rename = "recordings")]
-    pub recordings: Box<models::RecordingsSettings>,
+    pub default_presentation: Option<Box<models::DefaultPresentationSettings>>,
     /// When selecting a backend for creating a meeting, only consider nodes providing all of the required tags.
     #[serde(rename = "required_tags")]
-    pub required_tags: Vec<String>,
+    pub required_tags: Option<Vec<String>>,
+    /// Recordings settings (ignored - for backwards compatibility with API)
+    #[serde(rename = "recordings", skip_serializing)]
+    pub recordings: Option<serde_json::Value>,
 }
 
 impl FrontendSettings {
     /// Frontend Settings
     pub fn new(
-        attendees_limit: models::AttendeesLimitSettings,
+        attendees_limit: Option<models::AttendeesLimitSettings>,
         create_default_params: std::collections::HashMap<String, String>,
         create_override_params: std::collections::HashMap<String, String>,
-        default_presentation: models::DefaultPresentationSettings,
-        recordings: models::RecordingsSettings,
-        required_tags: Vec<String>,
+        default_presentation: Option<models::DefaultPresentationSettings>,
+        required_tags: Option<Vec<String>>,
     ) -> FrontendSettings {
         FrontendSettings {
-            attendees_limit: Box::new(attendees_limit),
+            attendees_limit: attendees_limit.map(Box::new),
             create_default_params,
             create_override_params,
-            default_presentation: Box::new(default_presentation),
-            recordings: Box::new(recordings),
+            default_presentation: default_presentation.map(Box::new),
             required_tags,
+            recordings: None,
         }
     }
 }

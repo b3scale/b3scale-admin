@@ -1,3 +1,4 @@
+use gloo_console;
 use yew::{function_component, html, Html, Properties};
 
 use crate::{
@@ -26,14 +27,36 @@ pub fn list_item(ListItemProps { frontend }: &ListItemProps) -> Html {
 #[function_component(List)]
 pub fn list() -> Html {
     let frontends = use_frontends();
-    let frontends_list = match frontends.result() {
-        None => html! { <p>{"No Frontends"}</p> },
-        Some(frontends) => frontends
-            .iter()
-            .map(|f| {
-                html! { <ListItem frontend={f.clone()} /> }
-            })
-            .collect::<Html>(),
+    
+    // Debug logging
+    gloo_console::log!("Frontends loading:", frontends.is_loading());
+    if let Some(error) = frontends.error() {
+        gloo_console::log!("Frontends error:", format!("{:?}", error));
+    }
+    if let Some(result) = frontends.result() {
+        gloo_console::log!("Frontends result length:", result.len());
+    }
+    
+    let frontends_list = if frontends.is_loading() {
+        html! { <p>{"Loading frontends..."}</p> }
+    } else if let Some(error) = frontends.error() {
+        html! { <p class="text-danger">{format!("Error: {}", error)}</p> }
+    } else {
+        match frontends.result() {
+            None => html! { <p>{"No Frontends"}</p> },
+            Some(frontends) => {
+                if frontends.is_empty() {
+                    html! { <p>{"No frontends found"}</p> }
+                } else {
+                    frontends
+                        .iter()
+                        .map(|f| {
+                            html! { <ListItem frontend={f.clone()} /> }
+                        })
+                        .collect::<Html>()
+                }
+            },
+        }
     };
     
     html! {

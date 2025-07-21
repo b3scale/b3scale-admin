@@ -20,14 +20,13 @@ pub struct Context {
 
 impl Context {
     /// New api
-    pub fn new() -> Self {
-        let token: Option<String> = match SessionStorage::get("access_token") {
-            Ok(t) => Some(t),
-            Err(_) => None,
-        };
+    pub fn new(
+        access_token: UseStateHandle<Option<String>>,
+        error: UseStateHandle<Option<ClientError>>,
+    ) -> Self {
         Self {
-            access_token: use_state(move || token),
-            error: use_state(move || None),
+            access_token,
+            error,
         }
     }
 
@@ -86,7 +85,16 @@ pub struct AuthenticationContextProps {
 #[function_component(AuthenticationContext)]
 pub fn authentication_context(props: &AuthenticationContextProps) -> Html {
     let AuthenticationContextProps { children } = props;
-    let ctx = Context::new();
+    
+    let token: Option<String> = match SessionStorage::get("access_token") {
+        Ok(t) => Some(t),
+        Err(_) => None,
+    };
+    
+    let access_token = use_state(move || token);
+    let error = use_state(|| None);
+    let ctx = Context::new(access_token, error);
+    
     html! {
         <ContextProvider<Context> context={ctx.clone()}>
             {for children.iter() }

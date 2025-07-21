@@ -14,8 +14,12 @@ pub enum Route {
     Start,
     #[at("/authenticate")]
     Authenticate,
+    #[at("/frontends/new")]
+    FrontendsNew,
     #[at("/frontends/:id")]
     Frontends { id: String },
+    #[at("/backends/new")]
+    BackendsNew,
     #[at("/backends/:id")]
     Backends { id: String },
     #[not_found]
@@ -27,11 +31,17 @@ pub enum Route {
 fn switch(route: &Route) -> Html {
     match route {
         Route::Start => html! { <Start /> },
+        Route::FrontendsNew => html! {
+            <FrontendsPage id={None::<String>} />
+        },
         Route::Frontends { id } => html! {
-            <FrontendsPage id={id.clone()} />
+            <FrontendsPage id={Some(id.clone())} />
+        },
+        Route::BackendsNew => html! {
+            <BackendsPage id={None::<String>} />
         },
         Route::Backends { id } => html! {
-            <BackendsPage id={id.clone()} />
+            <BackendsPage id={Some(id.clone())} />
         },
         Route::Authenticate => html! {
             <AuthenticatePage />
@@ -75,9 +85,7 @@ pub fn start() -> Html {
 
     use_effect(move || {
         if auth.is_authenticated() {
-            history.replace(Route::Frontends {
-                id: "new".to_owned(),
-            });
+            history.replace(Route::FrontendsNew);
         };
         || ()
     });

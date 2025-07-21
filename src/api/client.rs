@@ -1,4 +1,6 @@
+use gloo_console;
 use serde::{de::DeserializeOwned, Deserialize};
+use serde_json;
 use wasm_bindgen_futures::spawn_local;
 use yew::{use_effect_with_deps, use_state, UseStateHandle};
 
@@ -19,6 +21,12 @@ pub enum Error {
     ValidationFailed(String),
     Client(String),
     Server(ErrorResponse),
+}
+
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.message())
+    }
 }
 
 impl Error {
@@ -42,6 +50,7 @@ impl From<gloo_net::Error> for Error {
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// A client with an access token
+#[derive(Clone)]
 pub struct Client(String);
 
 impl Client {
@@ -56,18 +65,39 @@ impl Client {
         let bearer = format!("Bearer {}", auth_token);
         let req = req.header("Authorization", &bearer);
 
+        gloo_console::log!("Making API request...");
         let result = req.send().await?;
+        gloo_console::log!("API response status:", result.status());
+        
         if result.ok() {
-            // Try to decode success type
-            let t: T = result.json().await?;
-            Ok(t)
+            // Log the raw response text for debugging
+            let response_text = result.text().await?;
+            gloo_console::log!("API response body:", &response_text);
+            
+            // Try to decode success type from the text
+            match serde_json::from_str::<T>(&response_text) {
+                Ok(t) => {
+                    gloo_console::log!("API request successful");
+                    Ok(t)
+                },
+                Err(e) => {
+                    gloo_console::log!("JSON parse error:", format!("{:?}", e));
+                    gloo_console::log!("Raw response was:", &response_text);
+                    Err(Error::Client(format!("JSON parse error: {}", e)))
+                }
+            }
         } else {
             // Decode error
+            gloo_console::log!("API request failed with status:", result.status());
             match result.status() {
-                404 => Err(Error::NotFound),
+                404 => {
+                    gloo_console::log!("404 Not Found error");
+                    Err(Error::NotFound)
+                },
                 _ => {
                     // Try to decode error response
                     let err: ErrorResponse = result.json().await?;
+                    gloo_console::log!("Server error:", format!("{:?}", err));
                     Err(Error::Server(err))
                 }
             }
@@ -112,6 +142,7 @@ impl<T: DeserializeOwned + Clone> State<T> {
 /// Use request returns a state object wrapping the
 /// requested type
 pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T> {
+    gloo_console::log!("use_fetch called");
     let client = use_client();
     let is_loading = use_state(|| false);
     let error = use_state(|| None);
@@ -132,23 +163,26 @@ pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T
         let fetch = fetch.clone();
         use_effect_with_deps(
             move |_| {
-                state.is_loading.set(true);
-                spawn_local(async move {
-                    if *state.fetch == 0 {
-                        return;
-                    }
-                    match client.fetch::<T>(req).await {
-                        Ok(s) => {
-                            state.is_loading.set(false);
-                            state.error.set(None);
-                            state.result.set(Some(s));
+                gloo_console::log!("use_fetch effect triggered, fetch count:", *state.fetch);
+                if *state.fetch == 0 {
+                    gloo_console::log!("Skipping fetch because count is 0");
+                } else {
+                    state.is_loading.set(true);
+                    gloo_console::log!("Starting fetch...");
+                    spawn_local(async move {
+                        match client.fetch::<T>(req).await {
+                            Ok(s) => {
+                                state.is_loading.set(false);
+                                state.error.set(None);
+                                state.result.set(Some(s));
+                            }
+                            Err(error) => {
+                                state.is_loading.set(false);
+                                state.error.set(Some(error));
+                            }
                         }
-                        Err(error) => {
-                            state.is_loading.set(false);
-                            state.error.set(Some(error));
-                        }
-                    }
-                });
+                    });
+                }
                 || ()
             },
             *fetch,

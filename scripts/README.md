@@ -40,3 +40,37 @@ b3scale_api = { path = "./b3scale_api" }
 ## compile_style.sh
 
 Compiles SCSS to CSS using grass (existing script).
+
+## fix_ambiguous_exports.sh
+
+Fixes ambiguous glob re-exports in the b3scale_api models module.
+
+### Usage
+
+```bash
+./scripts/fix_ambiguous_exports.sh
+```
+
+### What it does
+
+1. Creates a backup of the original `b3scale_api/src/models/mod.rs` file
+2. Replaces conflicting glob imports with explicit imports and type aliases
+3. Resolves naming conflicts between auto-generated models
+4. Verifies the crate builds successfully after changes
+
+### Conflict Resolution
+
+The script resolves these naming conflicts:
+
+- **AdminState**: Found in `backend`, `backend_patch`, `backend_request` modules
+  - Aliased as: `BackendAdminState`, `BackendPatchAdminState`, `BackendRequestAdminState`
+- **NodeState**: Found in `backend`, `backend_patch` modules  
+  - Aliased as: `BackendNodeState`, `BackendPatchNodeState`
+- **Action**: Found in `command`, `command_request` modules
+  - Aliased as: `CommandAction`, `CommandRequestAction`
+- **Status**: Found in `rpc_response` (enum), `status` (struct) modules
+  - Aliased as: `RpcStatus`, `Status`
+
+### When to use
+
+Run this script after regenerating models with `generate_models.sh` to eliminate ambiguous glob re-export warnings.

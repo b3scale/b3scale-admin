@@ -1,0 +1,14 @@
+Frontend saved successfully b3scale-admin-b46b5f3b7de47cf7.js:432:17
+panicked at /home/annika/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yew-0.19.3/src/functional/hooks/mod.rs:72:10:
+Incompatible hook type. Hooks must always be called in the same order
+
+Stack:
+
+__wbg_get_imports/imports.wbg.__wbg_new_8a6f238a6ece86ea@http://localhost:8080/b3scale-admin-b46b5f3b7de47cf7.js:454:21
+b3scale_admin-da19d0f8ea922b1b.wasm.__wbg_new_8a6f238a6ece86ea externref shim@http://localhost:8080/b3scale-admin-b46b5f3b7de47cf7_bg.wasm:wasm-function[2241]:0xd5602
+b3scale_admin-da19d0f8ea922b1b.wasm.console_error_panic_hook::hook::h968b503fded41efc@http://localhost:8080/b3scale-admin-b46b5f3b7de47cf7_bg.wasm:wasm-function[553]:0x88334
+b3scale_admin-da19d0f8ea922b1b.wasm.core::ops::function::Fn::call::h6ce0206b1b4c5726@http://localhost:8080/b3scale-admin-b46b5f3b7de47cf7_bg.wasm:wasm-function[2489]:0xd670e
+b3scale_admin-da19d0f8ea922b1b.wasm.std::panicking::rust_panic_with_hook::h9ea01914b5d92659@http://localhost:8080/b3scale-admin-b46b5f3b7de47cf7_bg.wasm:wasm-func…
+b3scale-admin-b46b5f3b7de47cf7.js:328:21
+Uncaught (in promise) RuntimeError: unreachable executed
+b3scale-admin-b46b5f3b7de47cf7_bg.wasm:878463:1
