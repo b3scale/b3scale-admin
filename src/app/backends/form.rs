@@ -296,12 +296,114 @@ pub fn form(props: &FormProps) -> Html {
     };
     
     html! {
-        <form class="form" onsubmit={on_submit}>
-            if let Some(err) = &*error {
-                <div class="alert alert-danger" role="alert">
-                    {err}
+        <>
+            // Backend Stats & Info Block (only shown in edit mode)
+            if let Some(backend_data) = backend {
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">{"Backend Information"}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>{"Backend ID:"}</strong>
+                                    <div class="text-muted font-monospace small">{&backend_data.id}</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Node State:"}</strong>
+                                    <div class="d-flex align-items-center">
+                                        {match backend_data.node_state {
+                                            NodeState::Ready => html! {
+                                                <span class="badge bg-success ms-2">{"Ready"}</span>
+                                            },
+                                            NodeState::Error => html! {
+                                                <span class="badge bg-danger ms-2">{"Error"}</span>
+                                            },
+                                            NodeState::Stopped => html! {
+                                                <span class="badge bg-secondary ms-2">{"Stopped"}</span>
+                                            },
+                                            NodeState::Init => html! {
+                                                <span class="badge bg-info ms-2">{"Initializing"}</span>
+                                            },
+                                            NodeState::Decommissioned => html! {
+                                                <span class="badge bg-warning ms-2">{"Decommissioned"}</span>
+                                            },
+                                        }}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Latency:"}</strong>
+                                    <div class="text-muted">
+                                        {format!("{} ms", backend_data.latency)}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Agent Reference:"}</strong>
+                                    <div class="text-muted">
+                                        {backend_data.agent_ref.as_ref().unwrap_or(&"None".to_string())}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>{"Current Load:"}</strong>
+                                    <div class="text-muted">
+                                        {format!("Meetings: {} | Attendees: {}", backend_data.meetings_count, backend_data.attendees_count)}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Last Heartbeat:"}</strong>
+                                    <div class="text-muted small">
+                                        {&backend_data.agent_heartbeat}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Last Sync:"}</strong>
+                                    <div class="text-muted small">
+                                        {&backend_data.synced_at}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>{"Created:"}</strong>
+                                    <div class="text-muted small">
+                                        {&backend_data.created_at}
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <strong>{"Updated:"}</strong>
+                                    <div class="text-muted small">
+                                        {&backend_data.updated_at}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        // Last Error (prominent display if present)
+                        if let Some(ref last_error) = backend_data.last_error {
+                            <div class="alert alert-warning mt-3" role="alert">
+                                <strong>{"Last Error:"}</strong>
+                                <div class="mt-1">{last_error}</div>
+                            </div>
+                        }
+                    </div>
                 </div>
             }
+        
+            <form class="form" onsubmit={on_submit}>
+                if let Some(err) = &*error {
+                    <div class="alert alert-danger" role="alert">
+                        {err}
+                    </div>
+                }
             
             // Basic backend config
             <div class="form-group">
@@ -459,5 +561,6 @@ pub fn form(props: &FormProps) -> Html {
                 }
             </div>
         </form>
+        </>
     }
 }
