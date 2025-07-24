@@ -17,9 +17,9 @@
   transition: all 0.6s ease;
   position: relative;
   background-image: 
-    url('./cyber_graphic_2.png'),
-    url('./cyber_graphic_6.png'),
-    url('./cyber_graphic_12.png');
+    url('/public/cyber_graphic_2.png'),
+    url('/public/cyber_graphic_6.png'),
+    url('/public/cyber_graphic_12.png');
   background-size: 
     80% auto,
     40% auto,
@@ -64,9 +64,9 @@
     transform: translateY(-2px);
     
     background-image: 
-      url('./cyber_graphic_3.png'),
-      url('./cyber_graphic_7.png'),
-      url('./cyber_graphic_13.png');
+      url('/public/cyber_graphic_3.png'),
+      url('/public/cyber_graphic_7.png'),
+      url('/public/cyber_graphic_13.png');
   }
   
   .card-header {
@@ -80,8 +80,8 @@
     padding: 20px 25px;
     margin: -30px -30px 25px -30px;
     background-image: 
-      url('./cyber_graphic_4.png'),
-      url('./cyber_graphic_8.png');
+      url('/public/cyber_graphic_4.png'),
+      url('/public/cyber_graphic_8.png');
     background-size: 
       auto 100%,
       50% auto;
@@ -112,8 +112,8 @@
   position: relative;
   overflow: hidden;
   background-image: 
-    url('./cyber_graphic_10.png'),
-    url('./cyber_graphic_14.png');
+    url('/public/cyber_graphic_10.png'),
+    url('/public/cyber_graphic_14.png');
   background-size: 
     contain,
     20% auto;
@@ -290,9 +290,9 @@
   padding: 0.75rem 1.5rem !important;
   position: relative;
   background-image: 
-    url('./cyber_graphic_1.png'),
-    url('./cyber_graphic_5.png'),
-    url('./cyber_graphic_9.png');
+    url('/public/cyber_graphic_1.png'),
+    url('/public/cyber_graphic_5.png'),
+    url('/public/cyber_graphic_9.png');
   background-size: 
     auto 120%,
     50% auto,

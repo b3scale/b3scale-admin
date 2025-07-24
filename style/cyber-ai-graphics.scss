@@ -5,10 +5,10 @@
 // TONS of colorful background layers with AI graphics!!
 body {
   background-image: 
-    url('./cyber_graphic_1.png'),
-    url('./cyber_graphic_2.png'),
-    url('./cyber_graphic_3.png'),
-    url('./cyber_graphic_4.png');
+    url('/public/cyber_graphic_1.png'),
+    url('/public/cyber_graphic_2.png'),
+    url('/public/cyber_graphic_3.png'),
+    url('/public/cyber_graphic_4.png');
   background-size: 
     30% auto,
     25% auto,
@@ -24,9 +24,9 @@ body {
   
   &::before {
     background-image: 
-      url('./cyber_graphic_5.png'),
-      url('./cyber_graphic_6.png'),
-      url('./cyber_graphic_7.png');
+      url('/public/cyber_graphic_5.png'),
+      url('/public/cyber_graphic_6.png'),
+      url('/public/cyber_graphic_7.png');
     background-size: 
       40% auto,
       30% auto,
@@ -42,8 +42,8 @@ body {
   
   &::after {
     background-image: 
-      url('./cyber_graphic_8.png'),
-      url('./cyber_graphic_9.png');
+      url('/public/cyber_graphic_8.png'),
+      url('/public/cyber_graphic_9.png');
     background-size: 
       50% auto,
       40% auto;
@@ -59,15 +59,15 @@ body {
 // Trinity Access Point with AI graphics
 .box-authenticate {
   background-image: 
-    url('./cyber_graphic_4.png'),
-    url('./cyber_graphic_5.png');
+    url('/public/cyber_graphic_4.png'),
+    url('/public/cyber_graphic_5.png');
   background-size: contain, cover;
   background-position: top center, center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: overlay, multiply;
   
   &::before {
-    background-image: url('./cyber_graphic_6.png');
+    background-image: url('/public/cyber_graphic_6.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -78,8 +78,8 @@ body {
 // Navigation with cyber graphics
 .navbar {
   background-image: 
-    url('./cyber_graphic_7.png'),
-    url('./cyber_graphic_8.png');
+    url('/public/cyber_graphic_7.png'),
+    url('/public/cyber_graphic_8.png');
   background-size: auto 100%, 100px auto;
   background-position: left center, right center;
   background-repeat: repeat-x, no-repeat;
@@ -94,7 +94,7 @@ body {
       transform: translateY(-50%);
       width: 25px;
       height: 25px;
-      background-image: url('./cyber_graphic_9.png');
+      background-image: url('/public/cyber_graphic_9.png');
       background-size: contain;
       background-repeat: no-repeat;
       opacity: 0.7;
@@ -108,7 +108,7 @@ body {
       transform: translateY(-50%);
       width: 25px;
       height: 25px;
-      background-image: url('./cyber_graphic_10.png');
+      background-image: url('/public/cyber_graphic_10.png');
       background-size: contain;
       background-repeat: no-repeat;
       opacity: 0.7;
@@ -120,11 +120,11 @@ body {
 // Form sections - COMPLETELY STILL but colorful!
 .form-section {
   background-image: 
-    url('./cyber_graphic_11.png'),
-    url('./cyber_graphic_12.png'),
-    url('./cyber_graphic_13.png'),
-    url('./cyber_graphic_14.png'),
-    url('./cyber_graphic_1.png');
+    url('/public/cyber_graphic_11.png'),
+    url('/public/cyber_graphic_12.png'),
+    url('/public/cyber_graphic_13.png'),
+    url('/public/cyber_graphic_14.png'),
+    url('/public/cyber_graphic_1.png');
   background-size: 
     cover, 
     60% auto, 
@@ -166,7 +166,7 @@ body {
     right: 5px;
     width: 20px;
     height: 20px;
-    background-image: url('./cyber_graphic_14.png');
+    background-image: url('/public/cyber_graphic_14.png');
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0.7;
@@ -177,15 +177,15 @@ body {
 // Sidebar with epic graphics
 .page aside {
   background-image: 
-    url('./cyber_graphic_1.png'),
-    url('./cyber_graphic_7.png');
+    url('/public/cyber_graphic_1.png'),
+    url('/public/cyber_graphic_7.png');
   background-size: auto 100%, 100% auto;
   background-position: right center, center;
   background-repeat: repeat-y, no-repeat;
   background-blend-mode: multiply, overlay;
   
   &::before {
-    background-image: url('./cyber_graphic_2.png');
+    background-image: url('/public/cyber_graphic_2.png');
     background-size: 100% auto;
     background-repeat: repeat-y;
     background-position: right;
@@ -196,8 +196,8 @@ body {
 // Main content area graphics
 .page main {
   background-image: 
-    url('./cyber_graphic_3.png'),
-    url('./cyber_graphic_8.png');
+    url('/public/cyber_graphic_3.png'),
+    url('/public/cyber_graphic_8.png');
   background-size: 300px auto, auto 50px;
   background-position: top left, bottom center;
   background-repeat: no-repeat, repeat-x;
@@ -205,8 +205,8 @@ body {
   
   h1 {
     background-image: 
-      url('./cyber_graphic_9.png'),
-      url('./cyber_graphic_10.png');
+      url('/public/cyber_graphic_9.png'),
+      url('/public/cyber_graphic_10.png');
     background-size: 30px auto, 30px auto;
     background-position: left center, right center;
     background-repeat: no-repeat, no-repeat;
@@ -217,8 +217,8 @@ body {
 // Cards with AI graphics
 .card {
   background-image: 
-    url('./cyber_graphic_11.png'),
-    url('./cyber_graphic_4.png');
+    url('/public/cyber_graphic_11.png'),
+    url('/public/cyber_graphic_4.png');
   background-size: cover, 100px auto;
   background-position: center, top right;
   background-repeat: no-repeat, no-repeat;
@@ -226,13 +226,13 @@ body {
   
   &:hover {
     background-image: 
-      url('./cyber_graphic_12.png'),
-      url('./cyber_graphic_5.png');
+      url('/public/cyber_graphic_12.png'),
+      url('/public/cyber_graphic_5.png');
     background-blend-mode: screen, overlay;
   }
   
   .card-header {
-    background-image: url('./cyber_graphic_6.png');
+    background-image: url('/public/cyber_graphic_6.png');
     background-size: auto 100%;
     background-position: center;
     background-repeat: repeat-x;
@@ -243,7 +243,7 @@ body {
 // Buttons with micro graphics
 .btn {
   &::before {
-    background-image: url('./cyber_graphic_13.png');
+    background-image: url('/public/cyber_graphic_13.png');
     background-size: 10px auto;
     background-repeat: no-repeat;
     background-position: center;
@@ -251,7 +251,7 @@ body {
   }
   
   &::after {
-    background-image: url('./cyber_graphic_14.png');
+    background-image: url('/public/cyber_graphic_14.png');
     background-size: 10px auto;
     background-repeat: no-repeat;
     background-position: center;
@@ -262,7 +262,7 @@ body {
 // Form controls with subtle graphics
 .form-control {
   &:focus {
-    background-image: url('./cyber_graphic_7.png');
+    background-image: url('/public/cyber_graphic_7.png');
     background-size: auto 100%;
     background-position: right;
     background-repeat: no-repeat;
@@ -303,9 +303,9 @@ body {
   right: 0;
   bottom: 0;
   background-image: 
-    url('./cyber_graphic_1.png'),
-    url('./cyber_graphic_2.png'),
-    url('./cyber_graphic_3.png');
+    url('/public/cyber_graphic_1.png'),
+    url('/public/cyber_graphic_2.png'),
+    url('/public/cyber_graphic_3.png');
   background-size: 
     20% auto,
     30% auto,
