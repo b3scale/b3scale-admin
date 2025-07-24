@@ -237,14 +237,18 @@
 
 // Form Section Cyber Style - NO ANIMATION EVER!
 .form-section {
-  background: var(--bg-glass);
+  // SUPER ACCESSIBLE BACKGROUND WITH DARK OVERLAY!!!
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+    var(--bg-glass);
   border: 2px solid var(--cyber-cyan);
   border-radius: 6px;
-  padding: 8px;
+  padding: 12px;
   margin: 8px 0;
   box-shadow: 
     var(--glow-cyan),
-    inset 0 0 20px rgba(0, 255, 255, 0.1);
+    inset 0 0 20px rgba(0, 255, 255, 0.1),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   position: relative;
   
@@ -279,12 +283,19 @@
   }
   
   h2, h3, h4, h5 {
-    color: var(--cyber-pink);
-    text-shadow: var(--glow-pink);
+    // SUPER BRIGHT AND READABLE!!!
+    color: #ff66b3;  // Brighter pink for better contrast
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 1),
+      3px 3px 6px rgba(0, 0, 0, 0.9),
+      4px 4px 8px rgba(0, 0, 0, 0.8),
+      0 0 20px rgba(255, 102, 179, 0.8),
+      var(--glow-pink);
     margin-bottom: 5px;
     margin-top: 0;
     font-size: 0.95em;
     position: relative;
+    font-weight: bold;
     
     &::before {
       content: '▶▐█';
@@ -311,21 +322,47 @@
       left: -8px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--cyber-pink);
+      color: #ff66b3;
       font-size: 8px;
+      text-shadow: 0 0 10px rgba(255, 102, 179, 0.8);
       // NO ANIMATION - bullet stays still
     }
   }
   
+  .form-label {
+    // SUPER BRIGHT LABELS!!!
+    color: #00ffff !important;  // Bright cyan for labels
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 1),
+      3px 3px 6px rgba(0, 0, 0, 0.9),
+      4px 4px 8px rgba(0, 0, 0, 0.8),
+      0 0 15px rgba(0, 255, 255, 0.6) !important;
+    font-weight: bold !important;
+  }
+  
   .form-control {
     margin-bottom: 2px;
+    // ULTRA HIGH CONTRAST FOR FORM INPUTS!!!
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: #ff66b3 !important;  // Bright pink text
+    border-color: #00ffff !important;  // Bright cyan border
+    
+    &::placeholder {
+      color: rgba(255, 102, 179, 0.6) !important;
+    }
     
     &:focus {
+      background: rgba(0, 0, 0, 0.98) !important;
+      color: #ff99cc !important;  // Even brighter on focus
+      box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.6),
+        inset 0 0 10px rgba(0, 255, 255, 0.2) !important;
+      
       &::before {
         content: '► ';
         position: absolute;
         left: -15px;
-        color: var(--cyber-pink);
+        color: #ff66b3;
         font-size: 8px;
         // NO ANIMATION - arrow stays still
       }
@@ -351,14 +388,24 @@
   
   p, .form-text {
     margin-bottom: 4px;
-    font-size: 0.75em;
-    line-height: 1.2;
+    font-size: 0.9em;  // Bigger for readability
+    line-height: 1.4;  // Better line spacing
     position: relative;
+    // SUPER READABLE WHITE TEXT WITH MASSIVE SHADOWS!!!
+    color: #ffffff;  // Pure white for maximum contrast
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 1),
+      3px 3px 6px rgba(0, 0, 0, 0.9),
+      4px 4px 8px rgba(0, 0, 0, 0.8),
+      5px 5px 10px rgba(0, 0, 0, 0.7),
+      0 0 15px rgba(0, 0, 0, 0.6);
+    font-weight: 500;
     
     &::before {
       content: '∙ ';
-      color: var(--cyber-pink);
-      font-size: 6px;
+      color: #ff66b3;  // Brighter pink
+      font-size: 8px;
+      text-shadow: 0 0 10px rgba(255, 102, 179, 0.8);
     }
   }
 }
