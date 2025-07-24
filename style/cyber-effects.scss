@@ -235,21 +235,22 @@
   51%, 100% { opacity: 0.3; }
 }
 
-// Form Section Cyber Style - NO ANIMATION EVER!
+// Form Section Cyber Style - NO ANIMATION EVER! ULTRA ACCESSIBLE!!!
 .form-section {
-  // SUPER ACCESSIBLE BACKGROUND WITH DARK OVERLAY!!!
+  // MAXIMUM ACCESSIBLE BACKGROUND WITH SUPER DARK OVERLAY!!!
   background: 
-    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+    linear-gradient(rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.92)),
     var(--bg-glass);
-  border: 2px solid var(--cyber-cyan);
-  border-radius: 6px;
-  padding: 12px;
-  margin: 8px 0;
+  border: 3px solid #00ffff; // THICKER BRIGHT BORDER!!!
+  border-radius: 8px;
+  padding: 20px; // BIGGER PADDING!!!
+  margin: 16px 0;
   box-shadow: 
-    var(--glow-cyan),
-    inset 0 0 20px rgba(0, 255, 255, 0.1),
-    inset 0 0 40px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+    0 0 30px rgba(0, 255, 255, 0.6),
+    0 0 50px rgba(0, 255, 255, 0.3),
+    inset 0 0 30px rgba(0, 255, 255, 0.1),
+    inset 0 0 60px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(15px);
   position: relative;
   
   // DESTROY ALL ANIMATIONS!
@@ -283,18 +284,23 @@
   }
   
   h2, h3, h4, h5 {
-    // SUPER BRIGHT AND READABLE!!!
-    color: #ff66b3;  // Brighter pink for better contrast
+    // ULTRA MEGA BRIGHT AND READABLE!!!
+    color: #ffb3d9 !important;  // SUPER BRIGHT PINK FOR MAXIMUM CONTRAST!!!
     text-shadow: 
+      1px 1px 2px rgba(0, 0, 0, 1),
       2px 2px 4px rgba(0, 0, 0, 1),
-      3px 3px 6px rgba(0, 0, 0, 0.9),
-      4px 4px 8px rgba(0, 0, 0, 0.8),
-      0 0 20px rgba(255, 102, 179, 0.8),
+      3px 3px 6px rgba(0, 0, 0, 1),
+      4px 4px 8px rgba(0, 0, 0, 0.95),
+      5px 5px 10px rgba(0, 0, 0, 0.9),
+      0 0 25px rgba(0, 0, 0, 0.85),
+      0 0 35px rgba(255, 179, 217, 0.7),
       var(--glow-pink);
-    margin-bottom: 5px;
+    margin-bottom: 12px;
     margin-top: 0;
-    font-size: 0.95em;
+    font-size: 1.3em !important; // MUCH BIGGER!!!
+    font-weight: 700 !important;
     position: relative;
+    letter-spacing: 0.5px;
     font-weight: bold;
     
     &::before {

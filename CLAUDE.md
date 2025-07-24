@@ -20,6 +20,18 @@ trunk build
 trunk clean
 ```
 
+### Testing
+```bash
+# Run UI tests in browser
+./scripts/run_tests.sh
+
+# Or manually with wasm-pack
+wasm-pack test --headless --chrome
+
+# Run tests with cargo
+cargo test --target wasm32-unknown-unknown
+```
+
 ### Rust/Cargo Commands
 ```bash
 # Check code for errors without building
