@@ -1,0 +1,283 @@
+// 💚 MATRIX DIGITAL RAIN EFFECTS 💚
+// Welcome to the Matrix!
+
+// Multiple layers of Matrix rain
+.matrix-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+// Matrix rain layers
+.matrix-rain-layer-1,
+.matrix-rain-layer-2,
+.matrix-rain-layer-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--matrix-green);
+  white-space: pre;
+  pointer-events: none;
+}
+
+.matrix-rain-layer-1 {
+  opacity: 0.6;
+  animation: matrix-rain-fall-1 10s linear infinite;
+}
+
+.matrix-rain-layer-2 {
+  opacity: 0.4;
+  animation: matrix-rain-fall-2 14s linear infinite;
+  animation-delay: -5s;
+}
+
+.matrix-rain-layer-3 {
+  opacity: 0.3;
+  animation: matrix-rain-fall-3 18s linear infinite;
+  animation-delay: -9s;
+}
+
+@keyframes matrix-rain-fall-1 {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes matrix-rain-fall-2 {
+  0% { transform: translateY(-100vh) translateX(20px); }
+  100% { transform: translateY(100vh) translateX(20px); }
+}
+
+@keyframes matrix-rain-fall-3 {
+  0% { transform: translateY(-100vh) translateX(-15px); }
+  100% { transform: translateY(100vh) translateX(-15px); }
+}
+
+// Enhanced body matrix effect
+body {
+  position: relative;
+}
+
+// Add more matrix rain patterns to body
+body::before {
+  content: '10110100101110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001';
+  position: fixed;
+  top: 0;
+  left: 5%;
+  width: 20px;
+  height: 200vh;
+  color: var(--matrix-dark-green);
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  line-height: 12px;
+  word-wrap: break-word;
+  pointer-events: none;
+  z-index: -2;
+  animation: matrix-digital-rain-1 12s linear infinite;
+  opacity: 0.2;
+}
+
+body::after {
+  content: '01010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001011010011100101101001110010110100';
+  position: fixed; 
+  top: 0;
+  right: 15%;
+  width: 20px;
+  height: 200vh;
+  color: var(--matrix-digital-green);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 14px;
+  word-wrap: break-word;
+  pointer-events: none;
+  z-index: -2;
+  animation: matrix-digital-rain-2 15s linear infinite;
+  animation-delay: -7s;
+  opacity: 0.3;
+}
+
+@keyframes matrix-digital-rain-1 {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(50vh); }
+}
+
+@keyframes matrix-digital-rain-2 {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(50vh); }
+}
+
+// Matrix text rain effect for specific elements
+.matrix-text-rain {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '10110100111001011010011100101101001110010110100111001011010011100101101001110010110100111001';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    height: 200%;
+    color: rgba(0, 255, 65, 0.1);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    line-height: 10px;
+    word-wrap: break-word;
+    pointer-events: none;
+    z-index: -1;
+    animation: matrix-text-fall 8s linear infinite;
+  }
+}
+
+@keyframes matrix-text-fall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+// Matrix glitch effect
+.matrix-glitch {
+  position: relative;
+  color: var(--matrix-bright-green);
+  
+  &::before,
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &::before {
+    animation: matrix-glitch-1 0.5s infinite;
+    color: var(--matrix-neon-green);
+    z-index: -1;
+  }
+  
+  &::after {
+    animation: matrix-glitch-2 0.5s infinite;
+    color: var(--matrix-dark-green);
+    z-index: -2;
+  }
+}
+
+@keyframes matrix-glitch-1 {
+  0%, 14%, 15%, 49%, 50%, 99%, 100% {
+    transform: translate(0);
+  }
+  15% {
+    transform: translate(-2px, -1px);
+  }
+  50% {
+    transform: translate(1px, -2px);
+  }
+}
+
+@keyframes matrix-glitch-2 {
+  0%, 20%, 21%, 62%, 63%, 99%, 100% {
+    transform: translate(0);
+  }
+  21% {
+    transform: translate(2px, 1px);
+  }
+  63% {
+    transform: translate(-1px, 2px);
+  }
+}
+
+// Matrix scan lines
+.matrix-scanlines {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 65, 0.03) 2px,
+      rgba(0, 255, 65, 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+    animation: matrix-scan 0.1s linear infinite;
+  }
+}
+
+@keyframes matrix-scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+// Matrix loading bar
+.matrix-loading {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-matrix-rain);
+    animation: matrix-load 3s ease-in-out infinite;
+  }
+}
+
+@keyframes matrix-load {
+  0%, 100% { width: 0%; }
+  50% { width: 100%; }
+}
+
+// Matrix terminal cursor
+.matrix-cursor::after {
+  content: '█';
+  color: var(--matrix-bright-green);
+  animation: matrix-cursor-blink 1s infinite;
+}
+
+@keyframes matrix-cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+// Matrix code streaming
+.matrix-stream {
+  position: relative;
+  
+  &::before {
+    content: '> ACCESS GRANTED TRINITY > ROOT ACCESS ENABLED > SYSTEM BREACH DETECTED > WELCOME TO THE CONSTRUCT > ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    color: var(--matrix-green);
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    opacity: 0.6;
+    animation: matrix-stream-text 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@keyframes matrix-stream-text {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}

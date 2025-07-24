@@ -15,6 +15,7 @@ use b3scale_api::Status;
 #[derive(PartialEq, Clone)]
 pub struct Context {
     pub access_token: UseStateHandle<Option<String>>,
+    pub api_url: UseStateHandle<Option<String>>,
     pub error: UseStateHandle<Option<ClientError>>,
 }
 
@@ -22,29 +23,46 @@ impl Context {
     /// New api
     pub fn new(
         access_token: UseStateHandle<Option<String>>,
+        api_url: UseStateHandle<Option<String>>,
         error: UseStateHandle<Option<ClientError>>,
     ) -> Self {
         Self {
             access_token,
+            api_url,
             error,
         }
     }
 
     /// Check if the token is valid and accept it
-    pub fn authenticate(&mut self, token: &str) {
+    pub fn authenticate(&mut self, token: &str, api_url: &str) {
         log!(format!("auth token: {:?}", token));
+        log!(format!("api url: {:?}", api_url));
         let token: String = token.trim().into();
+        let api_url_str = if api_url.is_empty() { 
+            None 
+        } else { 
+            Some(api_url.trim().to_string())
+        };
         let client = Client::new(&token);
         {
             let access_token = self.access_token.clone();
+            let api_url_state = self.api_url.clone();
             let error = self.error.clone();
+            let api_url_clone = api_url_str.clone();
             spawn_local(async move {
-                match client.fetch::<Status>(status_api::read()).await {
+                match client.fetch::<Status>(status_api::read_with_base_url(api_url_clone.as_deref())).await {
                     Ok(s) => {
                         log!(format!("status: {:?}", s));
                         SessionStorage::set("access_token", token.clone())
                             .expect("session storage unavailable");
+                        if let Some(url) = &api_url_clone {
+                            SessionStorage::set("api_url", url)
+                                .expect("session storage unavailable");
+                        } else {
+                            SessionStorage::delete("api_url");
+                        }
                         access_token.set(Some(token.clone()));
+                        api_url_state.set(api_url_clone);
                         error.set(None);
                     }
                     Err(err) => {
@@ -57,15 +75,17 @@ impl Context {
     }
 
     /// Authentiate with jwt secret
-    pub fn authenticate_secret(&mut self, secret: &str) {
+    pub fn authenticate_secret(&mut self, secret: &str, api_url: &str) {
         let token = new_access_token(secret);
-        self.authenticate(&token)
+        self.authenticate(&token, api_url)
     }
 
     /// Forget current session
     pub fn logout(&mut self) {
         SessionStorage::delete("access_token");
+        SessionStorage::delete("api_url");
         self.access_token.set(None);
+        self.api_url.set(None);
     }
 
     /// Helper to check if we are authenticated
@@ -91,9 +111,15 @@ pub fn authentication_context(props: &AuthenticationContextProps) -> Html {
         Err(_) => None,
     };
     
+    let api_url: Option<String> = match SessionStorage::get("api_url") {
+        Ok(url) => Some(url),
+        Err(_) => None,
+    };
+    
     let access_token = use_state(move || token);
+    let api_url_state = use_state(move || api_url);
     let error = use_state(|| None);
-    let ctx = Context::new(access_token, error);
+    let ctx = Context::new(access_token, api_url_state, error);
     
     html! {
         <ContextProvider<Context> context={ctx.clone()}>
@@ -112,4 +138,10 @@ pub fn use_authentication() -> Context {
 pub fn use_access_token() -> Option<String> {
     let api = use_authentication();
     (*api.access_token).clone()
+}
+
+/// Retrieve the API URL from the api state
+pub fn use_api_url() -> Option<String> {
+    let api = use_authentication();
+    (*api.api_url).clone()
 }

@@ -1,0 +1,350 @@
+// ⚡ CYBER EFFECTS & ANIMATIONS ⚡
+
+// MATRIX LOGIN BOX - Welcome to the Real World
+.box-authenticate {
+  background: var(--bg-glass);
+  border: 2px solid var(--matrix-green);
+  box-shadow: 
+    var(--glow-matrix),
+    inset 0 0 40px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-matrix);
+    animation: matrix-scan 5s linear infinite;
+  }
+  
+  &::after {
+    content: 'TRINITY ACCESS POINT';
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: var(--bg-void);
+    color: var(--matrix-bright-green);
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0 10px;
+    text-shadow: var(--glow-matrix-bright);
+  }
+}
+
+@keyframes matrix-scan {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+// Server Status Cyber Style
+.server-status {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--cyber-green);
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: var(--glow-green);
+  font-family: 'Courier New', monospace;
+  color: var(--cyber-green);
+  position: relative;
+  
+  &::before {
+    content: '●';
+    color: var(--cyber-green);
+    animation: cyber-pulse-dot 2s ease-in-out infinite;
+    margin-right: 5px;
+  }
+  
+  td {
+    color: var(--cyber-cyan);
+    text-shadow: 0 0 10px var(--cyber-cyan);
+  }
+}
+
+@keyframes cyber-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+// Cyber Page Layout with enhanced spacing
+.page {
+  aside {
+    background: var(--bg-glass);
+    border-right: 2px solid var(--cyber-cyan);
+    box-shadow: 
+      4px 0 20px rgba(0, 255, 255, 0.3),
+      inset 0 0 40px rgba(0, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    padding: 30px 20px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: var(--gradient-cyber);
+      animation: cyber-energy 2s linear infinite;
+    }
+  }
+  
+  .nav-header {
+    background: var(--gradient-cyber);
+    color: var(--bg-void);
+    border-bottom: 2px solid var(--cyber-cyan);
+    position: relative;
+    
+    &::after {
+      content: 'SYSTEM NAVIGATION';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-void);
+      color: var(--cyber-cyan);
+      font-size: 8px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border: 1px solid var(--cyber-cyan);
+      border-radius: 2px;
+    }
+    
+    ul {
+      background: rgba(0, 0, 0, 0.8) !important;
+      border: 2px solid var(--cyber-cyan);
+      box-shadow: var(--glow-cyan);
+    }
+  }
+  
+  main {
+    background: var(--bg-glass);
+    position: relative;
+    padding: 20px;
+    
+    h1 {
+      background: var(--bg-void);
+      border: 2px solid var(--cyber-pink);
+      border-radius: 6px;
+      padding: 15px 25px;
+      margin: 20px 0;
+      box-shadow: var(--glow-pink);
+      position: relative;
+      
+      &::before {
+        content: '►';
+        color: var(--cyber-green);
+        margin-right: 10px;
+        animation: cyber-blink 1s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes cyber-energy {
+  0% { 
+    background: var(--cyber-cyan);
+    box-shadow: 0 0 20px var(--cyber-cyan);
+    opacity: 0.8;
+  }
+  25% { 
+    background: var(--cyber-pink);
+    box-shadow: 0 0 25px var(--cyber-pink);
+    opacity: 1;
+  }
+  50% { 
+    background: var(--cyber-purple);
+    box-shadow: 0 0 20px var(--cyber-purple);
+    opacity: 0.9;
+  }
+  75% { 
+    background: var(--matrix-green);
+    box-shadow: 0 0 25px var(--matrix-green);
+    opacity: 1;
+  }
+  100% { 
+    background: var(--cyber-cyan);
+    box-shadow: 0 0 20px var(--cyber-cyan);
+    opacity: 0.8;
+  }
+}
+
+@keyframes cyber-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+// Form Section Cyber Style with balanced spacing
+.form-section {
+  background: var(--bg-glass);
+  border: 2px solid var(--cyber-cyan);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 25px 0;
+  box-shadow: 
+    var(--glow-cyan),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-cyber);
+    animation: cyber-loading 4s linear infinite;
+  }
+  
+  h2, h3, h4, h5 {
+    color: var(--matrix-bright-green);
+    text-shadow: var(--glow-matrix-bright);
+    margin-bottom: 18px;
+    margin-top: 0;
+    
+    &::before {
+      content: '▶';
+      color: var(--matrix-green);
+      margin-right: 8px;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    margin-bottom: 8px;
+  }
+  
+  .btn {
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+}
+
+// Special Cyber Typography Effects
+.cyber-title {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--cyber-pink);
+  text-shadow: var(--glow-pink);
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 2px;
+    background: var(--gradient-cyber);
+  }
+  
+  &::before {
+    left: -60px;
+  }
+  
+  &::after {
+    right: -60px;
+  }
+}
+
+// Cyber Loading Animation
+.cyber-loading {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: cyber-sweep 2s ease-in-out infinite;
+  }
+}
+
+@keyframes cyber-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+// Holographic text effect
+.cyber-hologram {
+  color: var(--cyber-cyan);
+  text-shadow: 
+    0 0 5px var(--cyber-cyan),
+    0 0 10px var(--cyber-cyan),
+    0 0 15px var(--cyber-cyan),
+    0 0 20px var(--cyber-cyan);
+  animation: cyber-hologram 2s ease-in-out infinite alternate;
+}
+
+@keyframes cyber-hologram {
+  0% { 
+    opacity: 0.8;
+    text-shadow: 
+      0 0 5px var(--cyber-cyan),
+      0 0 10px var(--cyber-cyan),
+      0 0 15px var(--cyber-cyan),
+      0 0 20px var(--cyber-cyan);
+  }
+  100% { 
+    opacity: 1;
+    text-shadow: 
+      0 0 2px var(--cyber-cyan),
+      0 0 5px var(--cyber-cyan),
+      0 0 8px var(--cyber-cyan),
+      0 0 12px var(--cyber-cyan),
+      0 0 16px var(--cyber-cyan);
+  }
+}
+
+// Matrix-style background for containers
+.cyber-matrix {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '01010101010101010101010101010101010101010101010101010101010101010101010101010101';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(0, 255, 255, 0.1);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    line-height: 10px;
+    word-wrap: break-word;
+    pointer-events: none;
+    z-index: -1;
+    animation: cyber-matrix-rain 10s linear infinite;
+  }
+}
+
+@keyframes cyber-matrix-rain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}

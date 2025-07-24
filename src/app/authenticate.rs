@@ -27,6 +27,7 @@ fn use_input_ref(node: &NodeRef) -> Option<String> {
 pub struct FormData {
     pub token: Option<String>,
     pub secret: Option<String>,
+    pub api_url: String,
 }
 
 #[derive(Clone, Properties, PartialEq)]
@@ -41,6 +42,7 @@ fn form(props: &FormProps) -> Html {
     let on_submit_cb = props.on_submit.clone();
     let token_ref = use_node_ref();
     let secret_ref = use_node_ref();
+    let api_url_ref = use_node_ref();
     let show_submit = use_state(|| false);
 
     let auth_error = (*auth.error).clone();
@@ -49,13 +51,16 @@ fn form(props: &FormProps) -> Html {
         let on_submit_cb = on_submit_cb.clone();
         let token_ref = token_ref.clone();
         let secret_ref = secret_ref.clone();
+        let api_url_ref = api_url_ref.clone();
         Callback::from(move |ev: FocusEvent| {
             ev.prevent_default();
             let token = use_input_ref(&token_ref);
             let secret = use_input_ref(&secret_ref);
+            let api_url = use_input_ref(&api_url_ref).unwrap_or_else(|| "".to_string());
             on_submit_cb.emit(FormData {
                 token: token.clone(),
                 secret: secret.clone(),
+                api_url,
             });
         })
     };
@@ -69,13 +74,16 @@ fn form(props: &FormProps) -> Html {
 
     let on_token_changed = {
         let token_ref = token_ref.clone();
+        let api_url_ref = api_url_ref.clone();
         let on_submit_cb = on_submit_cb.clone();
         Callback::from(move |_: KeyboardEvent| {
             let token = use_input_ref(&token_ref);
+            let api_url = use_input_ref(&api_url_ref).unwrap_or_else(|| "".to_string());
             if let Some(token) = token {
                 on_submit_cb.emit(FormData {
                     secret: None,
                     token: Some(token.clone()),
+                    api_url,
                 })
             }
         })
@@ -85,9 +93,66 @@ fn form(props: &FormProps) -> Html {
       <form onsubmit={on_submit}>
         if let Some(err) = auth_error {
             <div class="alert alert-danger error auth-error">
+                <strong>{"Authentication failed:"}</strong>
+                <br />
                 {err.message()}
+                {
+                    // Add helpful hints based on error type
+                    if err.message().contains("CORS") {
+                        html! {
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    {"💡 "}
+                                    <strong>{"Fix: "}</strong>
+                                    {"Add this domain to the CORS allowed origins in your b3scale API configuration."}
+                                </small>
+                            </div>
+                        }
+                    } else if err.message().contains("Cannot connect") || err.message().contains("NetworkError") || err.message().contains("fetch") {
+                        html! {
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    {"💡 "}
+                                    <strong>{"Troubleshooting: "}</strong>
+                                    {"1) Verify the API URL is correct, 2) Check if the server is running, 3) Try accessing the API URL directly in your browser."}
+                                </small>
+                            </div>
+                        }
+                    } else if err.message().contains("401") || err.message().contains("Unauthorized") {
+                        html! {
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    {"💡 "}
+                                    <strong>{"Fix: "}</strong>
+                                    {"Double-check your access token or generate a new one from your b3scale API server."}
+                                </small>
+                            </div>
+                        }
+                    } else if err.message().contains("404") {
+                        html! {
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    {"💡 "}
+                                    <strong>{"Fix: "}</strong>
+                                    {"The API endpoint was not found. Check if you're using the correct API URL and version."}
+                                </small>
+                            </div>
+                        }
+                    } else {
+                        html! {}
+                    }
+                }
             </div>
         }
+        <div class="form-group">
+        <label for="api_url">{"API URL:"}</label>
+        <input ref={api_url_ref} type="text" class="form-control" name="api_url" placeholder="https://api.example.com or leave empty for same origin" />
+        <small class="form-text text-muted">
+            <strong>{"💡 Tip:"}</strong>
+            {" Leave empty to use same origin, or specify full URL (e.g. https://api.yourdomain.com) to connect to external API server."}
+        </small>
+        </div>
+        <br />
         <div class="form-group">
         <label for="token">{"Paste your access token:"}
         </label>
@@ -117,9 +182,9 @@ pub fn authenticate_page() -> Html {
             let mut auth = auth.clone();
             log!(format!("form: {:?}", f));
             if let Some(token) = f.token {
-                auth.authenticate(&token);
+                auth.authenticate(&token, &f.api_url);
             } else if let Some(secret) = f.secret {
-                auth.authenticate_secret(&secret);
+                auth.authenticate_secret(&secret, &f.api_url);
             }
         })
     };
@@ -145,7 +210,7 @@ pub fn authenticate_page() -> Html {
             justify-content-center
             align-items-center">
 
-        <div class="card box box-authenticate">
+        <div class="card box box-authenticate cyber-matrix matrix-scanlines matrix-text-rain">
             <div class="card-body">
               <Form {on_submit} />
             </div>

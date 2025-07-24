@@ -1,0 +1,10 @@
+
+# Better error handling :)
+
+So right now when the login fails there is the error box with
+"TypeError: NetworkError when attempting to fetch resource."
+
+I would like to see the actual network error in there. Like
+
+"NetworkError when attempting to fetch resource:
+CORS Missing allow etc etc whteverf"

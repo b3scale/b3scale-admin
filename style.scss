@@ -1,55 +1,133 @@
-html {
-}
+// 🔥 CYBERPUNK 2077 THEME - TOTAL CYBER VIBES 🔥
+// Import all the cyber components
 
+@import './style/cyberpunk';
+@import './style/cyber-components';
+@import './style/cyber-effects';
+@import './style/matrix-rain';
+
+// Override and enhance existing styles with cyber vibes
 main > .container-fluid {
-    padding: 15px 20px;
+    padding: 20px 25px;
 }
 
 main > .container {
-  padding: 80px 15px;
+  padding: 60px 20px;
 }
 
-
-body {
-  background: #2d3740;
-}
-
-.bg-primary {
-  background: #222;
-}
-
-.server-status {
-  margin-right: 4pt;
-  white-space: nowrap;
-  font-size: 11px;
-  font-family: monospace;
-  tr {
-    margin: 0;
-    padding: 0;
-  }
-  td {
-    margin: 0;
-    padding: 0;
-    padding-right: 4pt;
-  }
-}
-
-
+// Cyber overrides for existing components
 .card.box {
    width: 500px;  
-   padding: 20px;
+   padding: 30px;
+   margin: 20px 0;
    border-radius: 8px;
-}
-
-.box-authenticate {
-
+   // Cyberpunk styling is now handled in cyber-components.scss
 }
 
 header {
     .navbar {
-        background: #222;
-        box-shadow: 0px 0px 10px #222;
+        // Cyberpunk navbar styling is now in cyber-components.scss
+        position: relative;
+        z-index: 1000;
     }
 }
 
+// Enhanced cyber page layout
 @import './style/page';
+
+// Additional cyber enhancements
+.container-page {
+  min-height: 100vh;
+  background: var(--gradient-void);
+  position: relative;
+}
+
+// Make everything more MATRIX!
+* {
+  transition: all 0.3s ease;
+}
+
+// Fix Bootstrap overrides
+.container, .container-fluid {
+  max-width: 100%;
+}
+
+// Fix form styling with balanced spacing
+.form-section {
+  margin: 25px 0 !important;
+  padding: 25px !important;
+  
+  h3, h4, h5 {
+    color: var(--matrix-bright-green) !important;
+    text-shadow: var(--glow-matrix-bright);
+    margin-bottom: 18px !important;
+  }
+  
+  .form-group, .mb-3 {
+    margin-bottom: 20px !important;
+  }
+  
+  .btn {
+    margin-top: 15px !important;
+    margin-right: 10px !important;
+  }
+}
+
+// Fix any remaining pink text
+.text-danger {
+  color: #ff0000 !important;
+}
+
+.text-primary {
+  color: var(--matrix-bright-green) !important;
+}
+
+.text-info {
+  color: var(--matrix-green) !important;
+}
+
+// Fix badge colors
+.badge {
+  &.bg-primary {
+    background: var(--matrix-green) !important;
+    color: var(--bg-void) !important;
+  }
+  
+  &.bg-secondary {
+    background: var(--matrix-dark-green) !important;
+    color: var(--matrix-bright-green) !important;
+  }
+}
+
+// Fix nav pills
+.nav-pills {
+  .nav-link {
+    color: var(--matrix-green) !important;
+    background: transparent;
+    border: 1px solid var(--matrix-green);
+    
+    &.active {
+      background: var(--matrix-green) !important;
+      color: var(--bg-void) !important;
+      box-shadow: var(--glow-matrix);
+    }
+    
+    &:hover {
+      background: rgba(0, 255, 65, 0.2);
+      border-color: var(--matrix-bright-green);
+    }
+  }
+}
+
+// Matrix text selection
+::selection {
+  background: var(--matrix-bright-green);
+  color: var(--bg-void);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: var(--matrix-bright-green);
+  color: var(--bg-void);
+  text-shadow: none;
+}

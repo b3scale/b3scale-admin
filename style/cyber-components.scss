@@ -1,0 +1,375 @@
+// 🚀 CYBER UI COMPONENTS 🚀
+
+// Matrix Cards with enhanced spacing and pink accents
+.card {
+  background: var(--bg-glass);
+  border: 2px solid var(--matrix-green);
+  border-radius: 12px;
+  padding: 30px;
+  margin: 30px 0;
+  box-shadow: 
+    var(--glow-matrix),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: var(--cyber-pink);
+    box-shadow: var(--glow-pink);
+    transform: translateY(-3px);
+  }
+  
+  .card-header {
+    background: var(--gradient-cyber);
+    color: var(--bg-void);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--cyber-pink);
+    padding: 20px 25px;
+    margin: -30px -30px 25px -30px;
+  }
+  
+  .card-body {
+    color: var(--matrix-green);
+    padding: 0;
+  }
+}
+
+// Cyber Buttons with enhanced spacing
+.btn {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid;
+  border-radius: 6px;
+  padding: 16px 32px;
+  margin: 10px 10px 10px 0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+.btn-primary {
+  background: var(--gradient-cyber);
+  border-color: var(--cyber-pink);
+  color: var(--bg-void);
+  box-shadow: var(--glow-pink);
+  
+  &:hover {
+    background: var(--cyber-pink);
+    box-shadow: var(--glow-pink), 0 0 40px var(--cyber-pink);
+    transform: translateY(-3px);
+  }
+}
+
+.btn-success {
+  background: transparent;
+  border-color: var(--matrix-green);
+  color: var(--matrix-green);
+  box-shadow: var(--glow-matrix);
+  
+  &:hover {
+    background: var(--matrix-green);
+    color: var(--bg-void);
+    box-shadow: var(--glow-matrix), 0 0 40px var(--matrix-green);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: #ff0000;
+  color: #ff0000;
+  box-shadow: 0 0 20px #ff0000;
+  
+  &:hover {
+    background: #ff0000;
+    color: var(--bg-void);
+    box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+    transform: translateY(-2px);
+  }
+}
+
+// Matrix Forms with balanced spacing and pink accents
+.form-control {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--matrix-green);
+  border-radius: 6px;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: var(--cyber-pink);
+    box-shadow: var(--glow-pink);
+    color: var(--cyber-pink);
+    outline: none;
+  }
+  
+  &::placeholder {
+    color: rgba(255, 0, 127, 0.5);
+    font-style: italic;
+  }
+}
+
+.form-label {
+  color: var(--cyber-pink);
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  margin-top: 5px;
+  display: block;
+}
+
+.form-text {
+  color: rgba(0, 255, 65, 0.7);
+  font-family: 'Courier New', monospace;
+  font-size: 0.8em;
+}
+
+// Cyber Alerts
+.alert {
+  border: 2px solid;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-cyber);
+    animation: cyber-loading 2s linear infinite;
+  }
+}
+
+@keyframes cyber-loading {
+  0% { transform: translateX(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.alert-danger {
+  background: rgba(255, 0, 127, 0.15);
+  border-color: var(--cyber-pink);
+  color: var(--cyber-pink);
+  box-shadow: var(--glow-pink);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.alert-success {
+  background: rgba(0, 255, 65, 0.15);
+  border-color: var(--matrix-green);
+  color: var(--matrix-green);
+  box-shadow: var(--glow-matrix);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.alert-info {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+// Cyberpunk Navigation - Fixed layout with proper spacing
+.navbar {
+  background: var(--bg-glass) !important;
+  border-bottom: 3px solid transparent;
+  border-image: var(--gradient-cyber) 1;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 127, 0.3),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 0.75rem 1.5rem !important;
+  
+  .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .navbar-brand {
+    color: var(--cyber-pink) !important;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: var(--glow-pink);
+    margin-right: auto;
+    
+    &:hover {
+      color: var(--matrix-bright-green) !important;
+      text-shadow: var(--glow-matrix-bright), 0 0 40px var(--matrix-bright-green);
+    }
+  }
+  
+  .navbar-nav {
+    margin-left: auto;
+  }
+  
+  .nav-link {
+    color: var(--matrix-green) !important;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    padding: 8px 12px !important;
+    
+    &:hover {
+      color: var(--cyber-pink) !important;
+      text-shadow: var(--glow-pink);
+      border-bottom: 2px solid var(--cyber-pink);
+    }
+  }
+}
+
+// Cyber Tables
+.table {
+  color: var(--cyber-cyan);
+  font-family: 'Courier New', monospace;
+  
+  th {
+    background: var(--gradient-cyber);
+    color: var(--bg-void);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--cyber-cyan);
+  }
+  
+  td {
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  tr:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  }
+}
+
+// Cyber List Groups
+.list-group-item {
+  background: var(--bg-glass);
+  border: 1px solid var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--cyber-pink);
+    color: var(--cyber-pink);
+    box-shadow: var(--glow-pink);
+    transform: translateX(5px);
+  }
+  
+  &.active {
+    background: var(--gradient-cyber);
+    border-color: var(--cyber-pink);
+    color: var(--bg-void);
+    box-shadow: var(--glow-pink);
+  }
+}
+
+// Cyber Modals
+.modal-content {
+  background: var(--bg-glass);
+  border: 2px solid var(--cyber-cyan);
+  border-radius: 8px;
+  box-shadow: var(--glow-cyan);
+  backdrop-filter: blur(20px);
+  
+  .modal-header {
+    background: var(--gradient-cyber);
+    color: var(--bg-void);
+    border-bottom: 2px solid var(--cyber-cyan);
+  }
+  
+  .modal-body {
+    color: var(--cyber-cyan);
+  }
+}
+
+// Cyber badges
+.badge {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  
+  &.bg-success {
+    background: var(--matrix-green) !important;
+    color: var(--bg-void) !important;
+    box-shadow: var(--glow-matrix);
+  }
+  
+  &.bg-danger {
+    background: var(--cyber-pink) !important;
+    color: var(--bg-void) !important;
+    box-shadow: var(--glow-pink);
+  }
+  
+  &.bg-info {
+    background: var(--cyber-cyan) !important;
+    color: var(--bg-void);
+    box-shadow: var(--glow-cyan);
+  }
+}
+
+// Cyber animations
+@keyframes cyber-glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+.cyber-glitch {
+  animation: cyber-glitch 0.3s ease-in-out infinite;
+}
+
+@keyframes cyber-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.cyber-float {
+  animation: cyber-float 3s ease-in-out infinite;
+}

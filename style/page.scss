@@ -17,27 +17,31 @@
 .page {
     display: flex;
     flex-direction: row;
+    min-height: calc(100vh - 56px);
 
     aside {
-        min-width: 450px;
-        padding-top: 56px;
+        min-width: 300px;
+        max-width: 350px;
+        padding-top: 0;
         display: flex;
         flex-direction: column;
-        flex: 0 1;
-        flex-basis: fit-content;
-        background: #000000;
-        box-shadow: 0px 0px 10px #222;
+        flex: 0 0 auto;
+        background: var(--bg-glass);
+        box-shadow: 0px 0px 10px var(--matrix-dark-green);
     }
 
     .nav-header {
         display: flex;
-        background: #222;
+        background: var(--bg-dark);
         padding: 15px 10px;
         justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid var(--matrix-green);
         ul {
           padding: 4px;
-          background: #333;
+          background: var(--bg-panel);
           border-radius: 8px;
+          border: 1px solid var(--matrix-green);
         }
     }
 
@@ -57,16 +61,17 @@
 
     main {
         flex: 1;
-        padding-top: 56px;
+        padding: 20px;
         overflow-y: auto;
+        background: var(--bg-void);
 
         h1 {
-            text-shadow: 0px -2px 0px #000000;
-            font-family: monospace;
-            font-size: 14pt;
-            position: absolute;
-            top: 16px;
-            z-index: 9999;
+            text-shadow: var(--glow-matrix);
+            font-family: 'Courier New', monospace;
+            font-size: 18pt;
+            margin-bottom: 20px;
+            color: var(--matrix-bright-green);
+            text-transform: uppercase;
         }
 
         .align-right {

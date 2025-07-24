@@ -1,0 +1,164 @@
+// 🔥 CYBERPUNK 2077 THEME 🔥
+// Total cyberpunk vibes - neon everything!
+
+// MATRIX COLOR PALETTE - Welcome to the Matrix! 💚
+:root {
+  // Matrix green shades - THE MATRIX LIVES HERE!
+  --matrix-green: #00ff41;
+  --matrix-dark-green: #008f11;
+  --matrix-bright-green: #39ff14;
+  --matrix-neon-green: #00ff00;
+  --matrix-digital-green: #00cc33;
+  
+  // Matrix accent colors
+  --cyber-pink: #ff007f;
+  --cyber-cyan: #00ffff;
+  --cyber-purple: #bf00ff;
+  --cyber-green: #00ff41;
+  --cyber-yellow: #ffff00;
+  --cyber-orange: #ff8c00;
+  
+  // Matrix background layers - deeper into the code
+  --bg-void: #000000;
+  --bg-dark: #001100;
+  --bg-darker: #002200;
+  --bg-panel: #003300;
+  --bg-glass: rgba(0, 17, 0, 0.3);
+  --bg-matrix: rgba(0, 255, 65, 0.05);
+  
+  // Matrix green glows - follow the white rabbit! 🐰
+  --glow-matrix: 0 0 20px var(--matrix-green), 0 0 40px var(--matrix-green), 0 0 80px var(--matrix-green);
+  --glow-matrix-bright: 0 0 10px var(--matrix-bright-green), 0 0 20px var(--matrix-bright-green), 0 0 40px var(--matrix-bright-green);
+  --glow-matrix-neon: 0 0 15px var(--matrix-neon-green), 0 0 30px var(--matrix-neon-green), 0 0 60px var(--matrix-neon-green);
+  
+  // Accent glows
+  --glow-pink: 0 0 20px var(--cyber-pink), 0 0 40px var(--cyber-pink), 0 0 80px var(--cyber-pink);
+  --glow-cyan: 0 0 20px var(--cyber-cyan), 0 0 40px var(--cyber-cyan), 0 0 80px var(--cyber-cyan);
+  --glow-purple: 0 0 20px var(--cyber-purple), 0 0 40px var(--cyber-purple), 0 0 80px var(--cyber-purple);
+  --glow-green: 0 0 20px var(--cyber-green), 0 0 40px var(--cyber-green), 0 0 80px var(--cyber-green);
+  
+  // Matrix gradient backgrounds - digital rain
+  --gradient-matrix: linear-gradient(135deg, var(--matrix-dark-green), var(--matrix-green), var(--matrix-bright-green));
+  --gradient-matrix-rain: linear-gradient(180deg, var(--matrix-bright-green), var(--matrix-green), transparent);
+  --gradient-void: linear-gradient(135deg, var(--bg-void), var(--bg-dark), var(--bg-darker));
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-pink), var(--cyber-purple), var(--cyber-cyan));
+  --gradient-glass: linear-gradient(135deg, 
+                     rgba(0, 255, 65, 0.1), 
+                     rgba(0, 204, 51, 0.1), 
+                     rgba(57, 255, 20, 0.1));
+}
+
+// Base cyber styling
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg-void);
+  color: var(--matrix-green);
+  font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+  overflow-x: hidden;
+}
+
+// Matrix background effect - Welcome to the real world
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 204, 51, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: matrix-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes matrix-pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+// Matrix grid overlay - The code is everywhere
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+  animation: matrix-grid-move 25s linear infinite;
+}
+
+@keyframes matrix-grid-move {
+  0% { transform: translate(0, 0); opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { transform: translate(40px, 40px); opacity: 0.8; }
+}
+
+// Matrix text effects - The truth is out there
+h1, h2, h3, h4, h5, h6 {
+  color: var(--matrix-bright-green);
+  text-shadow: var(--glow-matrix-bright);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+// Matrix links - Follow the white rabbit
+a {
+  color: var(--matrix-green);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: var(--matrix-bright-green);
+    text-shadow: var(--glow-matrix-bright);
+    text-decoration: underline;
+  }
+}
+
+// Cyber scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-cyber);
+  border-radius: 4px;
+  box-shadow: var(--glow-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-pink);
+  box-shadow: var(--glow-pink);
+}
+
+// Selection styling
+::selection {
+  background: var(--cyber-pink);
+  color: var(--bg-void);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: var(--cyber-pink);
+  color: var(--bg-void);
+  text-shadow: none;
+}

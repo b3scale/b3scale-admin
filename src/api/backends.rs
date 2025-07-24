@@ -3,6 +3,8 @@ use yew::{
     Properties,
 };
 
+use crate::api::auth::use_api_url;
+use crate::api::build_api_url;
 use crate::api::client::{use_fetch, Request, State};
 pub use b3scale_api::{Backend, BackendPatch, BackendRequest};
 
@@ -45,7 +47,9 @@ pub struct BackendsContextProps {
 #[function_component(BackendsContext)]
 pub fn backends_context(props: &BackendsContextProps) -> Html {
     let BackendsContextProps { children } = props;
-    let state = use_fetch::<Vec<Backend>>(list());
+    let api_url = use_api_url();
+    let url = build_api_url("/api/v1/backends", api_url.as_deref());
+    let state = use_fetch::<Vec<Backend>>(Request::get(&url));
     html! {
         <ContextProvider<State<Vec<Backend>>> context={state.clone()}>
           { for children.iter() }
@@ -71,7 +75,9 @@ pub fn use_backends() -> State<Vec<Backend>> {
 
 /// Hook to fetch a single backend
 pub fn use_backend(id: &str) -> State<Backend> {
-    let state = use_fetch::<Backend>(get(id));
+    let api_url = use_api_url();
+    let url = build_api_url(&format!("/api/v1/backends/{}", id), api_url.as_deref());
+    let state = use_fetch::<Backend>(Request::get(&url));
     // Trigger initial fetch immediately
     {
         let state = state.clone();

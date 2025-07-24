@@ -3,6 +3,8 @@ use yew::{
     Properties,
 };
 
+use crate::api::auth::use_api_url;
+use crate::api::build_api_url;
 use crate::api::client::{use_fetch, Request, State};
 pub use b3scale_api::{Frontend, FrontendPatch, FrontendRequest};
 
@@ -45,7 +47,9 @@ pub struct FrontendsContextProps {
 #[function_component(FrontendsContext)]
 pub fn frontends_context(props: &FrontendsContextProps) -> Html {
     let FrontendsContextProps { children } = props;
-    let state = use_fetch::<Vec<Frontend>>(list());
+    let api_url = use_api_url();
+    let url = build_api_url("/api/v1/frontends", api_url.as_deref());
+    let state = use_fetch::<Vec<Frontend>>(Request::get(&url));
     html! {
         <ContextProvider<State<Vec<Frontend>>> context={state.clone()}>
           { for children.iter() }
@@ -71,7 +75,9 @@ pub fn use_frontends() -> State<Vec<Frontend>> {
 
 /// Hook to fetch a single frontend
 pub fn use_frontend(id: &str) -> State<Frontend> {
-    let state = use_fetch::<Frontend>(get(id));
+    let api_url = use_api_url();
+    let url = build_api_url(&format!("/api/v1/frontends/{}", id), api_url.as_deref());
+    let state = use_fetch::<Frontend>(Request::get(&url));
     // Trigger initial fetch immediately
     {
         let state = state.clone();

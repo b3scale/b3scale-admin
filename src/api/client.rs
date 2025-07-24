@@ -3,7 +3,7 @@ use serde_json;
 use wasm_bindgen_futures::spawn_local;
 use yew::{use_effect_with_deps, use_state, UseStateHandle};
 
-use super::auth::use_access_token;
+use super::auth::{use_access_token, use_api_url};
 
 /// Reexport request for convenience
 pub use gloo_net::http::Request;
@@ -19,6 +19,8 @@ pub enum Error {
     NotFound,
     ValidationFailed(String),
     Client(String),
+    Network(String),
+    Cors(String),
     Server(ErrorResponse),
 }
 
@@ -31,9 +33,23 @@ impl std::fmt::Display for Error {
 impl Error {
     pub fn message(&self) -> String {
         match self {
-            Self::NotFound => "404 not found".into(),
+            Self::NotFound => "Resource not found (404)".into(),
             Self::ValidationFailed(msg) => msg.clone(),
             Self::Client(msg) => msg.clone(),
+            Self::Network(msg) => {
+                if msg.contains("TypeError: NetworkError when attempting to fetch resource") {
+                    "Cannot connect to API server - check if the API URL is correct and the server is running".to_string()
+                } else {
+                    format!("Network error: {}", msg)
+                }
+            },
+            Self::Cors(msg) => {
+                if msg.contains("CORS") {
+                    "CORS policy blocked the request - API server needs to allow requests from this domain".to_string()
+                } else {
+                    format!("CORS error: {}", msg)
+                }
+            },
             Self::Server(res) => res.message.clone(),
         }
     }
@@ -41,7 +57,23 @@ impl Error {
 
 impl From<gloo_net::Error> for Error {
     fn from(err: gloo_net::Error) -> Self {
-        Self::Client(err.to_string())
+        let error_string = err.to_string();
+        
+        // Categorize different types of network errors
+        if error_string.contains("NetworkError") {
+            if error_string.contains("CORS") || error_string.contains("cors") {
+                Self::Cors(error_string)
+            } else {
+                Self::Network(error_string)
+            }
+        } else if error_string.contains("CORS") || error_string.contains("cors") 
+                  || error_string.contains("Access-Control") {
+            Self::Cors(error_string)
+        } else if error_string.contains("fetch") || error_string.contains("network") {
+            Self::Network(error_string)
+        } else {
+            Self::Client(error_string)
+        }
     }
 }
 
@@ -75,9 +107,35 @@ impl Client {
         } else {
             match result.status() {
                 404 => Err(Error::NotFound),
+                401 => {
+                    // Try to get error details for 401 Unauthorized
+                    match result.json::<ErrorResponse>().await {
+                        Ok(err) => Err(Error::Server(err)),
+                        Err(_) => Err(Error::Client("401 Unauthorized - Invalid token or expired session".to_string()))
+                    }
+                },
+                403 => {
+                    match result.json::<ErrorResponse>().await {
+                        Ok(err) => Err(Error::Server(err)),
+                        Err(_) => Err(Error::Client("403 Forbidden - Access denied".to_string()))
+                    }
+                },
+                500..=599 => {
+                    // Server errors
+                    match result.json::<ErrorResponse>().await {
+                        Ok(err) => Err(Error::Server(err)),
+                        Err(_) => Err(Error::Server(ErrorResponse {
+                            message: format!("Server error ({})", result.status()),
+                            error: None
+                        }))
+                    }
+                },
                 _ => {
-                    let err: ErrorResponse = result.json().await?;
-                    Err(Error::Server(err))
+                    // Try to parse as ErrorResponse, fallback to generic error
+                    match result.json::<ErrorResponse>().await {
+                        Ok(err) => Err(Error::Server(err)),
+                        Err(_) => Err(Error::Client(format!("HTTP {} - {}", result.status(), result.status_text())))
+                    }
                 }
             }
         }
@@ -122,6 +180,7 @@ impl<T: DeserializeOwned + Clone> State<T> {
 /// requested type
 pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T> {
     let client = use_client();
+    let _api_url = use_api_url();
     let is_loading = use_state(|| false);
     let error = use_state(|| None);
     let result = use_state(|| None);
