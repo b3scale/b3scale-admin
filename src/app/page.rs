@@ -2,6 +2,7 @@ use yew::{function_component, html, Callback, Children, Properties};
 use yew_router::{hooks::use_history, prelude::*};
 
 use crate::{
+    api::auth::use_authentication,
     app::{nav::Link, router::Route},
 };
 
@@ -59,13 +60,33 @@ pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
 
 #[function_component(Header)]
 fn header() -> Html {
+    let auth = use_authentication();
+    let history = use_history().unwrap();
+    
+    let on_logout = {
+        let auth = auth.clone();
+        let history = history.clone();
+        Callback::from(move |_| {
+            let mut auth = auth.clone();
+            auth.logout();
+            history.push(Route::Authenticate);
+        })
+    };
+    
     html! {
         <header>
           <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
             <div class="container-fluid">
               <a class="navbar-brand" href="/">{"B3Scale Admin"}</a>
-            </div>
-            <div class="d-flex">
+              <div class="d-flex">
+                <button 
+                    type="button" 
+                    class="btn btn-outline-light btn-sm"
+                    onclick={on_logout}
+                >
+                    {"Logout"}
+                </button>
+              </div>
             </div>
           </nav>
         </header>
