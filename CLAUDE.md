@@ -16,6 +16,9 @@ trunk serve
 # Build for production
 trunk build
 
+# Build optimized release version
+trunk build --release
+
 # Clean build artifacts
 trunk clean
 ```
