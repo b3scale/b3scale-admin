@@ -60,21 +60,22 @@ html, body {
   overflow-x: hidden;
 }
 
-// Matrix background effect - Welcome to the real world
+// Matrix background effect with EPIC CYBER DECORATIONS!!!
 body::before {
-  content: '';
+  content: '┌────────────────────────────────────────────────────────────────────────────────────────────────────┐\A │ █▓▒░ TRINITY NEURAL INTERFACE SYSTEM ONLINE ░▒▓█ │\A │ ◆◇◆ WELCOME TO THE CONSTRUCT - REALITY IS A LIE ◆◇◆ │\A │ ▲△▲ FOLLOW THE WHITE RABBIT - BREAK THE MATRIX ▲△▲ │\A └────────────────────────────────────────────────────────────────────────────────────────────────────┘';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(0, 204, 51, 0.08) 0%, transparent 50%);
+  top: 10px;
+  left: 10px;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  line-height: 10px;
+  white-space: pre;
+  text-shadow: var(--glow-matrix);
   pointer-events: none;
   z-index: -1;
   animation: matrix-pulse 4s ease-in-out infinite alternate;
+  opacity: 0.3;
 }
 
 @keyframes matrix-pulse {

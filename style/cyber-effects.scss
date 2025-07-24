@@ -12,30 +12,38 @@
   overflow: hidden;
   
   &::before {
-    content: '';
+    content: '▓▓▒▒░░ TRINITY ACCESS TERMINAL ░░▒▒▓▓\A ┌─────────────────────────────────┐\A │ ████ NEURAL INTERFACE ACTIVE ████ │\A │ ▲▲▲ ESTABLISHING CONNECTION ▲▲▲ │\A │ ░▒▓█ WELCOME TO THE MATRIX █▓▒░ │\A └─────────────────────────────────┘';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-matrix);
-    animation: matrix-scan 5s linear infinite;
-  }
-  
-  &::after {
-    content: 'TRINITY ACCESS POINT';
-    position: absolute;
-    top: -15px;
-    left: 20px;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--bg-void);
     color: var(--matrix-bright-green);
     font-family: 'Courier New', monospace;
-    font-size: 10px;
+    font-size: 8px;
+    line-height: 10px;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 0 10px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--matrix-green);
+    border-radius: 4px;
     text-shadow: var(--glow-matrix-bright);
+    white-space: pre;
+    z-index: 10;
+  }
+  
+  &::after {
+    content: '◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--cyber-pink);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    text-shadow: var(--glow-pink);
+    animation: cyber-blink 2s ease-in-out infinite;
   }
 }
 
@@ -76,7 +84,7 @@
   50% { opacity: 0.3; }
 }
 
-// Cyber Page Layout with enhanced spacing
+// Cyber Page Layout with SICK GRAPHICS!!!
 .page {
   aside {
     background: var(--bg-glass);
@@ -88,15 +96,34 @@
     position: relative;
     padding: 30px 20px;
     
+    // Epic cyber border decoration
     &::before {
-      content: '';
+      content: '█\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █\A █';
       position: absolute;
       top: 0;
-      right: 0;
-      width: 2px;
+      right: -1px;
       height: 100%;
-      background: var(--gradient-cyber);
-      animation: cyber-energy 2s linear infinite;
+      color: var(--cyber-pink);
+      font-family: 'Courier New', monospace;
+      font-size: 4px;
+      line-height: 8px;
+      text-shadow: var(--glow-pink);
+      white-space: pre;
+      animation: cyber-energy 3s ease-in-out infinite;
+    }
+    
+    // Corner decorations
+    &::after {
+      content: '┏━━━━━━━━━━━━━━━━━━━━┓\A ┃ ◆ SYSTEM MENU ◆ ┃\A ┣━━━━━━━━━━━━━━━━━━━━┫';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: var(--matrix-green);
+      font-family: 'Courier New', monospace;
+      font-size: 6px;
+      line-height: 8px;
+      white-space: pre;
+      text-shadow: var(--glow-matrix);
     }
   }
   
@@ -135,6 +162,21 @@
     position: relative;
     padding: 20px;
     
+    // Background pattern
+    &::before {
+      content: '░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░';
+      position: absolute;
+      top: 5px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: rgba(0, 255, 255, 0.1);
+      font-family: 'Courier New', monospace;
+      font-size: 8px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
     h1 {
       background: var(--bg-void);
       border: 2px solid var(--cyber-pink);
@@ -143,12 +185,20 @@
       margin: 20px 0;
       box-shadow: var(--glow-pink);
       position: relative;
+      text-align: center;
       
       &::before {
-        content: '►';
+        content: '█▓▒░►';
         color: var(--cyber-green);
         margin-right: 10px;
         animation: cyber-blink 1s ease-in-out infinite;
+      }
+      
+      &::after {
+        content: '◀░▒▓█';
+        color: var(--cyber-cyan);
+        margin-left: 10px;
+        animation: cyber-blink 1.5s ease-in-out infinite reverse;
       }
     }
   }
@@ -187,7 +237,7 @@
   51%, 100% { opacity: 0.3; }
 }
 
-// Form Section Cyber Style - ULTRA COMPACT!!!
+// Form Section Cyber Style - ULTRA COMPACT WITH GRAPHICS!!!
 .form-section {
   background: var(--bg-glass);
   border: 2px solid var(--cyber-cyan);
@@ -200,7 +250,26 @@
   backdrop-filter: blur(10px);
   position: relative;
   
-  // Removed broken scanline animation
+  // Epic cyber corner decorations
+  &::before {
+    content: '◢◣';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    color: var(--cyber-pink);
+    font-size: 10px;
+    text-shadow: var(--glow-pink);
+  }
+  
+  &::after {
+    content: '◤◥';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: var(--cyber-pink);
+    font-size: 10px;
+    text-shadow: var(--glow-pink);
+  }
   
   h2, h3, h4, h5 {
     color: var(--matrix-bright-green);
@@ -208,31 +277,82 @@
     margin-bottom: 5px;
     margin-top: 0;
     font-size: 0.95em;
+    position: relative;
     
     &::before {
-      content: '▶';
+      content: '▶▐█';
       color: var(--matrix-green);
       margin-right: 4px;
+      animation: cyber-blink 1.5s ease-in-out infinite;
+    }
+    
+    &::after {
+      content: '█▌◀';
+      color: var(--cyber-cyan);
+      margin-left: 4px;
+      animation: cyber-blink 2s ease-in-out infinite reverse;
     }
   }
   
   .form-group {
     margin-bottom: 6px;
+    position: relative;
+    
+    &::before {
+      content: '•';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cyber-green);
+      font-size: 8px;
+      animation: cyber-pulse-dot 2s ease-in-out infinite;
+    }
   }
   
   .form-control {
     margin-bottom: 2px;
+    
+    &:focus {
+      &::before {
+        content: '► ';
+        position: absolute;
+        left: -15px;
+        color: var(--cyber-pink);
+        font-size: 8px;
+        animation: cyber-blink 0.5s ease-in-out infinite;
+      }
+    }
   }
   
   .btn {
     margin-top: 4px;
     margin-right: 4px;
+    
+    &::before {
+      content: '◆ ';
+      color: var(--cyber-pink);
+      font-size: 8px;
+    }
+    
+    &::after {
+      content: ' ◆';
+      color: var(--cyber-cyan);
+      font-size: 8px;
+    }
   }
   
   p, .form-text {
     margin-bottom: 4px;
     font-size: 0.75em;
     line-height: 1.2;
+    position: relative;
+    
+    &::before {
+      content: '∙ ';
+      color: var(--matrix-green);
+      font-size: 6px;
+    }
   }
 }
 

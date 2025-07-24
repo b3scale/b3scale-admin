@@ -1,6 +1,6 @@
 // 🚀 CYBER UI COMPONENTS 🚀
 
-// Matrix Cards with enhanced spacing and pink accents
+// Matrix Cards with CYBER GRAPHICS!!!
 .card {
   background: var(--bg-glass);
   border: 2px solid var(--matrix-green);
@@ -12,11 +12,38 @@
     inset 0 0 20px rgba(0, 255, 65, 0.1);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  position: relative;
+  
+  // Sick corner graphics
+  &::before {
+    content: '◢◣◤◥';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: var(--cyber-pink);
+    font-size: 8px;
+    text-shadow: var(--glow-pink);
+  }
+  
+  &::after {
+    content: '◥◤◣◢';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: var(--cyber-cyan);
+    font-size: 8px;
+    text-shadow: var(--glow-cyan);
+  }
   
   &:hover {
     border-color: var(--cyber-pink);
     box-shadow: var(--glow-pink);
     transform: translateY(-3px);
+    
+    &::before,
+    &::after {
+      animation: cyber-glitch 0.3s ease-in-out infinite;
+    }
   }
   
   .card-header {
@@ -199,7 +226,7 @@
   box-shadow: var(--glow-cyan);
 }
 
-// Cyberpunk Navigation - Fixed layout with proper spacing
+// Cyberpunk Navigation - EPIC GRAPHICS VERSION!!!
 .navbar {
   background: var(--bg-glass) !important;
   border-bottom: 3px solid transparent;
@@ -209,6 +236,21 @@
     inset 0 0 20px rgba(0, 255, 65, 0.1);
   backdrop-filter: blur(15px);
   padding: 0.75rem 1.5rem !important;
+  position: relative;
+  
+  // Sick cyber decorations
+  &::before {
+    content: '◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--cyber-cyan);
+    font-size: 6px;
+    text-shadow: var(--glow-cyan);
+    animation: cyber-float 3s ease-in-out infinite;
+  }
   
   .container-fluid {
     padding-left: 0 !important;
@@ -224,6 +266,21 @@
     letter-spacing: 2px;
     text-shadow: var(--glow-pink);
     margin-right: auto;
+    position: relative;
+    
+    &::before {
+      content: '▓█▓ ';
+      color: var(--matrix-green);
+      font-size: 12px;
+      animation: cyber-glitch 0.5s ease-in-out infinite;
+    }
+    
+    &::after {
+      content: ' ▓█▓';
+      color: var(--cyber-cyan);
+      font-size: 12px;
+      animation: cyber-glitch 0.7s ease-in-out infinite reverse;
+    }
     
     &:hover {
       color: var(--matrix-bright-green) !important;
@@ -243,11 +300,38 @@
     transition: all 0.3s ease;
     margin: 0 5px;
     padding: 8px 12px !important;
+    position: relative;
+    
+    &::before {
+      content: '◀';
+      position: absolute;
+      left: 0;
+      color: var(--cyber-pink);
+      font-size: 8px;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    &::after {
+      content: '▶';
+      position: absolute;
+      right: 0;
+      color: var(--cyber-pink);
+      font-size: 8px;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
     
     &:hover {
       color: var(--cyber-pink) !important;
       text-shadow: var(--glow-pink);
       border-bottom: 2px solid var(--cyber-pink);
+      
+      &::before,
+      &::after {
+        opacity: 1;
+        animation: cyber-blink 1s ease-in-out infinite;
+      }
     }
   }
 }
