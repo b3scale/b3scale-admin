@@ -1,28 +1,48 @@
 // 🚀 CYBER UI COMPONENTS 🚀
 
-// Matrix Cards with CYBER GRAPHICS!!!
+// RAINBOW COLORFUL Cards with TONS of graphics!!
 .card {
   background: var(--bg-glass);
-  border: 2px solid var(--matrix-green);
-  border-radius: 12px;
+  border: 3px solid transparent;
+  border-image: var(--gradient-electric) 1;
+  border-radius: 15px;
   padding: 30px;
   margin: 30px 0;
   box-shadow: 
-    var(--glow-matrix),
-    inset 0 0 20px rgba(0, 255, 65, 0.1);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+    var(--glow-turquoise),
+    var(--glow-violet),
+    inset 0 0 30px rgba(0, 255, 255, 0.1),
+    inset 0 0 30px rgba(255, 0, 255, 0.1);
+  backdrop-filter: blur(15px);
+  transition: all 0.6s ease;
   position: relative;
+  background-image: 
+    url('./cyber_graphic_2.png'),
+    url('./cyber_graphic_6.png'),
+    url('./cyber_graphic_12.png');
+  background-size: 
+    80% auto,
+    40% auto,
+    60% auto;
+  background-position: 
+    center,
+    top left,
+    bottom right;
+  background-repeat: no-repeat;
+  background-blend-mode: 
+    soft-light,
+    color-dodge,
+    multiply;
   
-  // Sick corner graphics
+  // Colorful corner graphics
   &::before {
     content: '◢◣◤◥';
     position: absolute;
     top: 5px;
     left: 5px;
-    color: var(--cyber-pink);
-    font-size: 8px;
-    text-shadow: var(--glow-pink);
+    color: var(--cyber-lime);
+    font-size: 10px;
+    text-shadow: var(--glow-lime);
   }
   
   &::after {
@@ -30,31 +50,46 @@
     position: absolute;
     bottom: 5px;
     right: 5px;
-    color: var(--cyber-cyan);
-    font-size: 8px;
-    text-shadow: var(--glow-cyan);
+    color: var(--cyber-coral);
+    font-size: 10px;
+    text-shadow: var(--glow-coral);
   }
   
   &:hover {
-    border-color: var(--cyber-pink);
-    box-shadow: var(--glow-pink);
-    transform: translateY(-3px);
+    border-image: var(--gradient-plasma) 1;
+    box-shadow: 
+      var(--glow-gold),
+      var(--glow-emerald),
+      var(--glow-rose);
+    transform: translateY(-2px);
     
-    &::before,
-    &::after {
-      animation: cyber-glitch 0.3s ease-in-out infinite;
-    }
+    background-image: 
+      url('./cyber_graphic_3.png'),
+      url('./cyber_graphic_7.png'),
+      url('./cyber_graphic_13.png');
   }
   
   .card-header {
-    background: var(--gradient-cyber);
+    background: var(--gradient-rainbow);
     color: var(--bg-void);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-bottom: 2px solid var(--cyber-pink);
+    border-bottom: 3px solid transparent;
+    border-image: var(--gradient-neon) 1;
     padding: 20px 25px;
     margin: -30px -30px 25px -30px;
+    background-image: 
+      url('./cyber_graphic_4.png'),
+      url('./cyber_graphic_8.png');
+    background-size: 
+      auto 100%,
+      50% auto;
+    background-position: 
+      left center,
+      right center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay, multiply;
   }
   
   .card-body {
@@ -63,19 +98,30 @@
   }
 }
 
-// Cyber Buttons with enhanced spacing
+// SUPER COLORFUL Cyber Buttons!!
 .btn {
   font-family: 'Courier New', monospace;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border: 2px solid;
-  border-radius: 6px;
+  border: 3px solid;
+  border-radius: 8px;
   padding: 16px 32px;
   margin: 10px 10px 10px 0;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease;
   position: relative;
   overflow: hidden;
+  background-image: 
+    url('./cyber_graphic_10.png'),
+    url('./cyber_graphic_14.png');
+  background-size: 
+    contain,
+    20% auto;
+  background-position: 
+    center,
+    top right;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, color-dodge;
   
   &::before {
     content: '';
@@ -84,8 +130,9 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
+    background: var(--gradient-neon);
+    opacity: 0.3;
+    transition: left 1s ease;
   }
   
   &:hover::before {
@@ -94,15 +141,19 @@
 }
 
 .btn-primary {
-  background: var(--gradient-cyber);
-  border-color: var(--cyber-pink);
+  background: var(--gradient-rainbow);
+  border-color: var(--cyber-magenta);
   color: var(--bg-void);
-  box-shadow: var(--glow-pink);
+  box-shadow: var(--glow-magenta), var(--glow-cyan);
   
   &:hover {
-    background: var(--cyber-pink);
-    box-shadow: var(--glow-pink), 0 0 40px var(--cyber-pink);
-    transform: translateY(-3px);
+    background: var(--gradient-plasma);
+    border-color: var(--cyber-gold);
+    box-shadow: 
+      var(--glow-gold), 
+      var(--glow-rose), 
+      0 0 30px var(--cyber-turquoise);
+    transform: translateY(-2px);
   }
 }
 
@@ -226,17 +277,35 @@
   box-shadow: var(--glow-cyan);
 }
 
-// Cyberpunk Navigation - EPIC GRAPHICS VERSION!!!
+// RAINBOW CYBERPUNK Navigation with ALL the colors!!
 .navbar {
   background: var(--bg-glass) !important;
-  border-bottom: 3px solid transparent;
-  border-image: var(--gradient-cyber) 1;
+  border-bottom: 4px solid transparent;
+  border-image: var(--gradient-rainbow) 1;
   box-shadow: 
     0 4px 20px rgba(255, 0, 127, 0.3),
+    0 8px 40px rgba(0, 255, 255, 0.2),
     inset 0 0 20px rgba(0, 255, 65, 0.1);
   backdrop-filter: blur(15px);
   padding: 0.75rem 1.5rem !important;
   position: relative;
+  background-image: 
+    url('./cyber_graphic_1.png'),
+    url('./cyber_graphic_5.png'),
+    url('./cyber_graphic_9.png');
+  background-size: 
+    auto 120%,
+    50% auto,
+    30% auto;
+  background-position: 
+    left center,
+    center,
+    right center;
+  background-repeat: no-repeat;
+  background-blend-mode: 
+    color-dodge,
+    overlay,
+    multiply;
   
   // Sick cyber decorations
   &::before {

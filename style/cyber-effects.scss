@@ -237,7 +237,7 @@
   51%, 100% { opacity: 0.3; }
 }
 
-// Form Section Cyber Style - ULTRA COMPACT WITH GRAPHICS!!!
+// Form Section Cyber Style - NO ANIMATION EVER!
 .form-section {
   background: var(--bg-glass);
   border: 2px solid var(--cyber-cyan);
@@ -250,7 +250,12 @@
   backdrop-filter: blur(10px);
   position: relative;
   
-  // Epic cyber corner decorations
+  // DESTROY ALL ANIMATIONS!
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+  // Static cyber corner decorations - NO MOVEMENT!
   &::before {
     content: '◢◣';
     position: absolute;
@@ -259,6 +264,8 @@
     color: var(--cyber-pink);
     font-size: 10px;
     text-shadow: var(--glow-pink);
+    animation: none !important;
+    transform: none !important;
   }
   
   &::after {
@@ -269,6 +276,8 @@
     color: var(--cyber-pink);
     font-size: 10px;
     text-shadow: var(--glow-pink);
+    animation: none !important;
+    transform: none !important;
   }
   
   h2, h3, h4, h5 {
@@ -283,14 +292,14 @@
       content: '▶▐█';
       color: var(--matrix-green);
       margin-right: 4px;
-      animation: cyber-blink 1.5s ease-in-out infinite;
+      // NO ANIMATION - stays still
     }
     
     &::after {
       content: '█▌◀';
       color: var(--cyber-cyan);
       margin-left: 4px;
-      animation: cyber-blink 2s ease-in-out infinite reverse;
+      // NO ANIMATION - stays still
     }
   }
   
@@ -306,7 +315,7 @@
       transform: translateY(-50%);
       color: var(--cyber-green);
       font-size: 8px;
-      animation: cyber-pulse-dot 2s ease-in-out infinite;
+      // NO ANIMATION - bullet stays still
     }
   }
   
@@ -320,7 +329,7 @@
         left: -15px;
         color: var(--cyber-pink);
         font-size: 8px;
-        animation: cyber-blink 0.5s ease-in-out infinite;
+        // NO ANIMATION - arrow stays still
       }
     }
   }

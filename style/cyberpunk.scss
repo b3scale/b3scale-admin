@@ -10,13 +10,23 @@
   --matrix-neon-green: #00ff00;
   --matrix-digital-green: #00cc33;
   
-  // Matrix accent colors
+  // TONS MORE CYBER COLORS!!
   --cyber-pink: #ff007f;
   --cyber-cyan: #00ffff;
   --cyber-purple: #bf00ff;
   --cyber-green: #00ff41;
   --cyber-yellow: #ffff00;
   --cyber-orange: #ff8c00;
+  --cyber-red: #ff0040;
+  --cyber-blue: #0080ff;
+  --cyber-lime: #80ff00;
+  --cyber-magenta: #ff00ff;
+  --cyber-turquoise: #00ff80;
+  --cyber-coral: #ff8040;
+  --cyber-violet: #8000ff;
+  --cyber-gold: #ffb000;
+  --cyber-emerald: #00b080;
+  --cyber-rose: #ff4080;
   
   // Matrix background layers - deeper into the code
   --bg-void: #000000;
@@ -31,17 +41,54 @@
   --glow-matrix-bright: 0 0 10px var(--matrix-bright-green), 0 0 20px var(--matrix-bright-green), 0 0 40px var(--matrix-bright-green);
   --glow-matrix-neon: 0 0 15px var(--matrix-neon-green), 0 0 30px var(--matrix-neon-green), 0 0 60px var(--matrix-neon-green);
   
-  // Accent glows
-  --glow-pink: 0 0 20px var(--cyber-pink), 0 0 40px var(--cyber-pink), 0 0 80px var(--cyber-pink);
-  --glow-cyan: 0 0 20px var(--cyber-cyan), 0 0 40px var(--cyber-cyan), 0 0 80px var(--cyber-cyan);
-  --glow-purple: 0 0 20px var(--cyber-purple), 0 0 40px var(--cyber-purple), 0 0 80px var(--cyber-purple);
-  --glow-green: 0 0 20px var(--cyber-green), 0 0 40px var(--cyber-green), 0 0 80px var(--cyber-green);
+  // ALL THE COLORFUL GLOWS!!
+  --glow-pink: 0 0 15px var(--cyber-pink), 0 0 30px var(--cyber-pink);
+  --glow-cyan: 0 0 15px var(--cyber-cyan), 0 0 30px var(--cyber-cyan);
+  --glow-purple: 0 0 15px var(--cyber-purple), 0 0 30px var(--cyber-purple);
+  --glow-green: 0 0 15px var(--cyber-green), 0 0 30px var(--cyber-green);
+  --glow-yellow: 0 0 15px var(--cyber-yellow), 0 0 30px var(--cyber-yellow);
+  --glow-orange: 0 0 15px var(--cyber-orange), 0 0 30px var(--cyber-orange);
+  --glow-red: 0 0 15px var(--cyber-red), 0 0 30px var(--cyber-red);
+  --glow-blue: 0 0 15px var(--cyber-blue), 0 0 30px var(--cyber-blue);
+  --glow-lime: 0 0 15px var(--cyber-lime), 0 0 30px var(--cyber-lime);
+  --glow-magenta: 0 0 15px var(--cyber-magenta), 0 0 30px var(--cyber-magenta);
+  --glow-turquoise: 0 0 15px var(--cyber-turquoise), 0 0 30px var(--cyber-turquoise);
+  --glow-coral: 0 0 15px var(--cyber-coral), 0 0 30px var(--cyber-coral);
+  --glow-violet: 0 0 15px var(--cyber-violet), 0 0 30px var(--cyber-violet);
+  --glow-gold: 0 0 15px var(--cyber-gold), 0 0 30px var(--cyber-gold);
+  --glow-emerald: 0 0 15px var(--cyber-emerald), 0 0 30px var(--cyber-emerald);
+  --glow-rose: 0 0 15px var(--cyber-rose), 0 0 30px var(--cyber-rose);
   
   // Matrix gradient backgrounds - digital rain
   --gradient-matrix: linear-gradient(135deg, var(--matrix-dark-green), var(--matrix-green), var(--matrix-bright-green));
   --gradient-matrix-rain: linear-gradient(180deg, var(--matrix-bright-green), var(--matrix-green), transparent);
   --gradient-void: linear-gradient(135deg, var(--bg-void), var(--bg-dark), var(--bg-darker));
-  --gradient-cyber: linear-gradient(135deg, var(--cyber-pink), var(--cyber-purple), var(--cyber-cyan));
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-pink), var(--cyber-purple), var(--cyber-cyan), var(--cyber-yellow), var(--cyber-orange));
+  --gradient-rainbow: linear-gradient(90deg, 
+    var(--cyber-red) 0%, 
+    var(--cyber-orange) 14%, 
+    var(--cyber-yellow) 28%, 
+    var(--cyber-lime) 42%, 
+    var(--cyber-cyan) 57%, 
+    var(--cyber-blue) 71%, 
+    var(--cyber-purple) 85%, 
+    var(--cyber-magenta) 100%);
+  --gradient-neon: linear-gradient(45deg, 
+    var(--cyber-pink), 
+    var(--cyber-cyan), 
+    var(--cyber-lime), 
+    var(--cyber-violet), 
+    var(--cyber-coral));
+  --gradient-electric: linear-gradient(180deg, 
+    var(--cyber-turquoise), 
+    var(--cyber-magenta), 
+    var(--cyber-gold), 
+    var(--cyber-emerald));
+  --gradient-plasma: radial-gradient(circle, 
+    var(--cyber-rose), 
+    var(--cyber-violet), 
+    var(--cyber-blue), 
+    var(--cyber-cyan));
   --gradient-glass: linear-gradient(135deg, 
                      rgba(0, 255, 65, 0.1), 
                      rgba(0, 204, 51, 0.1), 
@@ -74,7 +121,7 @@ body::before {
   text-shadow: var(--glow-matrix);
   pointer-events: none;
   z-index: -1;
-  animation: matrix-pulse 4s ease-in-out infinite alternate;
+  animation: matrix-pulse 10s ease-in-out infinite alternate;
   opacity: 0.3;
 }
 
