@@ -58,20 +58,12 @@ body {
 
 // Trinity Access Point with AI graphics
 .box-authenticate {
-  background-image: 
-    url('/public/cyber_graphic_4.png'),
-    url('/public/cyber_graphic_5.png');
-  background-size: contain, cover;
-  background-position: top center, center;
-  background-repeat: no-repeat, no-repeat;
-  background-blend-mode: overlay, multiply;
+  background-image: none;
+  /* Removed busy background graphics for cleaner login */
   
   &::before {
-    background-image: url('/public/cyber_graphic_6.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.8;
+    background-image: none;
+    /* Removed background graphic for simpler look */
   }
 }
 
