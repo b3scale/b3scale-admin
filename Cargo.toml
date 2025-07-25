@@ -20,7 +20,7 @@ gloo-net = "0.2"
 wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 web-sys = "0.3"
-jwt = "0.16"
+jsonwebtoken = "9.0"
 sha2 = "0.10"
 hmac = "0.12"
 serde = { version = "1", features = [ "derive" ] }

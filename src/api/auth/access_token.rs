@@ -1,16 +1,22 @@
-use hmac::{Hmac, Mac};
-use jwt::SignWithKey;
-use sha2::Sha384;
-use std::collections::BTreeMap;
+use jsonwebtoken::{encode, EncodingKey, Header, Algorithm};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Claims {
+    sub: String,
+    scope: String,
+}
 
 /// Create an JWT access admin token
 pub fn new_access_token(secret: &str) -> String {
-    let secret = secret.as_bytes();
-    let key: Hmac<Sha384> = Hmac::new_from_slice(secret).unwrap();
-    let mut claims = BTreeMap::new();
-    // Set sub and scope
-    claims.insert("sub", "b3scale-admin");
-    claims.insert("scope", "b3scale b3scale:node b3scale:admin");
-    let token_str = claims.sign_with_key(&key).unwrap();
+    let claims = Claims {
+        sub: "b3scale-admin".to_string(),
+        scope: "b3scale b3scale:node b3scale:admin".to_string(),
+    };
+    
+    let key = EncodingKey::from_secret(secret.as_ref());
+    let header = Header::new(Algorithm::HS384);
+    
+    let token_str = encode(&header, &claims, &key).unwrap();
     token_str
 }
