@@ -1,5 +1,6 @@
 pub mod api;
 pub mod app;
+pub mod components;
 
 #[cfg(test)]
 mod tests {

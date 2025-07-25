@@ -4,6 +4,8 @@ use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
 use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
 
+use crate::components::SvgCheckbox;
+
 use b3scale_api::{
     AttendeesLimitSettings, DefaultPresentationSettings, Frontend, FrontendConfig, 
     FrontendConfigPatch, FrontendPatch, FrontendRequest, FrontendSettings
@@ -168,14 +170,6 @@ pub fn form(props: &FormProps) -> Html {
         })
     };
     
-    let on_active_change = {
-        let active = active.clone();
-        Callback::from(move |e: yew::Event| {
-            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
-                active.set(input.checked());
-            }
-        })
-    };
     
     let on_account_ref_change = {
         let account_ref = account_ref.clone();
@@ -209,14 +203,6 @@ pub fn form(props: &FormProps) -> Html {
         })
     };
     
-    let on_presentation_force_change = {
-        let presentation_force = presentation_force.clone();
-        Callback::from(move |e: yew::Event| {
-            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
-                presentation_force.set(input.checked());
-            }
-        })
-    };
     
     // Note: recordings visibility handler removed - no longer in API
     
@@ -445,19 +431,16 @@ pub fn form(props: &FormProps) -> Html {
             </div>
             
             <div class="form-group form-section">
-                <div class="form-check form-switch">
-                    <input 
-                        class="form-check-input" 
-                        type="checkbox" 
-                        id="activeSwitch"
-                        checked={*active}
-                        onchange={on_active_change}
-                        disabled={*is_loading}
-                    />
-                    <label class="form-check-label" for="activeSwitch">
-                        {"Active"}
-                    </label>
-                </div>
+                <SvgCheckbox 
+                    checked={*active}
+                    onchange={{
+                        let active = active.clone();
+                        Callback::from(move |checked| active.set(checked))
+                    }}
+                    disabled={Some(*is_loading)}
+                    id={Some("activeSwitch".to_string())}
+                    label={Some("Active".to_string())}
+                />
             </div>
             
             // Attendee Limit Settings
@@ -734,19 +717,16 @@ pub fn form(props: &FormProps) -> Html {
                     />
                 </div>
                 
-                <div class="form-check form-switch">
-                    <input 
-                        class="form-check-input" 
-                        type="checkbox" 
-                        id="presentationForceSwitch"
-                        checked={*presentation_force}
-                        onchange={on_presentation_force_change}
-                        disabled={*is_loading}
-                    />
-                    <label class="form-check-label" for="presentationForceSwitch">
-                        {"Force Override (override any presentation from frontend)"}
-                    </label>
-                </div>
+                <SvgCheckbox 
+                    checked={*presentation_force}
+                    onchange={{
+                        let presentation_force = presentation_force.clone();
+                        Callback::from(move |checked| presentation_force.set(checked))
+                    }}
+                    disabled={Some(*is_loading)}
+                    id={Some("presentationForceSwitch".to_string())}
+                    label={Some("Force Override (override any presentation from frontend)".to_string())}
+                />
             </section>
             
             
