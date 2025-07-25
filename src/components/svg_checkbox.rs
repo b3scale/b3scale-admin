@@ -1,4 +1,4 @@
-use yew::{function_component, html, Properties, Callback};
+use yew::{function_component, html, Properties, Callback, Html};
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct CyberSliderProps {

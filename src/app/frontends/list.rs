@@ -1,6 +1,6 @@
 use web_sys::HtmlInputElement;
-use yew::{function_component, html, use_state, Callback, TargetCast};
-use yew_router::{hooks::use_history, prelude::*};
+use yew::{function_component, html, use_state, Callback, TargetCast, Html};
+use yew_router::{hooks::use_navigator, prelude::*};
 
 use crate::{
     api::frontends::use_frontends,
@@ -9,7 +9,7 @@ use crate::{
 
 #[function_component(List)]
 pub fn list() -> Html {
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let frontends_ctx = use_frontends();
     let search_term = use_state(|| String::new());
     
@@ -83,7 +83,7 @@ pub fn list() -> Html {
                             let history = history.clone();
                             let frontend_id = frontend_id.clone();
                             Callback::from(move |_| {
-                                history.push(Route::Frontends { id: frontend_id.clone() });
+                                history.push(&Route::Frontends { id: frontend_id.clone() });
                             })
                         };
                         

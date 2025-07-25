@@ -1,7 +1,7 @@
 use gloo_console::log;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
+use yew::{function_component, html, use_effect_with, use_state, Callback, Properties, TargetCast, Html};
 
 use b3scale_api::{
     backend::{AdminState, NodeState},
@@ -54,7 +54,8 @@ pub fn form(props: &FormProps) -> Html {
         let load_factor = load_factor.clone();
         let tags = tags.clone();
         
-        use_effect_with_deps(
+        use_effect_with(
+            backend.clone(),
             move |backend_option| {
                 if let Some(b) = backend_option {
                     // Update basic fields
@@ -75,7 +76,6 @@ pub fn form(props: &FormProps) -> Html {
                 }
                 || ()
             },
-            backend.clone(),
         );
     }
     
@@ -150,7 +150,7 @@ pub fn form(props: &FormProps) -> Html {
         let backend = backend.clone();
         let on_save = on_save.clone();
         
-        Callback::from(move |e: web_sys::FocusEvent| {
+        Callback::from(move |e: web_sys::SubmitEvent| {
             e.prevent_default();
             
             let client = client.clone();

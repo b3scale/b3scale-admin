@@ -1,5 +1,5 @@
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties};
-use yew_router::{hooks::use_history, prelude::*};
+use yew::{function_component, html, use_effect_with, use_state, Callback, Properties, Html};
+use yew_router::{hooks::use_navigator, prelude::*};
 
 use crate::{
     api::frontends::{use_frontend, use_frontends},
@@ -14,7 +14,7 @@ pub struct FrontendsPageProps {
 #[function_component(FrontendsPage)]
 pub fn frontends_page(props: &FrontendsPageProps) -> Html {
     let FrontendsPageProps { id } = props;
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let frontends_ctx = use_frontends();
     
     // Fetch specific frontend if ID is provided
@@ -34,7 +34,8 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
         } else {
             None
         };
-        use_effect_with_deps(
+        use_effect_with(
+            (id.clone(), frontend_result),
             move |(id, frontend_result)| {
                 if let Some(frontend) = frontend_result {
                     current_frontend.set(Some(frontend.clone()));
@@ -45,7 +46,6 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
                 }
                 || ()
             },
-            (id.clone(), frontend_result),
         );
     }
     
@@ -56,7 +56,7 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
             // Refresh the list
             frontends_ctx.fetch();
             // Navigate to the frontend
-            history.push(Route::Frontends { id: frontend.id.clone() });
+            history.push(&Route::Frontends { id: frontend.id.clone() });
         })
     };
     
@@ -67,7 +67,7 @@ pub fn frontends_page(props: &FrontendsPageProps) -> Html {
             // Refresh the list
             frontends_ctx.fetch();
             // Navigate to frontends list
-            history.push(Route::FrontendsNew);
+            history.push(&Route::FrontendsNew);
         })
     };
     

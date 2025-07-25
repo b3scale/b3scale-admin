@@ -1,12 +1,18 @@
 use serde::{de::DeserializeOwned, Deserialize};
 use serde_json;
 use wasm_bindgen_futures::spawn_local;
-use yew::{use_effect_with_deps, use_state, UseStateHandle};
+use yew::{use_effect_with, use_state, UseStateHandle, hook};
 
 use super::auth::{use_access_token, use_api_url};
 
 /// Reexport request for convenience
-pub use gloo_net::http::Request;
+pub use gloo_net::http::{Request, RequestBuilder};
+
+/// A wrapper that can hold either a RequestBuilder or a Request
+pub enum HttpRequest {
+    Builder(RequestBuilder),
+    Request(Request),
+}
 
 #[derive(Deserialize, Clone, Debug, PartialEq)]
 pub struct ErrorResponse {
@@ -91,12 +97,45 @@ impl Client {
     }
 
     /// Fetch performs the request and decodes the result
-    pub async fn fetch<T: DeserializeOwned>(&self, req: Request) -> Result<T> {
+    pub async fn fetch<T: DeserializeOwned>(&self, req: HttpRequest) -> Result<T> {
         let Self(auth_token) = self;
         let bearer = format!("Bearer {}", auth_token);
-        let req = req.header("Authorization", &bearer);
+        
+        let result = match req {
+            HttpRequest::Builder(builder) => {
+                let req = builder.header("Authorization", &bearer);
+                req.send().await?
+            },
+            HttpRequest::Request(request) => {
+                // For Request, we need to clone and add header - this is tricky
+                // For now, let's create a new request with the same method and URL
+                // This is not ideal but works around the limitation
+                // TODO: Find a better way to add headers to existing Request
+                let headers = request.headers();
+                headers.set("Authorization", &bearer);
+                request.send().await?
+            }
+        };
+        
+        self.handle_response(result).await
+    }
 
-        let result = req.send().await?;
+    /// Fetch with JSON body
+    pub async fn fetch_json<T: DeserializeOwned, B: serde::Serialize>(&self, req: RequestBuilder, body: &B) -> Result<T> {
+        let Self(auth_token) = self;
+        let bearer = format!("Bearer {}", auth_token);
+        let json_body = serde_json::to_string(body).map_err(|e| Error::Client(format!("JSON serialization error: {}", e)))?;
+        let req_with_body = req
+            .header("Authorization", &bearer)
+            .header("Content-Type", "application/json")
+            .body(json_body)?;
+
+        let result = req_with_body.send().await?;
+        self.handle_response(result).await
+    }
+
+    /// Handle HTTP response
+    async fn handle_response<T: DeserializeOwned>(&self, result: gloo_net::http::Response) -> Result<T> {
         
         if result.ok() {
             let response_text = result.text().await?;
@@ -143,6 +182,7 @@ impl Client {
 }
 
 /// Provide a configured client by using the auth context
+#[hook]
 pub fn use_client() -> Client {
     let access_token = use_access_token().unwrap_or("".into());
     Client::new(&access_token)
@@ -178,7 +218,8 @@ impl<T: DeserializeOwned + Clone> State<T> {
 
 /// Use request returns a state object wrapping the
 /// requested type
-pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T> {
+#[hook]
+pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: HttpRequest) -> State<T> {
     let client = use_client();
     let _api_url = use_api_url();
     let is_loading = use_state(|| false);
@@ -198,7 +239,8 @@ pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T
     {
         let state = state.clone();
         let fetch = fetch.clone();
-        use_effect_with_deps(
+        use_effect_with(
+            *fetch,
             move |_| {
                 if *state.fetch == 0 {
                     // Skip initial fetch
@@ -220,7 +262,6 @@ pub fn use_fetch<T: DeserializeOwned + Clone + 'static>(req: Request) -> State<T
                 }
                 || ()
             },
-            *fetch,
         );
     }
     state

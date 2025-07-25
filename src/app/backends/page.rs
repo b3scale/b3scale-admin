@@ -1,5 +1,5 @@
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties};
-use yew_router::{hooks::use_history, prelude::*};
+use yew::{function_component, html, use_effect_with, use_state, Callback, Properties, Html};
+use yew_router::{hooks::use_navigator, prelude::*};
 
 use crate::{
     api::backends::{use_backend, use_backends},
@@ -14,7 +14,7 @@ pub struct BackendsPageProps {
 #[function_component(BackendsPage)]
 pub fn backends_page(props: &BackendsPageProps) -> Html {
     let BackendsPageProps { id } = props;
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let backends_ctx = use_backends();
     
     // Fetch specific backend if ID is provided
@@ -34,7 +34,8 @@ pub fn backends_page(props: &BackendsPageProps) -> Html {
         } else {
             None
         };
-        use_effect_with_deps(
+        use_effect_with(
+            (id.clone(), backend_result),
             move |(id, backend_result)| {
                 if let Some(backend) = backend_result {
                     current_backend.set(Some(backend.clone()));
@@ -45,7 +46,6 @@ pub fn backends_page(props: &BackendsPageProps) -> Html {
                 }
                 || ()
             },
-            (id.clone(), backend_result),
         );
     }
     
@@ -56,7 +56,7 @@ pub fn backends_page(props: &BackendsPageProps) -> Html {
             // Refresh the list
             backends_ctx.fetch();
             // Navigate to the backend
-            history.push(Route::Backends { id: backend.id.clone() });
+            history.push(&Route::Backends { id: backend.id.clone() });
         })
     };
     
@@ -67,7 +67,7 @@ pub fn backends_page(props: &BackendsPageProps) -> Html {
             // Refresh the list
             backends_ctx.fetch();
             // Navigate to backends list
-            history.push(Route::BackendsNew);
+            history.push(&Route::BackendsNew);
         })
     };
     

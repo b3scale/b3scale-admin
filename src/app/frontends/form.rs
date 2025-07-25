@@ -2,7 +2,7 @@ use gloo_console::log;
 use std::collections::HashMap;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
+use yew::{function_component, html, use_effect_with, use_state, Callback, Properties, TargetCast, Html};
 
 use crate::components::CyberSlider;
 
@@ -99,7 +99,8 @@ pub fn form(props: &FormProps) -> Html {
         let presentation_force = presentation_force.clone();
         let required_tags = required_tags.clone();
         
-        use_effect_with_deps(
+        use_effect_with(
+            frontend.clone(),
             move |frontend_option| {
                 if let Some(f) = frontend_option {
                     // Update basic fields
@@ -145,7 +146,6 @@ pub fn form(props: &FormProps) -> Html {
                 }
                 || ()
             },
-            frontend.clone(),
         );
     }
     
@@ -254,7 +254,7 @@ pub fn form(props: &FormProps) -> Html {
         let frontend = frontend.clone();
         let on_save = on_save.clone();
         
-        Callback::from(move |e: web_sys::FocusEvent| {
+        Callback::from(move |e: web_sys::SubmitEvent| {
             e.prevent_default();
             
             let client = client.clone();

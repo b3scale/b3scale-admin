@@ -1,5 +1,5 @@
-use yew::{function_component, html, Callback, Children, Properties};
-use yew_router::{hooks::use_history, prelude::*};
+use yew::{function_component, html, Callback, Children, Properties, Html};
+use yew_router::{hooks::use_navigator, prelude::*};
 
 use crate::{
     api::auth::use_authentication,
@@ -13,7 +13,7 @@ pub struct PageSelectProps {
 
 #[function_component(PageSelect)]
 pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     
     let (page_title, create_route) = match active.as_str() {
         "frontends" => ("Frontends", Route::FrontendsNew),
@@ -25,7 +25,7 @@ pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
         let history = history.clone();
         let create_route = create_route.clone();
         Callback::from(move |_| {
-            history.push(create_route.clone());
+            history.push(&create_route);
         })
     };
     
@@ -61,7 +61,7 @@ pub fn page_select(PageSelectProps { active, .. }: &PageSelectProps) -> Html {
 #[function_component(Header)]
 fn header() -> Html {
     let auth = use_authentication();
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     
     let on_logout = {
         let auth = auth.clone();
@@ -69,7 +69,7 @@ fn header() -> Html {
         Callback::from(move |_| {
             let mut auth = auth.clone();
             auth.logout();
-            history.push(Route::Authenticate);
+            history.push(&Route::Authenticate);
         })
     };
     

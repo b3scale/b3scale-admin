@@ -1,7 +1,7 @@
 use yew::{function_component, html, use_effect, Html};
 use yew_router::{
     history::History,
-    hooks::{use_history, use_route},
+    hooks::{use_navigator, use_route},
     Routable, Switch,
 };
 
@@ -54,20 +54,20 @@ fn switch(route: &Route) -> Html {
 
 #[function_component(Router)]
 pub fn router() -> Html {
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let auth = use_authentication();
     let route = use_route().unwrap_or(Route::Start);
     {
         // Navigate to auth page
         use_effect(move || {
             if route != Route::Authenticate && !auth.is_authenticated() {
-                history.replace(Route::Authenticate);
+                history.replace(&Route::Authenticate);
             };
             || ()
         });
     }
     html! {
-        <Switch<Route> render={Switch::render(switch)} />
+        <Switch<Route> render={|route: Route| switch(&route)} />
     }
 }
 
@@ -81,11 +81,11 @@ pub fn not_found() -> Html {
 #[function_component(Start)]
 pub fn start() -> Html {
     let auth = use_authentication();
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
 
     use_effect(move || {
         if auth.is_authenticated() {
-            history.replace(Route::FrontendsNew);
+            history.replace(&Route::FrontendsNew);
         };
         || ()
     });

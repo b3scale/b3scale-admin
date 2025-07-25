@@ -3,7 +3,7 @@ use b3scale_admin::{
     app::Router,
 };
 
-use yew::{function_component, html};
+use yew::{function_component, html, Html, Renderer};
 use yew_router::BrowserRouter;
 
 #[function_component(App)]
@@ -22,5 +22,5 @@ fn app() -> Html {
 }
 
 fn main() {
-    yew::start_app::<App>();
+    Renderer::<App>::new().render();
 }

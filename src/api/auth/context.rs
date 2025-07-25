@@ -4,7 +4,7 @@ use gloo::{
 };
 use wasm_bindgen_futures::spawn_local;
 use yew::{
-    function_component, html, use_context, use_state, Children, ContextProvider, Properties,
+    function_component, html, use_context, use_state, hook, Children, ContextProvider, Html, Properties,
     UseStateHandle,
 };
 
@@ -129,18 +129,21 @@ pub fn authentication_context(props: &AuthenticationContextProps) -> Html {
 }
 
 /// Use the authentication API
+#[hook]
 pub fn use_authentication() -> Context {
     let api = use_context::<Context>().expect("context missing");
     api
 }
 
 /// Retrieve the access token from the api state
+#[hook]
 pub fn use_access_token() -> Option<String> {
     let api = use_authentication();
     (*api.access_token).clone()
 }
 
 /// Retrieve the API URL from the api state
+#[hook]
 pub fn use_api_url() -> Option<String> {
     let api = use_authentication();
     (*api.api_url).clone()

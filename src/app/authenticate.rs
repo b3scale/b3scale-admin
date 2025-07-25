@@ -1,14 +1,15 @@
 use gloo::console::log;
 use web_sys::HtmlInputElement;
 use yew::{
-    events::{FocusEvent, KeyboardEvent},
+    events::{KeyboardEvent, SubmitEvent},
     function_component, html, use_effect, use_node_ref, use_state, Callback, NodeRef, Properties,
+    Html,
 };
-use yew_router::{history::History, hooks::use_history};
+use yew_router::hooks::use_navigator;
 
 use crate::{api::auth::use_authentication, app::router::Route};
 
-fn use_input_ref(node: &NodeRef) -> Option<String> {
+fn get_input_value(node: &NodeRef) -> Option<String> {
     let node = node.clone();
     match node.cast::<HtmlInputElement>() {
         Some(input) => {
@@ -52,11 +53,11 @@ fn form(props: &FormProps) -> Html {
         let token_ref = token_ref.clone();
         let secret_ref = secret_ref.clone();
         let api_url_ref = api_url_ref.clone();
-        Callback::from(move |ev: FocusEvent| {
+        Callback::from(move |ev: SubmitEvent| {
             ev.prevent_default();
-            let token = use_input_ref(&token_ref);
-            let secret = use_input_ref(&secret_ref);
-            let api_url = use_input_ref(&api_url_ref).unwrap_or_else(|| "".to_string());
+            let token = get_input_value(&token_ref);
+            let secret = get_input_value(&secret_ref);
+            let api_url = get_input_value(&api_url_ref).unwrap_or_else(|| "".to_string());
             on_submit_cb.emit(FormData {
                 token: token.clone(),
                 secret: secret.clone(),
@@ -77,8 +78,8 @@ fn form(props: &FormProps) -> Html {
         let api_url_ref = api_url_ref.clone();
         let on_submit_cb = on_submit_cb.clone();
         Callback::from(move |_: KeyboardEvent| {
-            let token = use_input_ref(&token_ref);
-            let api_url = use_input_ref(&api_url_ref).unwrap_or_else(|| "".to_string());
+            let token = get_input_value(&token_ref);
+            let api_url = get_input_value(&api_url_ref).unwrap_or_else(|| "".to_string());
             if let Some(token) = token {
                 on_submit_cb.emit(FormData {
                     secret: None,
@@ -190,12 +191,12 @@ pub fn authenticate_page() -> Html {
     };
 
     {
-        let history = use_history().unwrap();
+        let navigator = use_navigator().unwrap();
         let auth = auth.clone();
         use_effect(move || {
             // Navigate to start if authenticated
             if auth.is_authenticated() {
-                history.replace(Route::Start);
+                navigator.replace(&Route::Start);
             }
             || ()
         });

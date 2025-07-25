@@ -1,9 +1,10 @@
 use yew::{
     classes, events::MouseEvent, function_component, html, Callback, Children, Classes, Properties,
+    Html,
 };
 use yew_router::{
     history::History,
-    hooks::{use_history, use_route},
+    hooks::{use_navigator, use_route},
     Routable,
 };
 
@@ -40,7 +41,7 @@ pub fn link<T: Routable + 'static>(props: &LinkProps<T>) -> Html {
         class,
         active,
     } = props.clone();
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let route: T = use_route().unwrap();
     let active = if let Some(a) = active {
         a
@@ -54,7 +55,7 @@ pub fn link<T: Routable + 'static>(props: &LinkProps<T>) -> Html {
         let target = to.clone();
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            history.push(target.clone());
+            history.push(&target);
         })
     };
 
@@ -78,7 +79,7 @@ pub fn button<T: Routable + 'static>(props: &LinkProps<T>) -> Html {
         class,
         ..
     } = props;
-    let history = use_history().unwrap();
+    let history = use_navigator().unwrap();
     let route: T = use_route().unwrap();
     let active = &route == to;
     let href = to.to_owned().to_path();
@@ -88,7 +89,7 @@ pub fn button<T: Routable + 'static>(props: &LinkProps<T>) -> Html {
         let target = to.clone();
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            history.push(target.clone());
+            history.push(&target);
         })
     };
 
