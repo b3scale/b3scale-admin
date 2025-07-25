@@ -38,11 +38,12 @@ b3scale-admin is a **web-based administration interface** for [b3scale](https://
 ## ✨ Features That Hit Different
 
 - **🦀 Pure Rust/WASM** - Zero JavaScript, maximum performance
-- **🔐 JWT Authentication** - Secure token-based auth system
+- **🔐 JWT Authentication** - Secure token-based auth system with modern `jsonwebtoken` crate
 - **🎨 Vibec0re Dark Theme** - Beautiful Bootstrap 5 dark theme for late-night coding
 - **⚡ Real-time Updates** - Instant feedback on all operations
 - **📱 Responsive AF** - Works flawlessly on desktop and mobile
 - **🔥 1337 Dev Setup** - Nix flakes for the most elite development experience
+- **🔄 Fresh Dependencies** - Recently updated to latest compatible versions
 
 ## 🛠️ Tech Stack (The Good Stuff)
 
@@ -321,6 +322,7 @@ cargo install grass
 - 🎨 Use `cargo fmt` for consistent formatting  
 - 📦 SCSS compiles automatically via pre-build hooks
 - 🔥 Use the Nix environment for best experience
+- 🔄 **Fresh Dependencies** - Updated to `jsonwebtoken` 9.0 and latest compatible versions
 
 ---
 
