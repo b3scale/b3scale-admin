@@ -1,38 +1,56 @@
-{ pkgs ? import <nixpkgs> {} }:
-pkgs.mkShell rec {
-  buildInputs = with pkgs; [
-    pkgconfig
-    openssl
-    rustup
-    llvmPackages_latest.llvm
-    llvmPackages_latest.bintools
-    llvmPackages_latest.lld
-    zlib.out
-  ];
-  RUSTC_VERSION = "stable";
-  LIBCLANG_PATH = pkgs.lib.makeLibraryPath [ pkgs.llvmPackages_latest.libclang.lib ];
-  HISTFILE = toString ./.history;
-  shellHook = ''
-    export PATH=$PATH:~/.cargo/bin
-    export PATH=$PATH:~/.rustup/toolchains/$RUSTC_VERSION-x86_64-unknown-linux-gnu/bin/
+{ pkgs ? import <nixpkgs> {
+    overlays = [ (import (fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz")) ];
+  }
+}:
 
-    rustup target add wasm32-unknown-unknown
-    rustup install stable
+pkgs.mkShell {
+  buildInputs = with pkgs; [
+    # Rust toolchain with WebAssembly target
+    (rust-bin.stable.latest.default.override {
+      extensions = [ "rust-src" "rust-analyzer" ];
+      targets = [ "wasm32-unknown-unknown" ];
+    })
+    
+    # Build tools
+    trunk
+    wasm-pack
+    wasm-bindgen-cli
+    
+    # Development tools
+    cargo-watch
+    cargo-edit
+    cargo-audit
+    
+    # Web development
+    nodejs_20
+    
+    # System dependencies
+    pkg-config
+    openssl
+    
+    # Optional but useful
+    ripgrep
+    fd
+    git
+  ];
+
+  shellHook = ''
+    echo "🚀 b3scale-admin dev environment (shell.nix) loaded!"
+    echo "Available commands:"
+    echo "  trunk serve     - Start development server"
+    echo "  trunk build     - Build for production"
+    echo "  ./scripts/run_tests.sh - Run tests"
+    echo "  cargo clippy    - Run linter"
+    echo "  cargo fmt       - Format code"
+    echo ""
+    echo "Rust version: $(rustc --version)"
+    if command -v trunk &> /dev/null; then
+      echo "Trunk version: $(trunk --version)"
+    else
+      echo "Warning: trunk not found in PATH"
+    fi
   '';
 
-  # Add precompiled library to rustc search path
-  RUSTFLAGS = (builtins.map (a: ''-L ${a}/lib'') [
-  ]);
-# Add glibc, clang, glib headers to bindgen search path
-  BINDGEN_EXTRA_CLANG_ARGS = 
-    # Includes with normal include path
-    (builtins.map (a: ''-I"${a}/include"'') [
-      pkgs.glibc.dev 
-    ])
-    # Includes with special directory paths
-    ++ [
-      ''-I"${pkgs.llvmPackages_latest.libclang.lib}/lib/clang/${pkgs.llvmPackages_latest.libclang.version}/include"''
-      ''-I"${pkgs.glib.dev}/include/glib-2.0"''
-      ''-I${pkgs.glib.out}/lib/glib-2.0/include/''
-    ];
+  # Environment variables
+  RUST_BACKTRACE = "1";
 }
