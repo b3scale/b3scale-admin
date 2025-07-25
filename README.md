@@ -15,7 +15,7 @@
 
 ---
 
-## 💜 Annie's Vibe Check
+## 💜 A Note From Annie 
 
 *Sooo.* I started this project like 3 years ago and it collected dust. Never had the time or energy to actually work on this.
 
