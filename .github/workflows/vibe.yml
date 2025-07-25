@@ -1,0 +1,168 @@
+name: 🔥 Vibe CI Pipeline 🔥
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  vibe-check:
+    name: 🦀 Rust Quality Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout the vibe
+      uses: actions/checkout@v4
+      
+    - name: ⚡ Setup Rust toolchain 
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: wasm32-unknown-unknown
+        components: rustfmt, clippy
+        
+    - name: 🚀 Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+          
+    - name: 🧪 Run tests
+      run: cargo test --verbose --target wasm32-unknown-unknown
+      
+    - name: 🔍 Check code quality (clippy)
+      run: cargo clippy --all-targets --all-features -- -D warnings
+      
+    - name: 🎨 Check formatting
+      run: cargo fmt --all -- --check
+
+  vibe-build:
+    name: 🏗️ WebAssembly Build
+    runs-on: ubuntu-latest
+    needs: vibe-check
+    
+    steps:
+    - name: 📥 Checkout the vibe
+      uses: actions/checkout@v4
+      
+    - name: ⚡ Setup Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: wasm32-unknown-unknown
+        
+    - name: 🚀 Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+          
+    - name: 📦 Install trunk
+      run: cargo install trunk
+      
+    - name: 🏗️ Build WebAssembly release
+      run: trunk build --release
+      
+    - name: 📤 Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: vibe-wasm-build
+        path: dist/
+        retention-days: 7
+
+  vibe-test:
+    name: 🧪 Browser Tests
+    runs-on: ubuntu-latest
+    needs: vibe-check
+    
+    steps:
+    - name: 📥 Checkout the vibe
+      uses: actions/checkout@v4
+      
+    - name: ⚡ Setup Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: wasm32-unknown-unknown
+        
+    - name: 🚀 Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: 📦 Install wasm-pack
+      run: cargo install wasm-pack
+      
+    - name: 🌐 Setup Chrome for headless testing
+      uses: browser-actions/setup-chrome@latest
+      
+    - name: 🧪 Run browser tests
+      run: wasm-pack test --headless --chrome
+
+  vibe-security:
+    name: 🔒 Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout the vibe
+      uses: actions/checkout@v4
+      
+    - name: ⚡ Setup Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      
+    - name: 🔍 Security audit
+      run: |
+        cargo install cargo-audit
+        cargo audit
+        
+    - name: 🛡️ Check for vulnerabilities
+      run: |
+        cargo install cargo-deny
+        cargo deny check
+
+  vibe-deploy-preview:
+    name: 🚀 Deploy Preview
+    runs-on: ubuntu-latest
+    needs: [vibe-build, vibe-test]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: vibe-wasm-build
+        path: dist/
+        
+    - name: 🌐 Deploy to GitHub Pages (Preview)
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        destination_dir: pr-${{ github.event.number }}
+        
+    - name: 💬 Comment preview link
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🔥 **Vibe Preview Deployed!** 🔥\n\n✨ Preview URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ github.event.number }}/\n\n*The vibes are immaculate with this one* 🦀⚡'
+          })
