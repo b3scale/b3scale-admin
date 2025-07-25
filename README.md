@@ -31,11 +31,15 @@ b3scale-admin is a **web-based administration interface** for [b3scale](https://
 
 **The entire frontend runs in your browser as WebAssembly** - giving you native-like performance with the security and portability of the web. No JavaScript. Just pure Rust compiled to WASM. 🚀
 
+![b3scale-admin Screenshot](propaganda/Screenshot%20from%202025-07-25%2008-56-43.png)
+
+*The vibec0re dark theme admin interface in all its glory* ✨
+
 ## ✨ Features That Hit Different
 
 - **🦀 Pure Rust/WASM** - Zero JavaScript, maximum performance
 - **🔐 JWT Authentication** - Secure token-based auth system
-- **🎨 Cyberpunk Dark Theme** - Beautiful Bootstrap 5 dark theme for late-night coding
+- **🎨 Vibec0re Dark Theme** - Beautiful Bootstrap 5 dark theme for late-night coding
 - **⚡ Real-time Updates** - Instant feedback on all operations
 - **📱 Responsive AF** - Works flawlessly on desktop and mobile
 - **🔥 1337 Dev Setup** - Nix flakes for the most elite development experience
