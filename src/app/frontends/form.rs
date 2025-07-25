@@ -4,7 +4,7 @@ use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
 use yew::{function_component, html, use_effect_with_deps, use_state, Callback, Properties, TargetCast};
 
-use crate::components::SvgCheckbox;
+use crate::components::CyberSlider;
 
 use b3scale_api::{
     AttendeesLimitSettings, DefaultPresentationSettings, Frontend, FrontendConfig, 
@@ -431,7 +431,7 @@ pub fn form(props: &FormProps) -> Html {
             </div>
             
             <div class="form-group form-section">
-                <SvgCheckbox 
+                <CyberSlider 
                     checked={*active}
                     onchange={{
                         let active = active.clone();
@@ -717,7 +717,7 @@ pub fn form(props: &FormProps) -> Html {
                     />
                 </div>
                 
-                <SvgCheckbox 
+                <CyberSlider 
                     checked={*presentation_force}
                     onchange={{
                         let presentation_force = presentation_force.clone();

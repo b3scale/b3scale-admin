@@ -1,2 +1,2 @@
 pub mod svg_checkbox;
-pub use svg_checkbox::SvgCheckbox;
+pub use svg_checkbox::CyberSlider;
