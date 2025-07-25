@@ -1,5 +1,5 @@
 use yew::{function_component, html, Callback, Children, Properties, Html};
-use yew_router::{hooks::use_navigator, prelude::*};
+use yew_router::{hooks::use_navigator};
 
 use crate::{
     api::auth::use_authentication,

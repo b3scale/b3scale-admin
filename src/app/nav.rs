@@ -3,7 +3,6 @@ use yew::{
     Html,
 };
 use yew_router::{
-    history::History,
     hooks::{use_navigator, use_route},
     Routable,
 };

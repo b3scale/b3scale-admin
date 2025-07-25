@@ -1,6 +1,5 @@
 use yew::{function_component, html, use_effect, Html};
 use yew_router::{
-    history::History,
     hooks::{use_navigator, use_route},
     Routable, Switch,
 };

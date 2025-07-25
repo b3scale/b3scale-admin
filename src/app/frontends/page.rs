@@ -1,5 +1,5 @@
 use yew::{function_component, html, use_effect_with, use_state, Callback, Properties, Html};
-use yew_router::{hooks::use_navigator, prelude::*};
+use yew_router::{hooks::use_navigator};
 
 use crate::{
     api::frontends::{use_frontend, use_frontends},

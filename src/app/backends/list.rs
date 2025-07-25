@@ -1,6 +1,6 @@
 use web_sys::HtmlInputElement;
 use yew::{function_component, html, use_state, Callback, TargetCast, Html};
-use yew_router::{hooks::use_navigator, prelude::*};
+use yew_router::{hooks::use_navigator};
 
 use b3scale_api::backend::{AdminState, NodeState};
 use crate::{
