@@ -164,6 +164,64 @@ header {
     }
   }
   
+  // MEGA VIBE ADMIN STATE DROPDOWN!!! 🔥💜
+  .admin-state-dropdown,
+  .cyber-vibe-dropdown,
+  .form-select[aria-label="Admin State"],
+  select[name="admin_state"],
+  select[onchange*="admin_state"] {
+    background: linear-gradient(135deg, 
+      rgba(255, 0, 127, 0.2), 
+      rgba(0, 255, 255, 0.2),
+      rgba(191, 0, 255, 0.2)) !important;
+    border: 3px solid transparent !important;
+    border-image: linear-gradient(135deg, #ff007f, #00ffff, #bf00ff) 1 !important;
+    color: #ff99cc !important; // VIBRANT PINK TEXT!!!
+    text-shadow: 
+      0 0 10px rgba(255, 0, 127, 0.8),
+      0 0 20px rgba(255, 0, 127, 0.6),
+      0 0 30px rgba(0, 255, 255, 0.4),
+      1px 1px 2px rgba(0, 0, 0, 1) !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    
+    option {
+      background: rgba(0, 0, 0, 0.95) !important;
+      color: #ff99cc !important;
+      padding: 8px !important;
+      
+      &:hover {
+        background: rgba(255, 0, 127, 0.3) !important;
+      }
+    }
+    
+    &:hover {
+      background: linear-gradient(135deg, 
+        rgba(255, 0, 127, 0.3), 
+        rgba(0, 255, 255, 0.3),
+        rgba(191, 0, 255, 0.3)) !important;
+      box-shadow: 
+        0 0 20px rgba(255, 0, 127, 0.6),
+        0 0 30px rgba(0, 255, 255, 0.6),
+        0 0 40px rgba(191, 0, 255, 0.6) !important;
+    }
+    
+    &:focus {
+      background: linear-gradient(135deg, 
+        rgba(255, 0, 127, 0.4), 
+        rgba(0, 255, 255, 0.4),
+        rgba(191, 0, 255, 0.4)) !important;
+      border-color: transparent !important;
+      border-image: linear-gradient(135deg, #ff007f, #00ffff, #bf00ff, #ff007f) 1 !important;
+      box-shadow: 
+        0 0 0 3px rgba(255, 0, 127, 0.3),
+        0 0 30px rgba(255, 0, 127, 0.8),
+        0 0 40px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(191, 0, 255, 0.8) !important;
+    }
+  }
+  
   // HELP TEXT SUPER READABLE LIKE HEADERS!!!
   .form-text, small {
     color: #ffccff !important; // BRIGHT LAVENDER LIKE FORM TEXT!!!

@@ -15,6 +15,8 @@ use crate::api::{
     client::use_client,
 };
 
+use super::cyber_dropdown::CyberDropdown;
+
 #[derive(Properties, Clone, PartialEq)]
 pub struct FormProps {
     pub backend: Option<Backend>,
@@ -102,17 +104,15 @@ pub fn form(props: &FormProps) -> Html {
     
     let on_admin_state_change = {
         let admin_state = admin_state.clone();
-        Callback::from(move |e: yew::Event| {
-            if let Some(input) = e.target_dyn_into::<HtmlInputElement>() {
-                let state = match input.value().as_str() {
-                    "init" => AdminState::Init,
-                    "ready" => AdminState::Ready,
-                    "stopped" => AdminState::Stopped,
-                    "decommissioned" => AdminState::Decommissioned,
-                    _ => AdminState::Ready,
-                };
-                admin_state.set(state);
-            }
+        Callback::from(move |value: String| {
+            let state = match value.as_str() {
+                "init" => AdminState::Init,
+                "ready" => AdminState::Ready,
+                "stopped" => AdminState::Stopped,
+                "decommissioned" => AdminState::Decommissioned,
+                _ => AdminState::Ready,
+            };
+            admin_state.set(state);
         })
     };
     
@@ -418,26 +418,24 @@ pub fn form(props: &FormProps) -> Html {
             </div>
             
             <div class="form-group">
-                <label class="form-label">{"Admin State"}</label>
-                <select 
-                    class="form-select" 
-                    onchange={on_admin_state_change}
+                <label class="form-label" style="color: #ff99cc !important; text-shadow: 0 0 10px #ff007f, 0 0 20px #00ffff;">{"Admin State"}</label>
+                <CyberDropdown
+                    value={match *admin_state {
+                        AdminState::Init => "init".to_string(),
+                        AdminState::Ready => "ready".to_string(),
+                        AdminState::Stopped => "stopped".to_string(),
+                        AdminState::Decommissioned => "decommissioned".to_string(),
+                    }}
+                    options={vec![
+                        ("init".to_string(), "Init".to_string()),
+                        ("ready".to_string(), "Ready".to_string()),
+                        ("stopped".to_string(), "Stopped".to_string()),
+                        ("decommissioned".to_string(), "Decommissioned".to_string()),
+                    ]}
+                    on_change={on_admin_state_change}
                     disabled={*is_loading}
-                >
-                    <option value="init" selected={matches!(*admin_state, AdminState::Init)}>
-                        {"Init"}
-                    </option>
-                    <option value="ready" selected={matches!(*admin_state, AdminState::Ready)}>
-                        {"Ready"}
-                    </option>
-                    <option value="stopped" selected={matches!(*admin_state, AdminState::Stopped)}>
-                        {"Stopped"}
-                    </option>
-                    <option value="decommissioned" selected={matches!(*admin_state, AdminState::Decommissioned)}>
-                        {"Decommissioned"}
-                    </option>
-                </select>
-                <div class="form-text">{"Desired state of the backend node"}</div>
+                />
+                <div class="form-text" style="color: #ff99cc !important; text-shadow: 0 0 5px #ff007f;">{"Desired state of the backend node"}</div>
             </div>
             
             <div class="form-group">
