@@ -1,0 +1,114 @@
+# 🔥💜 ULTRA C0RE VIBES HUGO CONFIGURATION 💜🔥
+# Maximum cyberpunk energy configuration!
+
+baseURL = 'https://your-domain.com'
+languageCode = 'en-us'
+title = 'ULTRA C0RE VIBES'
+theme = 'ultra-c0re-vibes'
+
+# Enable emoji support
+enableEmoji = true
+
+# Pagination (updated for Hugo v0.128+)
+[pagination]
+  pagerSize = 6
+  path = "page"
+
+# Taxonomy configuration
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+# Site parameters - CYBER SETTINGS! ⚡
+[params]
+  description = "Welcome to the Construct - Reality is a lie! Maximum cyberpunk vibes with Matrix energy."
+  cyber_tagline = "FOLLOW THE WHITE RABBIT - BREAK THE MATRIX"
+  
+  # Cyber theme settings
+  matrix_rain = true
+  neon_effects = true  
+  cyber_animations = true
+  responsive = true
+  
+  # Site branding
+  site_title = "ULTRA C0RE VIBES"
+  site_subtitle = "Welcome to the Matrix"
+  
+  # Copyright
+  copyright = "All rights reserved in the Matrix. The spoon does not exist."
+  
+  # Social links (optional)
+  [[params.social]]
+    name = "Twitter"
+    url = "https://twitter.com/yourhandle"
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/yourusername"
+  [[params.social]]
+    name = "Matrix"
+    url = "https://matrix.to/#/@you:matrix.org"
+  [[params.social]]
+    name = "Discord"
+    url = "https://discord.gg/yourinvite"
+
+# Menu configuration
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 10
+    
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 20
+    
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 30
+    
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 40
+
+# Markup configuration for better content
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "github-dark"
+    lineNos = true
+    codeFences = true
+    guessSyntax = true
+    lineNumbersInTable = false
+
+# Build configuration
+[build]
+  writeStats = true
+
+# Privacy configuration (GDPR)
+[privacy]
+  [privacy.googleAnalytics]
+    disable = false
+    anonymizeIP = true
+    respectDoNotTrack = true
+  [privacy.x]
+    disable = false
+    enableDNT = true
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML"]
+  section = ["HTML", "RSS"]
+
+# Custom CSS (if needed)
+[params.custom]
+  css = []
+  js = []

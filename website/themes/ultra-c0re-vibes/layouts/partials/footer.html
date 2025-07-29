@@ -1,0 +1,256 @@
+<!-- 🌟💜 ULTRA C0RE FOOTER - MATRIX SIGNATURE 💜🌟 -->
+<footer class="cyber-footer">
+    <div class="footer-content">
+        <!-- Cyber Divider -->
+        <div class="cyber-divider">
+            ═══════════════════════════════════════════════════════════════════════════════════
+        </div>
+        
+        <!-- Main Footer Content -->
+        <div class="footer-main">
+            <!-- Site Info -->
+            <div class="footer-section">
+                <h4 class="cyber-pink">{{ .Site.Title | default "ULTRA C0RE VIBES" }}</h4>
+                <p>{{ .Site.Params.description | default "Welcome to the Matrix - Reality is a lie!" }}</p>
+                {{ if .Site.Params.cyber_tagline }}
+                <p class="cyber-tagline matrix-green">{{ .Site.Params.cyber_tagline }}</p>
+                {{ end }}
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4 class="cyber-cyan">NAVIGATION</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ .Site.BaseURL }}">HOME</a></li>
+                    {{ range .Site.Menus.main }}
+                    <li><a href="{{ .URL }}">{{ .Name | upper }}</a></li>
+                    {{ end }}
+                    {{ if .Site.GetPage "section" "posts" }}
+                    <li><a href="/posts/">POSTS</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+            
+            <!-- Social Links (if configured) -->
+            {{ if .Site.Params.social }}
+            <div class="footer-section">
+                <h4 class="cyber-purple">CONNECT</h4>
+                <ul class="footer-links social-links">
+                    {{ range .Site.Params.social }}
+                    <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .name | upper }}</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+            
+            <!-- Tech Info -->
+            <div class="footer-section">
+                <h4 class="cyber-yellow">SYSTEM INFO</h4>
+                <p class="tech-info">
+                    ◆ POWERED BY HUGO<br>
+                    ◆ THEME: ULTRA C0RE VIBES<br>
+                    ◆ STATUS: ONLINE<br>
+                    ◆ MATRIX ACCESS: GRANTED
+                </p>
+            </div>
+        </div>
+        
+        <!-- Copyright & Cyber Signature -->
+        <div class="footer-bottom">
+            <div class="copyright">
+                © {{ now.Format "2006" }} {{ .Site.Title }}. 
+                {{ if .Site.Params.copyright }}
+                {{ .Site.Params.copyright | safeHTML }}
+                {{ else }}
+                All rights reserved in the Matrix.
+                {{ end }}
+            </div>
+            
+            <!-- Ultra C0re Signature -->
+            <div class="cyber-signature">
+                🔥 ULTRA C0RE VIBES WEBSITE - POWERED BY MATRIX ENERGY 🔥
+            </div>
+        </div>
+        
+        <!-- Matrix Code Footer -->
+        <div class="matrix-footer-code">
+            ▓█▓▒░ TRINITY ACCESS POINT SECURED ░▒▓█▓ • ◆◇◆ NEO PROTOCOL ACTIVE ◆◇◆ • ▲△▲ WELCOME TO THE REAL WORLD ▲△▲
+        </div>
+    </div>
+</footer>
+
+<style>
+/* 🌟 FOOTER CYBER STYLING 🌟 */
+.cyber-footer {
+    margin-top: 60px;
+    padding: 40px 20px 20px;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cyber-divider {
+    color: var(--cyber-cyan);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: var(--glow-cyan);
+    animation: cyber-float 3s ease-in-out infinite;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section h4 {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.footer-section h4::before {
+    content: '▶ ';
+    font-size: 0.8em;
+}
+
+.footer-section p {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.cyber-tagline {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: cyber-blink 2s ease-in-out infinite;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: var(--matrix-green);
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+}
+
+.footer-links a::before {
+    content: '◆ ';
+    color: var(--cyber-pink);
+    font-size: 0.7em;
+}
+
+.footer-links a:hover {
+    color: var(--cyber-pink);
+    background: rgba(255, 0, 127, 0.1);
+    text-shadow: var(--glow-pink);
+    transform: translateX(5px);
+}
+
+.social-links a {
+    color: var(--cyber-purple);
+}
+
+.social-links a:hover {
+    color: var(--cyber-cyan);
+    text-shadow: var(--glow-cyan);
+}
+
+.tech-info {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    line-height: 1.4;
+    color: var(--cyber-yellow);
+    background: rgba(255, 255, 0, 0.05);
+    border: 1px solid rgba(255, 255, 0, 0.2);
+}
+
+.footer-bottom {
+    border-top: 2px solid transparent;
+    border-image: var(--gradient-rainbow) 1;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.copyright {
+    color: var(--matrix-green);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.cyber-signature {
+    color: var(--cyber-pink);
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: var(--glow-pink);
+    animation: cyber-blink 2s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+.matrix-footer-code {
+    color: var(--matrix-dark-green);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    text-align: center;
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    animation: matrix-pulse 5s ease-in-out infinite alternate;
+}
+
+/* Mobile Footer Adjustments */
+@media (max-width: 768px) {
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .cyber-divider {
+        font-size: 6px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .matrix-footer-code {
+        font-size: 6px;
+        word-break: break-all;
+        white-space: normal;
+    }
+    
+    .cyber-signature {
+        font-size: 9px;
+        word-break: break-word;
+    }
+}
+</style>

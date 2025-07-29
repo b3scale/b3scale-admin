@@ -1,0 +1,152 @@
+<!-- 🔥💜 ULTRA C0RE NAVIGATION - MATRIX INTERFACE 💜🔥 -->
+<nav class="navbar cyber-nav">
+    <div class="nav-container">
+        <!-- Cyber Brand/Logo -->
+        <a href="{{ .Site.BaseURL }}" class="navbar-brand">
+            {{ .Site.Title | default "ULTRA C0RE VIBES" }}
+        </a>
+        
+        <!-- Main Navigation Menu -->
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{{ .Site.BaseURL }}" class="nav-link {{ if .IsHome }}active{{ end }}">
+                    HOME
+                </a>
+            </li>
+            
+            {{ range .Site.Menus.main }}
+            <li class="nav-item">
+                <a href="{{ .URL }}" class="nav-link {{ if $.IsMenuCurrent "main" . }}active{{ end }}">
+                    {{ .Name | upper }}
+                </a>
+            </li>
+            {{ end }}
+            
+            <!-- Posts/Blog Link -->
+            {{ if .Site.GetPage "section" "posts" }}
+            <li class="nav-item">
+                <a href="/posts/" class="nav-link {{ if eq .Section "posts" }}active{{ end }}">
+                    POSTS
+                </a>
+            </li>
+            {{ end }}
+            
+            <!-- About Link if it exists -->
+            {{ if .Site.GetPage "about" }}
+            <li class="nav-item">
+                <a href="/about/" class="nav-link {{ if eq .Title "About" }}active{{ end }}">
+                    ABOUT
+                </a>
+            </li>
+            {{ end }}
+            
+            <!-- Contact Link if it exists -->
+            {{ if .Site.GetPage "contact" }}
+            <li class="nav-item">
+                <a href="/contact/" class="nav-link {{ if eq .Title "Contact" }}active{{ end }}">
+                    CONTACT
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+        
+        <!-- Mobile Menu Toggle (if needed) -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span class="cyber-hamburger">☰</span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('mobile-active');
+            this.classList.toggle('active');
+        });
+    }
+});
+</script>
+
+<style>
+/* Mobile Navigation Enhancements */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: 2px solid var(--cyber-pink);
+    color: var(--cyber-pink);
+    font-size: 1.2em;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: var(--cyber-pink);
+    color: var(--bg-void);
+    box-shadow: var(--glow-pink);
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        margin-top: 15px;
+    }
+    
+    .nav-menu.mobile-active {
+        max-height: 500px;
+    }
+    
+    .nav-item {
+        margin: 5px 0;
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: 12px 15px;
+        border: 1px solid var(--cyber-cyan);
+        border-radius: 4px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.nav-link.active {
+    color: var(--cyber-pink) !important;
+    text-shadow: var(--glow-pink);
+    border-bottom: 2px solid var(--cyber-pink);
+}
+</style>

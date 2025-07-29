@@ -1,0 +1,31 @@
+# 🔥💜 ULTRA C0RE VIBES HUGO THEME 💜🔥
+# Maximum cyberpunk energy for your website!!
+
+name = "Ultra C0re Vibes"
+license = "MIT"
+licenselink = "https://github.com/username/ultra-c0re-vibes/blob/main/LICENSE"
+description = "Ultra cyberpunk theme with Matrix vibes, neon colors, and maximum c0re energy! 🔥⚡"
+homepage = "https://github.com/username/ultra-c0re-vibes"
+tags = ["cyberpunk", "matrix", "neon", "dark", "futuristic", "blog", "portfolio", "responsive"]
+features = ["responsive", "dark-theme", "matrix-effects", "neon-colors", "cyber-animations"]
+min_version = "0.41.0"
+
+[author]
+  name = "Ultra C0re Collective"
+  homepage = "https://github.com/username"
+
+# Theme supports all content types
+[params]
+  version = "1.0.0"
+  description = "A cyberpunk Hugo theme with Matrix digital rain, neon colors, and ultra c0re vibes!"
+  
+  # Cyber theme settings
+  matrix_rain = true
+  neon_effects = true  
+  cyber_animations = true
+  responsive = true
+  
+  # Site branding
+  site_title = "ULTRA C0RE VIBES"
+  site_subtitle = "Welcome to the Matrix"
+  cyber_tagline = "REALITY IS A LIE - BREAK THE MATRIX"

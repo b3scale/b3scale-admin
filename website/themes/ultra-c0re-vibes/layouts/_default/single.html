@@ -1,0 +1,333 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<article class="single-post card">
+    <!-- Post Header -->
+    <header class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        
+        <!-- Post Meta Information -->
+        <div class="post-meta">
+            {{ if .Date }}
+            <span class="post-date">
+                <span class="cyber-pink">◆</span> 
+                {{ .Date.Format "2006-01-02" }}
+            </span>
+            {{ end }}
+            
+            {{ if .Params.author }}
+            <span class="post-author">
+                <span class="cyber-cyan">◆</span> 
+                BY {{ .Params.author | upper }}
+            </span>
+            {{ end }}
+            
+            {{ if .ReadingTime }}
+            <span class="reading-time">
+                <span class="cyber-purple">◆</span> 
+                {{ .ReadingTime }} MIN READ
+            </span>
+            {{ end }}
+        </div>
+        
+        <!-- Tags -->
+        {{ if .Params.tags }}
+        <div class="post-tags">
+            {{ range .Params.tags }}
+                <span class="tag">{{ . | upper }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+    </header>
+    
+    <!-- Post Content -->
+    <div class="post-content">
+        {{ .Content }}
+    </div>
+    
+    <!-- Post Footer -->
+    <footer class="post-footer">
+        <!-- Categories -->
+        {{ if .Params.categories }}
+        <div class="post-categories">
+            <h4 class="cyber-cyan">CATEGORIES:</h4>
+            {{ range .Params.categories }}
+                <span class="category">{{ . | upper }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+        
+        <!-- Share Section (if needed) -->
+        <div class="post-share">
+            <h4 class="cyber-pink">SHARE THE MATRIX:</h4>
+            <div class="share-links">
+                <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&amp;url={{ .Permalink }}" 
+                   target="_blank" rel="noopener" class="share-twitter">
+                    TWITTER
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" 
+                   target="_blank" rel="noopener" class="share-facebook">
+                    FACEBOOK
+                </a>
+                <a href="mailto:?subject={{ .Title | urlquery }}&amp;body={{ .Permalink }}" 
+                   class="share-email">
+                    EMAIL
+                </a>
+            </div>
+        </div>
+    </footer>
+</article>
+
+<!-- Navigation Between Posts -->
+<nav class="post-navigation">
+    {{ if .PrevInSection }}
+    <div class="nav-previous">
+        <a href="{{ .PrevInSection.Permalink }}" class="nav-link">
+            <span class="nav-label cyber-cyan">◀ PREVIOUS POST</span>
+            <span class="nav-title">{{ .PrevInSection.Title }}</span>
+        </a>
+    </div>
+    {{ end }}
+    
+    {{ if .NextInSection }}
+    <div class="nav-next">
+        <a href="{{ .NextInSection.Permalink }}" class="nav-link">
+            <span class="nav-label cyber-pink">NEXT POST ▶</span>
+            <span class="nav-title">{{ .NextInSection.Title }}</span>
+        </a>
+    </div>
+    {{ end }}
+</nav>
+
+<!-- Back to Posts -->
+<div class="back-to-posts">
+    <a href="{{ .Site.BaseURL }}posts/" class="btn">
+        ◆ BACK TO ALL POSTS ◆
+    </a>
+</div>
+
+<style>
+/* 🔥 SINGLE POST STYLING 🔥 */
+.single-post {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid transparent;
+    border-image: var(--gradient-cyber) 1;
+}
+
+.post-title {
+    margin-bottom: 20px;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.post-meta span {
+    color: var(--cyber-cyan);
+    background: rgba(0, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.post-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.post-content {
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--cyber-cyan);
+    box-shadow: var(--glow-cyan);
+    margin: 20px 0;
+}
+
+.post-content code {
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--matrix-green);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.post-content pre {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--matrix-green);
+  border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+    box-shadow: var(--glow-matrix);
+}
+
+.post-content pre code {
+    background: none;
+    padding: 0;
+    color: var(--matrix-bright-green);
+}
+
+.post-footer {
+    padding-top: 30px;
+    border-top: 2px solid transparent;
+    border-image: var(--gradient-electric) 1;
+    margin-bottom: 40px;
+}
+
+.post-categories {
+    margin-bottom: 25px;
+}
+
+.post-categories h4,
+.post-share h4 {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.post-share {
+    text-align: center;
+}
+
+.share-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.share-links a {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--cyber-pink);
+    color: var(--cyber-pink);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.share-links a:hover {
+    background: var(--cyber-pink);
+    color: var(--bg-void);
+    box-shadow: var(--glow-pink);
+    transform: translateY(-2px);
+}
+
+/* Post Navigation */
+.post-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.nav-previous {
+    text-align: left;
+}
+
+.nav-next {
+    text-align: right;
+}
+
+.nav-link {
+    display: block;
+    background: var(--bg-glass);
+    border: 2px solid var(--cyber-cyan);
+    padding: 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-height: 80px;
+}
+
+.nav-link:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+}
+
+.nav-label {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.nav-title {
+    display: block;
+    color: var(--matrix-green);
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+.back-to-posts {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .post-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .post-navigation {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .nav-next {
+        text-align: left;
+    }
+    
+    .share-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .share-links a {
+        width: 200px;
+    }
+}
+</style>
+{{ end }}

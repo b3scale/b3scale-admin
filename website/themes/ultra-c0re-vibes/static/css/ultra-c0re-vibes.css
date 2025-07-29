@@ -1,0 +1,754 @@
+/* 🔥 ULTRA C0RE VIBES HUGO THEME 🔥 */
+/* Extracted from b3scale-admin for MAXIMUM CYBERPUNK ENERGY!! */
+/* LET'S FUCKING GOOOOOOOOO!!! 💜⚡🚀 */
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🌈 MATRIX CYBER COLOR PALETTE - Welcome to the CONSTRUCT! 💚 */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Matrix green shades - THE MATRIX LIVES HERE! */
+  --matrix-green: #00ff41;
+  --matrix-dark-green: #008f11;
+  --matrix-bright-green: #39ff14;
+  --matrix-neon-green: #00ff00;
+  --matrix-digital-green: #00cc33;
+  
+  /* TONS MORE CYBER COLORS!! */
+  --cyber-pink: #ff007f;
+  --cyber-cyan: #00ffff;
+  --cyber-purple: #bf00ff;
+  --cyber-green: #00ff41;
+  --cyber-yellow: #ffff00;
+  --cyber-orange: #ff8c00;
+  --cyber-red: #ff0040;
+  --cyber-blue: #0080ff;
+  --cyber-lime: #80ff00;
+  --cyber-magenta: #ff00ff;
+  --cyber-turquoise: #00ff80;
+  --cyber-coral: #ff8040;
+  --cyber-violet: #8000ff;
+  --cyber-gold: #ffb000;
+  --cyber-emerald: #00b080;
+  --cyber-rose: #ff4080;
+  
+  /* Matrix background layers - deeper into the code */
+  --bg-void: #000000;
+  --bg-dark: #001100;
+  --bg-darker: #002200;
+  --bg-panel: #003300;
+  --bg-glass: rgba(0, 17, 0, 0.3);
+  --bg-matrix: rgba(0, 255, 65, 0.05);
+  
+  /* Matrix green glows - follow the white rabbit! 🐰 */
+  --glow-matrix: 0 0 20px var(--matrix-green), 0 0 40px var(--matrix-green), 0 0 80px var(--matrix-green);
+  --glow-matrix-bright: 0 0 10px var(--matrix-bright-green), 0 0 20px var(--matrix-bright-green), 0 0 40px var(--matrix-bright-green);
+  --glow-matrix-neon: 0 0 15px var(--matrix-neon-green), 0 0 30px var(--matrix-neon-green), 0 0 60px var(--matrix-neon-green);
+  
+  /* ALL THE COLORFUL GLOWS!! */
+  --glow-pink: 0 0 15px var(--cyber-pink), 0 0 30px var(--cyber-pink);
+  --glow-cyan: 0 0 15px var(--cyber-cyan), 0 0 30px var(--cyber-cyan);
+  --glow-purple: 0 0 15px var(--cyber-purple), 0 0 30px var(--cyber-purple);
+  --glow-green: 0 0 15px var(--cyber-green), 0 0 30px var(--cyber-green);
+  --glow-yellow: 0 0 15px var(--cyber-yellow), 0 0 30px var(--cyber-yellow);
+  --glow-orange: 0 0 15px var(--cyber-orange), 0 0 30px var(--cyber-orange);
+  --glow-red: 0 0 15px var(--cyber-red), 0 0 30px var(--cyber-red);
+  --glow-blue: 0 0 15px var(--cyber-blue), 0 0 30px var(--cyber-blue);
+  --glow-lime: 0 0 15px var(--cyber-lime), 0 0 30px var(--cyber-lime);
+  --glow-magenta: 0 0 15px var(--cyber-magenta), 0 0 30px var(--cyber-magenta);
+  --glow-turquoise: 0 0 15px var(--cyber-turquoise), 0 0 30px var(--cyber-turquoise);
+  --glow-coral: 0 0 15px var(--cyber-coral), 0 0 30px var(--cyber-coral);
+  --glow-violet: 0 0 15px var(--cyber-violet), 0 0 30px var(--cyber-violet);
+  --glow-gold: 0 0 15px var(--cyber-gold), 0 0 30px var(--cyber-gold);
+  --glow-emerald: 0 0 15px var(--cyber-emerald), 0 0 30px var(--cyber-emerald);
+  --glow-rose: 0 0 15px var(--cyber-rose), 0 0 30px var(--cyber-rose);
+  
+  /* Matrix gradient backgrounds - digital rain */
+  --gradient-matrix: linear-gradient(135deg, var(--matrix-dark-green), var(--matrix-green), var(--matrix-bright-green));
+  --gradient-matrix-rain: linear-gradient(180deg, var(--matrix-bright-green), var(--matrix-green), transparent);
+  --gradient-void: linear-gradient(135deg, var(--bg-void), var(--bg-dark), var(--bg-darker));
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-pink), var(--cyber-purple), var(--cyber-cyan), var(--cyber-yellow), var(--cyber-orange));
+  --gradient-rainbow: linear-gradient(90deg, 
+    var(--cyber-red) 0%, 
+    var(--cyber-orange) 14%, 
+    var(--cyber-yellow) 28%, 
+    var(--cyber-lime) 42%, 
+    var(--cyber-cyan) 57%, 
+    var(--cyber-blue) 71%, 
+    var(--cyber-purple) 85%, 
+    var(--cyber-magenta) 100%);
+  --gradient-neon: linear-gradient(45deg, 
+    var(--cyber-pink), 
+    var(--cyber-cyan), 
+    var(--cyber-lime), 
+    var(--cyber-violet), 
+    var(--cyber-coral));
+  --gradient-electric: linear-gradient(180deg, 
+    var(--cyber-turquoise), 
+    var(--cyber-magenta), 
+    var(--cyber-gold), 
+    var(--cyber-emerald));
+  --gradient-plasma: radial-gradient(circle, 
+    var(--cyber-rose), 
+    var(--cyber-violet), 
+    var(--cyber-blue), 
+    var(--cyber-cyan));
+  --gradient-glass: linear-gradient(135deg, 
+                     rgba(0, 255, 65, 0.1), 
+                     rgba(0, 204, 51, 0.1), 
+                     rgba(57, 255, 20, 0.1));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🎯 BASE CYBER STYLING - Matrix foundation! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+html, body {
+  background: var(--bg-void);
+  color: var(--matrix-green);
+  font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Matrix background effect with EPIC CYBER DECORATIONS!!! */
+body::before {
+  content: '┌────────────────────────────────────────────────────────────────────────────────────────────────────┐\A │ █▓▒░ ULTRA C0RE VIBES WEBSITE - MATRIX INTERFACE ONLINE ░▒▓█ │\A │ ◆◇◆ WELCOME TO THE CONSTRUCT - REALITY IS A LIE ◆◇◆ │\A │ ▲△▲ FOLLOW THE WHITE RABBIT - BREAK THE MATRIX ▲△▲ │\A └────────────────────────────────────────────────────────────────────────────────────────────────────┘';
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  line-height: 10px;
+  white-space: pre;
+  text-shadow: var(--glow-matrix);
+  pointer-events: none;
+  z-index: -1;
+  animation: matrix-pulse 10s ease-in-out infinite alternate;
+  opacity: 0.3;
+}
+
+@keyframes matrix-pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+/* Matrix grid overlay - The code is everywhere */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+  animation: matrix-grid-move 25s linear infinite;
+}
+
+@keyframes matrix-grid-move {
+  0% { transform: translate(0, 0); opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { transform: translate(40px, 40px); opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🔤 CYBER TYPOGRAPHY - Matrix text effects! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--matrix-bright-green);
+  text-shadow: var(--glow-matrix-bright);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: var(--bg-void);
+  border: 2px solid var(--cyber-pink);
+  border-radius: 6px;
+  padding: 15px 25px;
+  margin: 20px 0;
+  box-shadow: var(--glow-pink);
+  text-align: center;
+}
+
+h1::before {
+  content: '█▓▒░►';
+  color: var(--cyber-green);
+  margin-right: 10px;
+  animation: cyber-blink 1s ease-in-out infinite;
+}
+
+h1::after {
+  content: '◀░▒▓█';
+  color: var(--cyber-cyan);
+  margin-left: 10px;
+  animation: cyber-blink 1.5s ease-in-out infinite reverse;
+}
+
+@keyframes cyber-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+h2 {
+  font-size: 2rem;
+  color: #ff99cc;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 1),
+    2px 2px 4px rgba(0, 0, 0, 1),
+    3px 3px 6px rgba(0, 0, 0, 0.95),
+    4px 4px 8px rgba(0, 0, 0, 0.9),
+    5px 5px 10px rgba(0, 0, 0, 0.85),
+    0 0 20px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 153, 204, 0.5),
+    var(--glow-pink);
+}
+
+h2::before {
+  content: '▶▐█';
+  color: var(--cyber-pink);
+  margin-right: 8px;
+}
+
+h2::after {
+  content: '█▌◀';
+  color: var(--cyber-cyan);
+  margin-left: 8px;
+}
+
+h3, h4, h5, h6 {
+  color: #ffccff;
+  font-size: 1.4em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 1),
+    2px 2px 4px rgba(0, 0, 0, 1),
+    3px 3px 6px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 204, 255, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🔗 CYBER LINKS - Follow the white rabbit! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+a {
+  color: var(--matrix-green);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--matrix-bright-green);
+  text-shadow: var(--glow-matrix-bright);
+  text-decoration: underline;
+}
+
+a::before {
+  content: '► ';
+  color: var(--cyber-pink);
+  font-size: 0.8em;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+a:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 📄 CONTENT STYLING - Main content areas */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.container, .content, main, article {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+p {
+  color: #ffffff;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 1),
+    2px 2px 4px rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+blockquote {
+  background: var(--bg-glass);
+  border-left: 4px solid var(--cyber-cyan);
+  padding: 20px;
+  margin: 20px 0;
+  color: var(--cyber-cyan);
+  font-style: italic;
+  box-shadow: var(--glow-cyan);
+  border-radius: 0 8px 8px 0;
+}
+
+blockquote::before {
+  content: '◢';
+  color: var(--cyber-pink);
+  font-size: 20px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🃏 CARD COMPONENTS - Cyber containers! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.card, .post, .article-card {
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+    var(--bg-glass);
+  border: 3px solid transparent;
+  border-image: var(--gradient-electric) 1;
+  border-radius: 15px;
+  padding: 30px;
+  margin: 30px 0;
+  box-shadow: 
+    var(--glow-turquoise),
+    var(--glow-violet),
+    inset 0 0 30px rgba(0, 255, 255, 0.1),
+    inset 0 0 30px rgba(255, 0, 255, 0.1);
+  backdrop-filter: blur(15px);
+  transition: all 0.6s ease;
+  position: relative;
+}
+
+.card::before {
+  content: '◢◣◤◥';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  color: var(--cyber-lime);
+  font-size: 10px;
+  text-shadow: var(--glow-lime);
+}
+
+.card::after {
+  content: '◥◤◣◢';
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: var(--cyber-coral);
+  font-size: 10px;
+  text-shadow: var(--glow-coral);
+}
+
+.card:hover {
+  border-image: var(--gradient-plasma) 1;
+  box-shadow: 
+    var(--glow-gold),
+    var(--glow-emerald),
+    var(--glow-rose);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🔘 CYBER BUTTONS - Epic interactive elements! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.btn, button, .button, input[type="submit"] {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 3px solid var(--cyber-magenta);
+  border-radius: 8px;
+  padding: 16px 32px;
+  margin: 10px 10px 10px 0;
+  transition: all 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-rainbow);
+  color: var(--bg-void);
+  box-shadow: var(--glow-magenta), var(--glow-cyan);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-neon);
+  opacity: 0.3;
+  transition: left 1s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  background: var(--gradient-plasma);
+  border-color: var(--cyber-gold);
+  box-shadow: 
+    var(--glow-gold), 
+    var(--glow-rose), 
+    0 0 30px var(--cyber-turquoise);
+  transform: translateY(-2px);
+}
+
+.btn::after {
+  content: '◆';
+  color: var(--cyber-pink);
+  margin-left: 8px;
+  font-size: 0.8em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 📋 NAVIGATION - Cyber menu system! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+nav, .navbar, .menu {
+  background: var(--bg-glass) !important;
+  border-bottom: 4px solid transparent;
+  border-image: var(--gradient-rainbow) 1;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 127, 0.3),
+    0 8px 40px rgba(0, 255, 255, 0.2),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 0.75rem 1.5rem;
+  position: relative;
+}
+
+nav::before {
+  content: '◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--cyber-cyan);
+  font-size: 6px;
+  text-shadow: var(--glow-cyan);
+  animation: cyber-float 3s ease-in-out infinite;
+}
+
+@keyframes cyber-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.navbar-brand, .site-title, .logo {
+  color: var(--cyber-pink) !important;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: var(--glow-pink);
+  position: relative;
+}
+
+.navbar-brand::before {
+  content: '▓█▓ ';
+  color: var(--matrix-green);
+  font-size: 12px;
+  animation: cyber-glitch 0.5s ease-in-out infinite;
+}
+
+.navbar-brand::after {
+  content: ' ▓█▓';
+  color: var(--cyber-cyan);
+  font-size: 12px;
+  animation: cyber-glitch 0.7s ease-in-out infinite reverse;
+}
+
+@keyframes cyber-glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+nav ul, .nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav li, .nav-item {
+  margin: 0 15px;
+}
+
+nav a, .nav-link {
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  position: relative;
+  text-decoration: none;
+}
+
+nav a::before {
+  content: '◀';
+  position: absolute;
+  left: 0;
+  color: var(--cyber-pink);
+  font-size: 8px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+nav a::after {
+  content: '▶';
+  position: absolute;
+  right: 0;
+  color: var(--cyber-pink);
+  font-size: 8px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--cyber-pink) !important;
+  text-shadow: var(--glow-pink);
+  border-bottom: 2px solid var(--cyber-pink);
+}
+
+nav a:hover::before,
+nav a:hover::after {
+  opacity: 1;
+  animation: cyber-blink 1s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 📱 RESPONSIVE DESIGN - Cyber adaptability! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+    padding: 10px 15px;
+  }
+  
+  .card {
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  nav ul {
+    flex-direction: column;
+  }
+  
+  nav li {
+    margin: 5px 0;
+  }
+  
+  body::before {
+    font-size: 6px;
+    line-height: 8px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🎨 SELECTION & SCROLLBAR - Cyber UI details! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: var(--cyber-pink);
+  color: var(--bg-void);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: var(--cyber-pink);
+  color: var(--bg-void);
+  text-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-cyber);
+  border-radius: 6px;
+  box-shadow: var(--glow-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-pink);
+  box-shadow: var(--glow-pink);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🔥 SPECIAL HUGO CLASSES - Blog post styling! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.post-meta, .date, .tags {
+  color: var(--cyber-cyan);
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.post-meta::before {
+  content: '◆ ';
+  color: var(--cyber-pink);
+}
+
+.tag, .category {
+  background: var(--matrix-green);
+  color: var(--bg-void);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 5px 5px 0;
+  display: inline-block;
+  box-shadow: var(--glow-matrix);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  gap: 10px;
+}
+
+.pagination a {
+  background: var(--bg-glass);
+  border: 2px solid var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+  background: var(--cyber-cyan);
+  color: var(--bg-void);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🌟 FOOTER - Cyber signature! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+footer {
+  background: var(--bg-glass);
+  border-top: 3px solid transparent;
+  border-image: var(--gradient-rainbow) 1;
+  padding: 30px 20px;
+  margin-top: 50px;
+  text-align: center;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+}
+
+footer::before {
+  content: '═══════════════════════════════════════════════════════════════════════════════════';
+  display: block;
+  color: var(--cyber-cyan);
+  font-size: 8px;
+  margin-bottom: 15px;
+  text-shadow: var(--glow-cyan);
+}
+
+footer::after {
+  content: '🔥 ULTRA C0RE VIBES WEBSITE - POWERED BY MATRIX ENERGY 🔥';
+  display: block;
+  color: var(--cyber-pink);
+  font-size: 10px;
+  margin-top: 15px;
+  text-shadow: var(--glow-pink);
+  animation: cyber-blink 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* 🎯 UTILITY CLASSES - Quick cyber styling! */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.cyber-glow {
+  text-shadow: var(--glow-matrix);
+}
+
+.cyber-pink {
+  color: var(--cyber-pink);
+  text-shadow: var(--glow-pink);
+}
+
+.cyber-cyan {
+  color: var(--cyber-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.cyber-purple {
+  color: var(--cyber-purple);
+  text-shadow: var(--glow-purple);
+}
+
+.matrix-green {
+  color: var(--matrix-green);
+  text-shadow: var(--glow-matrix);
+}
+
+.cyber-center {
+  text-align: center;
+}
+
+.cyber-bold {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.no-animation * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* END OF ULTRA C0RE VIBES CSS - LET'S FUCKING GOOOOOO!!! 🚀💜⚡ */
