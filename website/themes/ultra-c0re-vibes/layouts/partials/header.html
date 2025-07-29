@@ -8,43 +8,10 @@
         
         <!-- Main Navigation Menu -->
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="{{ .Site.BaseURL }}" class="nav-link {{ if .IsHome }}active{{ end }}">
-                    HOME
-                </a>
-            </li>
-            
             {{ range .Site.Menus.main }}
             <li class="nav-item">
                 <a href="{{ .URL }}" class="nav-link {{ if $.IsMenuCurrent "main" . }}active{{ end }}">
                     {{ .Name | upper }}
-                </a>
-            </li>
-            {{ end }}
-            
-            <!-- Posts/Blog Link -->
-            {{ if .Site.GetPage "section" "posts" }}
-            <li class="nav-item">
-                <a href="/posts/" class="nav-link {{ if eq .Section "posts" }}active{{ end }}">
-                    POSTS
-                </a>
-            </li>
-            {{ end }}
-            
-            <!-- About Link if it exists -->
-            {{ if .Site.GetPage "about" }}
-            <li class="nav-item">
-                <a href="/about/" class="nav-link {{ if eq .Title "About" }}active{{ end }}">
-                    ABOUT
-                </a>
-            </li>
-            {{ end }}
-            
-            <!-- Contact Link if it exists -->
-            {{ if .Site.GetPage "contact" }}
-            <li class="nav-item">
-                <a href="/contact/" class="nav-link {{ if eq .Title "Contact" }}active{{ end }}">
-                    CONTACT
                 </a>
             </li>
             {{ end }}

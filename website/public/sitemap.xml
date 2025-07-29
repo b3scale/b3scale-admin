@@ -6,10 +6,34 @@
     <lastmod>2025-07-29T16:45:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-07-29T10:00:00+00:00</lastmod>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/css/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/cyberpunk/</loc>
-    <lastmod>2025-07-29T10:00:00+00:00</lastmod>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/design/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/design/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/neon/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/neon-dreams-css-guide/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/tutorial/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/tutorials/</loc>
+    <lastmod>2025-07-29T14:30:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/getting-started/</loc>
     <lastmod>2025-07-29T10:00:00+00:00</lastmod>
@@ -18,9 +42,6 @@
     <lastmod>2025-07-29T10:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/matrix/</loc>
-    <lastmod>2025-07-29T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-07-29T10:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/ultra-c0re/</loc>
